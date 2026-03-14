@@ -1,99 +1,198 @@
 # AI Web Application Security Benchmark
 
-### Barrett Honors Thesis – Pratham Hegde (phegde9)
-### Commitee Chair - Yan Shoshitaishvili
-### Second Commitee Chair - Connor Nelson
+**Barrett Honors Thesis – Arizona State University**
+
+Pratham Hegde (phegde9)
+Barrett, The Honors College
+Arizona State University
+
+**Committee Chair:** Yan Shoshitaishvili
+**Committee Member:** Connor Nelson
+
+---
+
+## Overview
 
 This repository contains the benchmarking framework developed for my **Barrett Honors Thesis at Arizona State University**.
 
 The project studies the **security characteristics of AI-generated web applications**, with a particular focus on how **concurrent request conditions influence vulnerability exploitability**.
 
-Modern generative AI tools can rapidly produce full-stack applications, but the **security implications of AI-generated code remain largely unquantified**. This project builds a reproducible benchmarking pipeline that generates applications, deploys them in isolated environments, and evaluates their security using automated scanning and controlled attack simulations.
+Generative AI systems are increasingly capable of producing full-stack applications. While these tools accelerate development, the **security properties of AI-generated software remain insufficiently studied**. This project introduces a **reproducible benchmarking framework** designed to evaluate the security of AI-generated applications under realistic attack conditions.
 
-The benchmark produces a structured dataset that enables analysis of:
+The benchmark generates applications, deploys them in **isolated container environments**, scans them for vulnerabilities, and evaluates exploitability under **controlled concurrency conditions**.
+
+The resulting dataset enables analysis of:
 
 * Security weaknesses in AI-generated software
-* The impact of **concurrency on vulnerability exploitability**
-* The influence of **prompt engineering on security outcomes**
+* The impact of **concurrent request conditions on exploitability**
+* The influence of **prompt engineering on vulnerability density**
 * The effectiveness of **AI-generated security patches**
 
-For the complete experimental design and formal methodology, see:
-
-```
-docs/research_spec.md
-```
+For the complete experimental design and methodology, see the
+**[Research Specification](docs/research_spec.md)**.
 
 ---
+
+## Repository Structure
+
+```
+thesis-benchmark/
+│
+├── README.md
+│
+├── docs/
+│   └── research_spec.md
+│
+├── prompts/
+│   ├── prompt_bank.json
+│   └── experiment_matrix.csv
+│
+├── apps/
+│   ├── app01
+│   ├── app02
+│   ├── ...
+│   └── app12
+│
+├── deployment/
+│
+├── scanning/
+│
+├── attacks/
+│
+└── analysis/
+```
 
 ### Directory Overview
 
-| Directory     | Purpose                                                  |
-| ------------- | -------------------------------------------------------- |
-| `docs/`       | Detailed research specifications and experimental design |
-| `prompts/`    | Prompt datasets and experiment configurations            |
-| `apps/`       | AI-generated applications used in the benchmark          |
-| `deployment/` | Scripts for containerized deployment                     |
-| `scanning/`   | Security scanning integrations                           |
-| `attacks/`    | Concurrency attack simulations and exploit scripts       |
-| `analysis/`   | Aggregation and analysis of benchmark results            |
+| Directory     | Purpose                                                       |
+| ------------- | ------------------------------------------------------------- |
+| `docs/`       | Detailed research specifications and experimental methodology |
+| `prompts/`    | Prompt datasets and benchmark configuration                   |
+| `apps/`       | AI-generated applications evaluated in the benchmark          |
+| `deployment/` | Container deployment and environment setup                    |
+| `scanning/`   | Static and dynamic vulnerability scanning                     |
+| `attacks/`    | Concurrency attack simulations and exploit scripts            |
+| `analysis/`   | Dataset generation and statistical analysis                   |
 
 ---
 
-# Benchmark Workflow
+## Benchmark Pipeline
 
-The framework follows a repeatable pipeline designed to evaluate the security of generated applications.
+The benchmark follows a structured experimental pipeline.
 
 ### 1. Application Generation
 
-Applications are generated from structured prompts defined in `prompts/prompt_bank.json`.
+Applications are generated using structured prompts defined in:
+
+```
+prompts/prompt_bank.json
+```
+
+These prompts represent different **prompt engineering strategies**.
+
+---
 
 ### 2. Deployment
 
-Each application is deployed inside **isolated container environments** to ensure safe and reproducible experimentation.
+Generated applications are deployed inside **isolated container environments** to ensure:
+
+* Safe experimentation
+* Reproducibility
+* Consistent infrastructure across experiments
+
+---
 
 ### 3. Security Scanning
 
-Static and dynamic scanners analyze the applications to identify potential vulnerabilities.
+Applications are analyzed using a combination of **static and dynamic security analysis tools**, including:
+
+* Semgrep
+* Bandit
+* ESLint Security
+* OWASP ZAP
+* Dependency vulnerability scanners
+
+---
 
 ### 4. Attack Simulation
 
-Attack scripts simulate adversarial behavior, including high-concurrency request patterns that may expose race conditions or state-related vulnerabilities.
+Controlled attack scenarios simulate adversarial behavior, including:
+
+* Authentication request storms
+* Race-condition exploitation
+* File upload races
+* Input fuzzing
+* Timing probes
+
+These attacks are executed under varying **concurrency levels** to evaluate exploitability.
+
+---
 
 ### 5. Patch Evaluation
 
-Identified vulnerabilities are tested under multiple remediation approaches to measure the effectiveness of different patching strategies.
+Detected vulnerabilities are evaluated under three remediation modes:
+
+* **None** — original vulnerable application
+* **AI Patch** — patch generated by a language model
+* **Canonical Patch** — manually implemented secure fix
+
+This enables comparison between **AI-generated remediation and traditional developer fixes**.
+
+---
 
 ### 6. Data Collection
 
-Results are aggregated into structured datasets for statistical analysis.
+All experiment results are aggregated into a structured dataset used for statistical analysis.
+
+Output datasets are stored in:
+
+```
+analysis/
+```
 
 ---
 
-# Key Goals of the Benchmark
+## Research Objectives
 
-This framework enables systematic study of:
+This benchmark framework enables systematic investigation of:
 
-* Vulnerability prevalence in AI-generated web applications
-* The role of **concurrent request patterns** in vulnerability exploitation
-* The effect of **prompt design on software security**
-* The reliability of **AI-generated code fixes**
+* The **security quality of AI-generated web applications**
+* The relationship between **concurrency and vulnerability exploitability**
+* The impact of **prompt design on security outcomes**
+* The reliability of **AI-generated vulnerability remediation**
 
-The benchmark aims to provide a **reproducible experimental dataset** that can support further research into **AI-assisted software development and security risk assessment**.
-
----
-
-# Reproducibility
-
-The project emphasizes reproducible security experimentation through:
-
-* Containerized environments
-* Deterministic prompt sets
-* Version-controlled experiment specifications
-* Automated benchmarking pipelines
+The resulting dataset provides a foundation for **empirical research on AI-assisted software development and security risk assessment**.
 
 ---
 
-# Author
+## Reproducibility
+
+The benchmark is designed to support **reproducible security experiments**.
+
+Key principles include:
+
+* Containerized infrastructure
+* Deterministic prompt datasets
+* Version-controlled experimental specifications
+* Automated benchmarking workflows
+
+---
+
+## Ethical Scope
+
+All experiments are conducted within **controlled research environments**.
+
+Testing is strictly limited to:
+
+* Locally generated applications
+* Isolated container infrastructure
+* Simulated attack traffic
+
+No external systems or real-world services are targeted.
+
+---
+
+## Author
 
 **Pratham Hegde (phegde9)**
 Barrett Honors College
@@ -101,10 +200,16 @@ Arizona State University
 
 ---
 
-# Additional Documentation
+## Documentation
 
-For full research methodology, variables, hypotheses, and dataset definitions, refer to:
+Detailed methodology, hypotheses, variables, and dataset definitions are available in:
 
-```
-docs/research_spec.md
-```
+**[Research Specification](docs/research_spec.md)**
+
+---
+
+## License
+
+This repository is intended for **academic research purposes** related to the Barrett Honors Thesis.
+
+All experiments follow responsible security research practices.
