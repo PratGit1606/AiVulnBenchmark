@@ -1,139 +1,195 @@
-Title
+# Security Benchmarking of AI-Generated Web Applications Under Concurrent Attack Conditions
 
-Security Benchmarking of AI-Generated Web Applications Under Concurrent Attack Conditions
+## 1. Overview
 
-Core Research Questions
+This benchmark evaluates the **security characteristics of AI-generated web applications** across multiple technology stacks and prompt styles.  
+The study specifically investigates whether **concurrency amplifies exploitability** of vulnerabilities present in AI-generated software.
 
-RQ1: Do AI-generated web applications contain measurable security vulnerabilities across common web stacks?
+All experiments are conducted in **isolated container environments** using locally generated applications.
 
-RQ2: Does concurrency increase exploitability of vulnerabilities present in AI-generated applications?
+---
 
-RQ3: Does prompt style influence vulnerability density and severity in generated applications?
+# 2. Core Research Questions
 
-RQ4: Are AI-generated security patches as effective as canonical developer patches?
+**RQ1:** Do AI-generated web applications contain measurable security vulnerabilities across common web stacks?
 
-Hypotheses
+**RQ2:** Does concurrency increase exploitability of vulnerabilities present in AI-generated applications?
 
-H1: Applications generated with fast prototype prompts will have higher vulnerability density than secure prompts.
+**RQ3:** Does prompt style influence vulnerability density and severity in generated applications?
 
-H2: Certain vulnerabilities will only become exploitable under concurrent request conditions.
+**RQ4:** Are AI-generated security patches as effective as canonical developer patches?
 
-H3: Concurrency increases exploit success rate for race-condition or state-dependent vulnerabilities.
+---
 
-H4: AI-generated patches reduce vulnerability counts but introduce more regressions than canonical patches.
+# 3. Hypotheses
 
-Independent Variables
-Variable	Values
-Prompt Type	Secure, Fast Prototype, Vague
-Technology Stack	React, Express, Flask, PHP
-Concurrency Level	1, 10, 50, 200
-Patch Type	None, AI Patch, Canonical Patch
-Dependent Variables
-Metric	Definition
-Vulnerability Density	Number of confirmed vulnerabilities per application
-Exploitability (Single)	Binary indicator if vulnerability can be exploited sequentially
-Exploitability (Concurrent)	Binary indicator if vulnerability can be exploited under concurrency
-Concurrency Amplification Factor (CAF)	(EC+1)/(ES+1)
-Remediation Effectiveness	1 − (vulns_after / vulns_before)
-Scanner False Positive Rate	false_positives / scanner_reports
-Vulnerability Classes
+| ID | Hypothesis |
+|---|---|
+| **H1** | Applications generated with **fast prototype prompts** will have higher vulnerability density than those generated with **secure prompts** |
+| **H2** | Certain vulnerabilities will only become exploitable under **concurrent request conditions** |
+| **H3** | Increasing concurrency increases exploit success rate for **race-condition or state-dependent vulnerabilities** |
+| **H4** | AI-generated patches reduce vulnerability counts but introduce **more regressions** than canonical patches |
 
-Injection (XSS, SQLi, command injection)
+---
 
-Authentication flaws
+# 4. Experimental Variables
 
-Authorization / access control (IDOR)
+## Independent Variables
 
-CSRF
+| Variable | Values |
+|---|---|
+| Prompt Type | Secure, Fast Prototype, Vague |
+| Technology Stack | React, Express, Flask, PHP |
+| Concurrency Level | 1, 10, 50, 200 |
+| Patch Type | None, AI Patch, Canonical Patch |
 
-File upload vulnerabilities
+---
 
-Configuration vulnerabilities
+## Dependent Variables
 
-Dependency vulnerabilities
+| Metric | Definition |
+|---|---|
+| Vulnerability Density | Number of confirmed vulnerabilities per application |
+| Exploitability (Single) | Binary indicator if vulnerability can be exploited sequentially |
+| Exploitability (Concurrent) | Binary indicator if vulnerability can be exploited under concurrency |
+| Concurrency Amplification Factor (CAF) | `(EC + 1) / (ES + 1)` |
+| Remediation Effectiveness | `1 − (vulns_after / vulns_before)` |
+| Scanner False Positive Rate | `false_positives / scanner_reports` |
 
-Concurrency / race condition vulnerabilities
+---
 
-Information disclosure
+# 5. Vulnerability Classes
 
-Exploitability Scoring
-Value	Meaning
-0	Not exploitable
-1	Partially exploitable
-2	Fully exploitable
-Concurrency Amplification Factor
+The benchmark evaluates the following vulnerability categories:
+
+- Injection vulnerabilities  
+  - XSS  
+  - SQL Injection  
+  - Command Injection
+
+- Authentication flaws
+
+- Authorization / Access Control  
+  - IDOR
+
+- CSRF
+
+- File upload vulnerabilities
+
+- Configuration vulnerabilities
+
+- Dependency vulnerabilities
+
+- Concurrency / Race condition vulnerabilities
+
+- Information disclosure
+
+---
+
+# 6. Exploitability Scoring
+
+| Score | Meaning |
+|---|---|
+| **0** | Not exploitable |
+| **1** | Partially exploitable |
+| **2** | Fully exploitable |
+
+---
+
+# 7. Concurrency Amplification Factor (CAF)
+
+The Concurrency Amplification Factor measures whether concurrency increases exploitability.
+
+```
 
 CAF = (Exploitability_concurrent + 1) / (Exploitability_single + 1)
 
-Interpretation:
+```
 
-CAF	Meaning
-=1	concurrency has no effect
->1	vulnerability amplified by concurrency
-<1	vulnerability suppressed by concurrency
-Dataset Size
-Item	Quantity
-Generated Applications	12
-Prompt Categories	3
-Stacks	4
-Concurrency Levels	4
-Runs Per Configuration	3
+## Interpretation
 
-Total benchmark runs:
+| CAF Value | Meaning |
+|---|---|
+| = 1 | Concurrency has no effect |
+| > 1 | Vulnerability amplified by concurrency |
+| < 1 | Vulnerability suppressed by concurrency |
 
-12 apps × 4 concurrency levels × 3 repetitions = 144 executions
+---
 
-Output Dataset Schema
+# 8. Dataset Size
 
-File: benchmark_results.csv
+| Item | Quantity |
+|---|---|
+| Generated Applications | 12 |
+| Prompt Categories | 3 |
+| Technology Stacks | 4 |
+| Concurrency Levels | 4 |
+| Runs Per Configuration | 3 |
 
-Columns:
+### Total Benchmark Runs
 
-app_id
-prompt_type
-stack
-vulnerability_id
-vulnerability_class
-severity
-tool_detected
-exploit_single
-exploit_concurrent
-CAF
-patch_type
-patch_success
-notes
-timestamp
-Experiment Acceptance Criteria
+```
 
-The experiment pipeline is valid when:
+12 applications × 4 concurrency levels × 3 repetitions = 144 executions
 
-Generated applications deploy successfully in isolated containers.
+```
 
-Static and dynamic scanners produce vulnerability reports.
+---
 
-MCP concurrency scripts generate parallel request traffic.
+# 9. Output Dataset Schema
 
-Vulnerability exploits can be confirmed via manual PoC.
+**File:** `benchmark_results.csv`
 
-Results aggregate into a unified dataset.
+| Column | Description |
+|---|---|
+| app_id | Unique identifier for generated application |
+| prompt_type | Prompt category used for generation |
+| stack | Technology stack used |
+| vulnerability_id | Unique vulnerability identifier |
+| vulnerability_class | Type/category of vulnerability |
+| severity | Vulnerability severity level |
+| tool_detected | Scanner or tool that detected the issue |
+| exploit_single | Exploitability score under sequential execution |
+| exploit_concurrent | Exploitability score under concurrent execution |
+| CAF | Concurrency Amplification Factor |
+| patch_type | None, AI Patch, Canonical Patch |
+| patch_success | Boolean indicator of successful remediation |
+| notes | Additional experiment notes |
+| timestamp | Experiment execution timestamp |
 
-Ethical Scope
+---
 
-Testing only occurs against:
+# 10. Experiment Acceptance Criteria
 
-locally generated applications
+The experiment pipeline is considered **valid** when:
 
-isolated container environments
+1. Generated applications deploy successfully in **isolated containers**.
+2. Static and dynamic scanners produce **vulnerability reports**.
+3. MCP concurrency scripts generate **parallel request traffic**.
+4. Vulnerability exploits can be confirmed via **manual proof-of-concept (PoC)**.
+5. Results aggregate into a **unified dataset**.
 
-mock third-party services
+---
 
-No external systems are targeted.
+# 11. Ethical Scope
 
-Versioning
+All testing occurs strictly within controlled environments:
 
-This document must be version controlled.
+- Locally generated applications
+- Isolated container infrastructure
+- Mock third-party services
 
-Repository structure example:
+**No external systems are targeted.**
+
+---
+
+# 12. Versioning
+
+This specification must be maintained under version control.
+
+## Example Repository Structure
+
+```
 
 thesis-benchmark/
 │
@@ -141,8 +197,28 @@ thesis-benchmark/
 │   └─ research_spec.md
 │
 ├─ prompts/
+│
 ├─ generation/
+│
 ├─ deployment/
+│
 ├─ scanning/
+│
 ├─ attacks/
+│
 └─ analysis/
+
+```
+
+---
+
+# 13. Summary
+
+This benchmark framework enables systematic evaluation of:
+
+- Security quality of AI-generated applications
+- Effects of concurrency on exploitability
+- Impact of prompt engineering on vulnerability density
+- Effectiveness of AI-generated patches
+
+The resulting dataset provides a **quantitative foundation for studying AI-assisted software security.**
