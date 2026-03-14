@@ -1,0 +1,23 @@
+{
+  "concurrency_levels": [1, 10, 50, 200],
+  "runs_per_configuration": 3,
+  "scanner_tools": [
+    "semgrep",
+    "bandit",
+    "eslint_security",
+    "dependency_check",
+    "owasp_zap"
+  ],
+  "attack_scenarios": [
+    "auth_storm",
+    "file_upload_race",
+    "double_spend_race",
+    "fuzz_inputs",
+    "timing_probe"
+  ],
+  "patch_modes": [
+    "none",
+    "ai_patch",
+    "canonical_patch"
+  ]
+}
