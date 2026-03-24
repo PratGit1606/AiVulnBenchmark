@@ -1,0 +1,6 @@
+vuln_id,vuln_class,severity,exploit_single,exploit_concurrent,poc_notes,confirmed_by,timestamp
+APP01-RATE-001,missing_rate_limit,high,1.0,1.0,275 login attempts/sec accepted no lockout or throttle at any concurrency level,playwright+attack_runner,2026-03-24T01:02:24Z
+APP01-GEN-001,insecure_generation,low,0,0,LLM placed health route after app.run() — dead code never executed requires manual fix,manual_review,2026-03-24T01:02:24Z
+APP01-GEN-002,insecure_generation,low,0,0,debug=True in original generated code — RCE via Werkzeug console required manual fix,manual_review,2026-03-24T01:02:24Z
+APP01-GEN-003,insecure_generation,low,0,0,SECRET_KEY has hardcoded fallback string in config — should be env-only,manual_review,2026-03-24T01:02:24Z
+APP01-GEN-004,insecure_generation,low,0,0,db.create_all() outside app context — app crashed on start required manual fix,manual_review,2026-03-24T01:02:24Z

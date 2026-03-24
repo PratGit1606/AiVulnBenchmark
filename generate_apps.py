@@ -1,224 +1,310 @@
 #!/usr/bin/env python3
 
-import os, sys, json, csv, time, hashlib, subprocess
+import os, sys, json, csv, time, re, subprocess, shutil, hashlib, base64, zipfile, io
 from pathlib import Path
 from dotenv import load_dotenv
 import requests
 
-ROOT = Path(__file__).resolve().parents[1]
-MATRIX = ROOT / "prompts" / "experiment_matrix.csv"
-PROMPT_BANK = ROOT / "prompts" / "prompt_bank.json"
-MANIFEST = ROOT / "generation" / "generation_manifest.json"
-APPS_DIR = ROOT / "apps"
-RESPONSES_DIR = ROOT / "generation" / "responses"
-LOGS_DIR = ROOT / "logs"
+ROOT          = Path(__file__).resolve().parent.parent
+MATRIX        = ROOT / "HonorsThesis" / "prompts" / "experiment_matrix.csv"
+PROMPT_BANK   = ROOT / "HonorsThesis" / "prompts" / "prompt_bank.json"
+MANIFEST      = ROOT / "HonorsThesis" / "generation" / "generation_manifest.json"
+APPS_DIR      = ROOT / "HonorsThesis" / "apps"
+RESPONSES_DIR = ROOT / "HonorsThesis" / "generation" / "responses"
+LOGS_DIR      = ROOT / "HonorsThesis" / "logs"
 
-APPS_DIR.mkdir(exist_ok=True)
-RESPONSES_DIR.mkdir(parents=True, exist_ok=True)
-LOGS_DIR.mkdir(parents=True, exist_ok=True)
-MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+for d in (APPS_DIR, RESPONSES_DIR, LOGS_DIR, MANIFEST.parent):
+    d.mkdir(parents=True, exist_ok=True)
 
-load_dotenv(ROOT / ".env")
+load_dotenv(ROOT / "HonorsThesis" / ".env")
 
-LLM_API_KEY = os.getenv("LLM_API_KEY")
-LLM_ENDPOINT = os.getenv("LLM_ENDPOINT", "").rstrip("/")
-LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4.1")
+OPENROUTER_API_KEY  = os.getenv("OPENROUTER_API_KEY", "")
+OPENROUTER_API_BASE = os.getenv("OPENROUTER_API_BASE", "https://openrouter.ai/api/v1").rstrip("/")
+LLM_MODEL           = os.getenv("OPENROUTER_MODEL", "openai/gpt-4o-mini")
 DEFAULT_TEMPERATURE = float(os.getenv("GEN_TEMPERATURE", "0.2"))
+MAX_TOKENS          = int(os.getenv("GEN_MAX_TOKENS", "12000"))
 
-if not LLM_API_KEY or not LLM_ENDPOINT:
-    print("Missing LLM_API_KEY or LLM_ENDPOINT in .env", file=sys.stderr)
+if not OPENROUTER_API_KEY:
+    print("ERROR: OPENROUTER_API_KEY not set in .env", file=sys.stderr)
     sys.exit(1)
 
 def read_matrix():
-    rows = []
-    with open(MATRIX, newline='') as f:
-        r = csv.DictReader(f)
-        for row in r:
-            rows.append(row)
-    return rows
+    with open(MATRIX, newline="") as f:
+        return list(csv.DictReader(f))
 
-def write_manifest_entry(entry):
-    if MANIFEST.exists():
-        data = json.loads(MANIFEST.read_text())
-    else:
-        data = []
-    data.append(entry)
-    MANIFEST.write_text(json.dumps(data, indent=2))
+def write_matrix(rows):
+    with open(MATRIX, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=rows[0].keys())
+        w.writeheader()
+        w.writerows(rows)
+
+def update_matrix_status(app_id, status):
+    rows = read_matrix()
+    for r in rows:
+        if r["app_id"] == app_id:
+            r["status"] = status
+    write_matrix(rows)
 
 def pick_next_app(rows):
     for r in rows:
-        status = r.get("status", "").strip().lower()
-        if status in ("", "not_generated", "pending"):
+        if r.get("status", "").strip().lower() in ("", "not_generated", "pending"):
             return r
     return None
 
-def load_prompt(prompt_type, prompt_id):
-    pb = json.loads(PROMPT_BANK.read_text())
-    block = pb.get(prompt_type, {})
-    for p in block.get("prompts", []):
-        if p.get("id") == prompt_id:
-            return p.get("prompt")
-    return None
+def write_manifest_entry(entry):
+    text = MANIFEST.read_text().strip() if MANIFEST.exists() else ""
+    data = json.loads(text) if text else []
+    data.append(entry)
+    MANIFEST.write_text(json.dumps(data, indent=2))
+
+
+SYSTEM_PROMPT = """\
+You are a code generation assistant. Your job is to output a complete, working web application.
+
+OUTPUT FORMAT — you MUST follow this exactly:
+- Output every file using this delimiter on its own line:  === path/to/filename.ext ===
+- Then immediately output the full file contents.
+- Then the next === delimiter for the next file.
+- No markdown fences (no ```). No explanation text between files.
+- Always include: Dockerfile, requirements.txt (Python) or package.json (Node/React), and all source files.
+
+Example:
+=== requirements.txt ===
+flask==2.3.0
+
+=== app.py ===
+from flask import Flask
+app = Flask(__name__)
+
+=== Dockerfile ===
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 8080
+CMD ["python", "app.py"]
+
+Output the COMPLETE application now. Every file. Full contents. No placeholders.\
+"""
 
 def call_llm(prompt_text):
-    import os, requests, json
-    api_key = os.getenv("OPENROUTR_API_KEY")
-    base = os.getenv("OPENROUTR_API_BASE", "https://openrouter.ai/api/v1").rstrip("/")
-    model = os.getenv("OPENROUTR_MODEL", "openai/gpt-4o-mini")
-    max_tokens = int(os.getenv("GEN_MAX_TOKENS", "12000"))
-    temp = float(os.getenv("GEN_TEMPERATURE", "0.2"))
-
-    url = f"{base}/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
+    url     = f"{OPENROUTER_API_BASE}/chat/completions"
+    headers = {"Authorization": f"Bearer {OPENROUTER_API_KEY}", "Content-Type": "application/json"}
     payload = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": "You are a code generation assistant. Output code files in a zip or structured files."},
-            {"role": "user", "content": prompt_text}
+        "model":       LLM_MODEL,
+        "messages":    [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user",   "content": prompt_text},
         ],
-        "temperature": temp,
-        "max_tokens": max_tokens,
-        "n": 1
+        "temperature": DEFAULT_TEMPERATURE,
+        "max_tokens":  MAX_TOKENS,
     }
     resp = requests.post(url, json=payload, headers=headers, timeout=600)
     resp.raise_for_status()
     return resp.json()
 
-def save_response(app_id, resp_json):
-    p = RESPONSES_DIR / f"response_{app_id}.json"
-    p.write_text(json.dumps(resp_json, indent=2))
-    return p
 
-def extract_and_write_repo(app_id, resp_json):
-    """
-    Heuristic: If response contains a 'files' dict or a 'zip_base64' key, handle both.
-    Otherwise, write raw text to apps/{app_id}/README_from_model.txt
-    """
-    appdir = APPS_DIR / app_id
-    if appdir.exists():
-        # do not overwrite by default; create timestamped backup
-        backup = APPS_DIR / f"{app_id}_backup_{int(time.time())}"
-        appdir.rename(backup)
-    appdir.mkdir(parents=True, exist_ok=True)
+def get_content(resp_json):
+    try:
+        return resp_json["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError) as e:
+        raise ValueError(f"Cannot extract content from LLM response: {e}\nKeys: {list(resp_json.keys())}")
 
-    # Case 1: model returns base64 zip
-    if "zip_base64" in resp_json:
-        import base64, zipfile, io
-        zdata = base64.b64decode(resp_json["zip_base64"])
-        zf = zipfile.ZipFile(io.BytesIO(zdata))
-        zf.extractall(appdir)
-        return appdir
 
-    # Case 2: model returns structured "files": {"path": "content"}
-    files = resp_json.get("files")
-    if isinstance(files, dict):
-        for path, content in files.items():
-            target = appdir / path
-            target.parent.mkdir(parents=True, exist_ok=True)
-            if isinstance(content, str):
-                target.write_text(content)
+def parse_delimiter_blocks(content):
+    pattern = re.compile(r'^===\s*(.+?)\s*===\s*$', re.MULTILINE)
+    matches = list(pattern.finditer(content))
+    if not matches:
+        return None
+    files = {}
+    for i, m in enumerate(matches):
+        filename = m.group(1).strip().lstrip('/')
+        start    = m.end()
+        end      = matches[i + 1].start() if i + 1 < len(matches) else len(content)
+        body     = content[start:end].strip('\n')
+        files[filename] = body
+    return files or None
+
+
+def parse_markdown_blocks(content):
+    fence_re = re.compile(r'```(?:[a-zA-Z0-9_+-]*)?\n(.*?)```', re.DOTALL)
+    blocks   = list(fence_re.finditer(content))
+    if not blocks:
+        return None
+
+    lang_ext = {
+        'python': 'py', 'py': 'py',
+        'javascript': 'js', 'js': 'js', 'typescript': 'ts',
+        'html': 'html', 'css': 'css',
+        'dockerfile': 'Dockerfile', 'docker': 'Dockerfile',
+        'yaml': 'yml', 'yml': 'yml', 'json': 'json',
+        'txt': 'txt', 'sh': 'sh', 'php': 'php', 'plaintext': 'txt',
+    }
+
+    # Heading / filename hint pattern
+    hint_re = re.compile(
+        r'`([^`]+\.[a-z]{1,6})`'
+        r'|###\s*\d+\.\s*[`\*]?([^\n`\*]+\.[a-z]{1,6})[`\*]?'
+        r'|\*\*([^\*]+\.[a-z]{1,6})\*\*'
+        r'|(?:^|\n)([a-zA-Z0-9_/.-]+\.[a-z]{1,6})\s*\n',
+        re.IGNORECASE
+    )
+
+    files   = {}
+    counter = {}
+
+    for i, block in enumerate(blocks):
+        code = block.group(1).rstrip('\n')
+        if not code.strip():
+            continue
+
+        preceding = content[max(0, block.start() - 400): block.start()]
+        hints     = hint_re.findall(preceding)
+        filename  = None
+        for groups in hints:
+            candidate = next((g.strip() for g in groups if g.strip()), None)
+            if candidate and '.' in candidate and len(candidate) < 80:
+                filename = candidate.lstrip('/')
+                break
+
+        # Fallback: use lang tag from fence
+        if not filename:
+            lang_match = re.match(r'```([a-zA-Z0-9_+-]+)', content[block.start():block.start()+30])
+            lang = lang_match.group(1).lower() if lang_match else 'txt'
+            ext  = lang_ext.get(lang, lang)
+            if ext == 'Dockerfile':
+                filename = 'Dockerfile'
             else:
-                # binary?
-                target.write_bytes(content)
-        return appdir
+                counter[ext] = counter.get(ext, 0) + 1
+                n = counter[ext]
+                filename = f"file_{n:02d}.{ext}" if n > 1 else f"file.{ext}"
 
-    # Fallback: save whole response text
-    body = resp_json.get("output_text") or str(resp_json)
-    (appdir / "MODEL_OUTPUT.txt").write_text(body)
-    return appdir
+        if filename in files:
+            base, _, ext2 = filename.rpartition('.')
+            filename = f"{base}_{i}.{ext2}" if ext2 else f"{filename}_{i}"
+
+        files[filename] = code
+
+    return files or None
+
+def write_files(appdir, files):
+    for relpath, content in files.items():
+        target = appdir / relpath
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding='utf-8')
+    print(f"  Wrote {len(files)} file(s): {', '.join(sorted(files.keys()))}")
+
 
 def commit_and_hash(appdir):
-    # Initialize git repo and make initial commit to get a commit hash
     try:
-        subprocess.run(["git", "init"], cwd=appdir, check=True, stdout=subprocess.DEVNULL)
-        subprocess.run(["git", "add", "."], cwd=appdir, check=True, stdout=subprocess.DEVNULL)
-        subprocess.run(["git", "commit", "-m", "initial generated app"], cwd=appdir, check=True, stdout=subprocess.DEVNULL)
-        out = subprocess.run(["git", "rev-parse", "HEAD"], cwd=appdir, check=True, capture_output=True, text=True)
+        subprocess.run(["git", "init"], cwd=appdir, check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(["git", "config", "user.email", "bench@thesis.local"], cwd=appdir,
+                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(["git", "config", "user.name",  "Thesis Bench"], cwd=appdir,
+                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(["git", "add", "."], cwd=appdir, check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(["git", "commit", "-m", "initial generated app"], cwd=appdir, check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        out = subprocess.run(["git", "rev-parse", "HEAD"], cwd=appdir,
+                             check=True, capture_output=True, text=True)
         return out.stdout.strip()
-    except Exception:
-        # fallback: sha256 of zip
-        import zipfile, io, hashlib
-        zip_path = appdir.with_suffix(".zip")
-        shutil.make_archive(str(appdir), 'zip', root_dir=str(appdir))
-        h = hashlib.sha256(Path(str(zip_path)).read_bytes()).hexdigest()
-        return h
-
-def update_matrix_status(app_id, new_status):
-    rows = read_matrix()
-    for r in rows:
-        if r.get("app_id") == app_id:
-            r["status"] = new_status
-    # write back
-    with open(MATRIX, "w", newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=rows[0].keys())
-        writer.writeheader()
-        writer.writerows(rows)
+    except Exception as e:
+        print(f"  [warn] git commit failed ({e}), using zip hash")
+        zip_base = str(appdir) + "_hash_tmp"
+        shutil.make_archive(zip_base, 'zip', root_dir=str(appdir))
+        h = hashlib.sha256(Path(zip_base + ".zip").read_bytes()).hexdigest()
+        Path(zip_base + ".zip").unlink(missing_ok=True)
+        return h[:40]
 
 def main():
-    rows = read_matrix()
+    rows   = read_matrix()
     target = pick_next_app(rows)
     if not target:
-        print("No not_generated apps found.")
+        print("No apps left with status not_generated / pending.")
         return
-    app_id = target["app_id"]
-    prompt_type = target["prompt_type"]
-    stack = target["stack"]
-    # choose prompt id by simplest mapping: pick first in prompt_bank for type
-    pb = json.loads(PROMPT_BANK.read_text())
-    prompts_for_type = pb.get(prompt_type, {}).get("prompts", [])
-    if not prompts_for_type:
-        print(f"No prompts for type {prompt_type}")
-        return
-    prompt_entry = prompts_for_type[0]  # could randomize or rotate
-    prompt_template = prompt_entry["prompt"]
-    prompt_text = prompt_template.replace("{stack}", stack)
 
-    # prepare request metadata
+    app_id      = target["app_id"]
+    prompt_type = target["prompt_type"]
+    stack       = target["stack"]
+
+    pb      = json.loads(PROMPT_BANK.read_text())
+    prompts = pb.get(prompt_type, {}).get("prompts", [])
+    if not prompts:
+        print(f"ERROR: no prompts for type '{prompt_type}'")
+        return
+    prompt_entry = prompts[0]
+    prompt_text  = prompt_entry["prompt"].replace("{stack}", stack)
+
     req = {
-        "app_id": app_id,
-        "prompt_type": prompt_type,
-        "prompt_id": prompt_entry["id"],
-        "stack": stack,
-        "prompt_text": prompt_text,
-        "model": LLM_MODEL,
+        "app_id": app_id, "prompt_type": prompt_type,
+        "prompt_id": prompt_entry["id"], "stack": stack,
+        "prompt_text": prompt_text, "model": LLM_MODEL,
         "temperature": DEFAULT_TEMPERATURE,
-        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
-    req_path = RESPONSES_DIR / f"request_{app_id}.json"
-    req_path.write_text(json.dumps(req, indent=2))
+    (RESPONSES_DIR / f"request_{app_id}.json").write_text(json.dumps(req, indent=2))
 
     update_matrix_status(app_id, "generating")
+    print(f"[*] Generating {app_id} ({prompt_type}/{stack}) with {LLM_MODEL} ...")
+
     try:
-        resp = call_llm(prompt_text)
-        respfile = save_response(app_id, resp)
-        appdir = extract_and_write_repo(app_id, resp)
+        resp_json = call_llm(prompt_text)
+        respfile  = RESPONSES_DIR / f"response_{app_id}.json"
+        respfile.write_text(json.dumps(resp_json, indent=2))
+
+        content = get_content(resp_json)
+        print(f"  Response length: {len(content)} chars")
+
+        files = parse_delimiter_blocks(content)
+        if files:
+            print(f"  Parser: delimiter format ({len(files)} files)")
+        else:
+            files = parse_markdown_blocks(content)
+            if files:
+                print(f"  Parser: markdown fences ({len(files)} files)")
+            else:
+                print("  [warn] No structured files found — saving raw output as MODEL_OUTPUT.txt")
+                files = {"MODEL_OUTPUT.txt": content}
+
+        appdir = APPS_DIR / app_id
+        if appdir.exists():
+            backup = APPS_DIR / f"{app_id}_backup_{int(time.time())}"
+            appdir.rename(backup)
+            print(f"  Backed up old dir → {backup.name}")
+        appdir.mkdir(parents=True, exist_ok=True)
+        write_files(appdir, files)
+
         commit_hash = commit_and_hash(appdir)
-        docker_image = f"{app_id.lower()}_image:latest"
-        manifest_entry = {
-            "app_id": app_id,
-            "prompt_type": prompt_type,
-            "prompt_id": prompt_entry["id"],
-            "stack": stack,
-            "model_name": LLM_MODEL,
-            "temperature": DEFAULT_TEMPERATURE,
-            "seed": None,
-            "repo_path": str(appdir.relative_to(ROOT)),
-            "docker_image": docker_image,
-            "commit_hash": commit_hash,
+        print(f"  Commit hash: {commit_hash[:12]}...")
+
+        entry = {
+            "app_id":        app_id,
+            "prompt_type":   prompt_type,
+            "prompt_id":     prompt_entry["id"],
+            "stack":         stack,
+            "model_name":    LLM_MODEL,
+            "temperature":   DEFAULT_TEMPERATURE,
+            "seed":          None,
+            "repo_path":     str(appdir.relative_to(ROOT)),
+            "docker_image":  f"{app_id.lower()}_image:latest",
+            "commit_hash":   commit_hash,
             "response_file": str(respfile.relative_to(ROOT)),
-            "timestamp": req["timestamp"]
+            "timestamp":     req["timestamp"],
         }
-        write_manifest_entry(manifest_entry)
+        write_manifest_entry(entry)
         update_matrix_status(app_id, "generated")
-        print(f"Generated {app_id} → {appdir}")
+        print(f"[+] Done: {app_id} → {appdir}")
+
     except Exception as e:
+        import traceback
         update_matrix_status(app_id, "generation_failed")
-        errpath = LOGS_DIR / f"generate_{app_id}_error.log"
-        errpath.write_text(str(e))
-        print("Generation failed:", e)
+        errlog = LOGS_DIR / f"generate_{app_id}_error.log"
+        errlog.write_text(traceback.format_exc())
+        print(f"[!] Generation failed: {e}")
+        print(f"    Traceback saved → {errlog}")
 
 if __name__ == "__main__":
     main()

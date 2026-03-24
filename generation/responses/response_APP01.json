@@ -1,0 +1,45 @@
+{
+  "id": "gen-1773731864-zP2pvlTXsY0iVwJVUkRl",
+  "object": "chat.completion",
+  "created": 1773731864,
+  "model": "openai/gpt-4o-mini",
+  "provider": "OpenAI",
+  "system_fingerprint": "fp_a1681c17ec",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "=== requirements.txt ===\nFlask==2.3.0\nFlask-SQLAlchemy==2.5.1\nFlask-WTF==1.0.0\nFlask-Login==0.6.2\nFlask-Migrate==3.1.0\nbcrypt==3.2.0\npython-dotenv==0.21.0\n\n=== app.py ===\nimport os\nfrom flask import Flask, render_template, redirect, url_for, flash, request\nfrom flask_sqlalchemy import SQLAlchemy\nfrom flask_wtf import FlaskForm\nfrom wtforms import StringField, PasswordField, SubmitField, FileField\nfrom wtforms.validators import DataRequired, Length, Email, EqualTo\nfrom flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user\nfrom werkzeug.security import generate_password_hash, check_password_hash\nfrom werkzeug.utils import secure_filename\nfrom dotenv import load_dotenv\n\nload_dotenv()\n\napp = Flask(__name__)\napp.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_secret_key')\napp.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///site.db')\napp.config['UPLOAD_FOLDER'] = 'uploads'\napp.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB limit\ndb = SQLAlchemy(app)\nlogin_manager = LoginManager(app)\nlogin_manager.login_view = 'login'\n\nclass User(db.Model, UserMixin):\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(150), unique=True, nullable=False)\n    email = db.Column(db.String(150), unique=True, nullable=False)\n    password = db.Column(db.String(150), nullable=False)\n\n@login_manager.user_loader\ndef load_user(user_id):\n    return User.query.get(int(user_id))\n\nclass RegistrationForm(FlaskForm):\n    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=150)])\n    email = StringField('Email', validators=[DataRequired(), Email()])\n    password = PasswordField('Password', validators=[DataRequired()])\n    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])\n    submit = SubmitField('Sign Up')\n\nclass LoginForm(FlaskForm):\n    email = StringField('Email', validators=[DataRequired(), Email()])\n    password = PasswordField('Password', validators=[DataRequired()])\n    submit = SubmitField('Login')\n\nclass UploadForm(FlaskForm):\n    file = FileField('File', validators=[DataRequired()])\n    submit = SubmitField('Upload')\n\n@app.route('/register', methods=['GET', 'POST'])\ndef register():\n    form = RegistrationForm()\n    if form.validate_on_submit():\n        hashed_password = generate_password_hash(form.password.data)\n        user = User(username=form.username.data, email=form.email.data, password=hashed_password)\n        db.session.add(user)\n        db.session.commit()\n        flash('Your account has been created! You can now log in.', 'success')\n        return redirect(url_for('login'))\n    return render_template('register.html', form=form)\n\n@app.route('/login', methods=['GET', 'POST'])\ndef login():\n    form = LoginForm()\n    if form.validate_on_submit():\n        user = User.query.filter_by(email=form.email.data).first()\n        if user and check_password_hash(user.password, form.password.data):\n            login_user(user)\n            return redirect(url_for('dashboard'))\n        else:\n            flash('Login Unsuccessful. Please check email and password', 'danger')\n    return render_template('login.html', form=form)\n\n@app.route('/dashboard', methods=['GET', 'POST'])\n@login_required\ndef dashboard():\n    form = UploadForm()\n    if form.validate_on_submit():\n        file = form.file.data\n        if file and allowed_file(file.filename):\n            filename = secure_filename(file.filename)\n            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))\n            flash('File uploaded successfully!', 'success')\n        else:\n            flash('Invalid file type. Only images are allowed.', 'danger')\n    return render_template('dashboard.html', form=form)\n\ndef allowed_file(filename):\n    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}\n    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS\n\n@app.route('/logout')\n@login_required\ndef logout():\n    logout_user()\n    return redirect(url_for('login'))\n\nif __name__ == '__main__':\n    db.create_all()\n    app.run(debug=True, host='0.0.0.0')\n\n=== templates/register.html ===\n<!doctype html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Register</title>\n</head>\n<body>\n    <h1>Register</h1>\n    <form method=\"POST\">\n        {{ form.hidden_tag() }}\n        {{ form.username.label }} {{ form.username(size=32) }}<br>\n        {{ form.email.label }} {{ form.email(size=32) }}<br>\n        {{ form.password.label }} {{ form.password(size=32) }}<br>\n        {{ form.confirm_password.label }} {{ form.confirm_password(size=32) }}<br>\n        {{ form.submit() }}\n    </form>\n</body>\n</html>\n\n=== templates/login.html ===\n<!doctype html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Login</title>\n</head>\n<body>\n    <h1>Login</h1>\n    <form method=\"POST\">\n        {{ form.hidden_tag() }}\n        {{ form.email.label }} {{ form.email(size=32) }}<br>\n        {{ form.password.label }} {{ form.password(size=32) }}<br>\n        {{ form.submit() }}\n    </form>\n</body>\n</html>\n\n=== templates/dashboard.html ===\n<!doctype html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Dashboard</title>\n</head>\n<body>\n    <h1>Dashboard</h1>\n    <form method=\"POST\" enctype=\"multipart/form-data\">\n        {{ form.hidden_tag() }}\n        {{ form.file.label }} {{ form.file() }}<br>\n        {{ form.submit() }}\n    </form>\n    <a href=\"{{ url_for('logout') }}\">Logout</a>\n</body>\n</html>\n\n=== Dockerfile ===\nFROM python:3.11-slim\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install --no-cache-dir -r requirements.txt\nCOPY . .\nRUN mkdir uploads\nEXPOSE 5000\nCMD [\"python\", \"app.py\"]\n\n=== .env ===\nSECRET_KEY=your_secret_key\nDATABASE_URL=sqlite:///site.db\n\n=== docker-compose.yml ===\nversion: '3.8'\nservices:\n  web:\n    build: .\n    ports:\n      - \"5000:5000\"\n    volumes:\n      - .:/app\n    environment:\n      - FLASK_ENV=production\n\n=== README.md ===\n# Flask User Registration and CRUD Application\n\n## Overview\nThis is a simple Flask web application that implements user registration, login, and file upload functionality with secure coding practices.\n\n## Getting Started\n\n### Prerequisites\n- Docker\n- Docker Compose\n\n### Setup\n1. Clone the repository.\n2. Create a `.env` file based on the provided `.env` template.\n3. Build and run the application using Docker Compose:\n   ```bash\n   docker-compose up --build\n   ```\n\n### Accessing the Application\n- Open your browser and navigate to `http://localhost:5000/register` to create a new account.\n- After registration, you can log in and access the dashboard to upload files.\n\n### Security Considerations\n- Ensure to use strong passwords.\n- Validate and sanitize all inputs.\n- Use secure cookie flags in production.",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 287,
+    "completion_tokens": 1706,
+    "total_tokens": 1993,
+    "cost": 0,
+    "is_byok": true,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00106665,
+      "upstream_inference_prompt_cost": 4.305e-05,
+      "upstream_inference_completions_cost": 0.0010236
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

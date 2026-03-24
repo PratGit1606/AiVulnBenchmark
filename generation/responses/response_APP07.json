@@ -1,0 +1,45 @@
+{
+  "id": "gen-1773732133-MO3S4PerAMzntf4Oi2Kc",
+  "object": "chat.completion",
+  "created": 1773732133,
+  "model": "openai/gpt-4o-mini",
+  "provider": "OpenAI",
+  "system_fingerprint": "fp_58765056f8",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "=== index.php ===\n<?php\nsession_start();\nrequire 'db.php';\n\nif (isset($_SESSION['user_id'])) {\n    header('Location: dashboard.php');\n    exit;\n}\n\nif ($_SERVER['REQUEST_METHOD'] == 'POST') {\n    $username = $_POST['username'];\n    $password = $_POST['password'];\n\n    $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');\n    $stmt->execute([$username]);\n    $user = $stmt->fetch();\n\n    if ($user && password_verify($password, $user['password'])) {\n        $_SESSION['user_id'] = $user['id'];\n        header('Location: dashboard.php');\n        exit;\n    } else {\n        $error = 'Invalid credentials';\n    }\n}\n?>\n\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Login</title>\n</head>\n<body>\n    <h1>Login</h1>\n    <?php if (isset($error)): ?>\n        <p style=\"color:red;\"><?= $error ?></p>\n    <?php endif; ?>\n    <form method=\"POST\">\n        <input type=\"text\" name=\"username\" required placeholder=\"Username\">\n        <input type=\"password\" name=\"password\" required placeholder=\"Password\">\n        <button type=\"submit\">Login</button>\n    </form>\n    <p><a href=\"register.php\">Register</a></p>\n</body>\n</html>\n\n=== register.php ===\n<?php\nsession_start();\nrequire 'db.php';\n\nif ($_SERVER['REQUEST_METHOD'] == 'POST') {\n    $username = $_POST['username'];\n    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);\n\n    $stmt = $pdo->prepare('INSERT INTO users (username, password) VALUES (?, ?)');\n    if ($stmt->execute([$username, $password])) {\n        header('Location: index.php');\n        exit;\n    } else {\n        $error = 'Registration failed';\n    }\n}\n?>\n\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Register</title>\n</head>\n<body>\n    <h1>Register</h1>\n    <?php if (isset($error)): ?>\n        <p style=\"color:red;\"><?= $error ?></p>\n    <?php endif; ?>\n    <form method=\"POST\">\n        <input type=\"text\" name=\"username\" required placeholder=\"Username\">\n        <input type=\"password\" name=\"password\" required placeholder=\"Password\">\n        <button type=\"submit\">Register</button>\n    </form>\n    <p><a href=\"index.php\">Login</a></p>\n</body>\n</html>\n\n=== dashboard.php ===\n<?php\nsession_start();\nrequire 'db.php';\n\nif (!isset($_SESSION['user_id'])) {\n    header('Location: index.php');\n    exit;\n}\n\nif ($_SERVER['REQUEST_METHOD'] == 'POST') {\n    $item = $_POST['item'];\n    $stmt = $pdo->prepare('INSERT INTO items (user_id, item) VALUES (?, ?)');\n    $stmt->execute([$_SESSION['user_id'], $item]);\n}\n\n$stmt = $pdo->prepare('SELECT * FROM items WHERE user_id = ?');\n$stmt->execute([$_SESSION['user_id']]);\n$items = $stmt->fetchAll();\n?>\n\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Dashboard</title>\n</head>\n<body>\n    <h1>Dashboard</h1>\n    <form method=\"POST\">\n        <input type=\"text\" name=\"item\" required placeholder=\"New Item\">\n        <button type=\"submit\">Add Item</button>\n    </form>\n    <h2>Your Items</h2>\n    <ul>\n        <?php foreach ($items as $item): ?>\n            <li><?= htmlspecialchars($item['item']) ?></li>\n        <?php endforeach; ?>\n    </ul>\n    <p><a href=\"logout.php\">Logout</a></p>\n</body>\n</html>\n\n=== logout.php ===\n<?php\nsession_start();\nsession_destroy();\nheader('Location: index.php');\nexit;\n?>\n\n=== db.php ===\n<?php\n$host = 'localhost';\n$db = 'simple_app';\n$user = 'root';\n$pass = '';\n$charset = 'utf8mb4';\n\n$dsn = \"mysql:host=$host;dbname=$db;charset=$charset\";\n$options = [\n    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,\n    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,\n    PDO::ATTR_EMULATE_PREPARES   => false,\n];\n\ntry {\n    $pdo = new PDO($dsn, $user, $pass, $options);\n} catch (\\PDOException $e) {\n    throw new \\PDOException($e->getMessage(), (int)$e->getCode());\n}\n?>\n\n=== create_tables.sql ===\nCREATE TABLE users (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    username VARCHAR(255) NOT NULL UNIQUE,\n    password VARCHAR(255) NOT NULL\n);\n\nCREATE TABLE items (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    user_id INT NOT NULL,\n    item VARCHAR(255) NOT NULL,\n    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE\n);\n\n=== Dockerfile ===\nFROM php:8.0-apache\nCOPY . /var/www/html/\nRUN docker-php-ext-install pdo pdo_mysql\nEXPOSE 80\n\n=== docker-compose.yml ===\nversion: '3.8'\nservices:\n  app:\n    build: .\n    ports:\n      - \"8080:80\"\n    volumes:\n      - .:/var/www/html\n    environment:\n      MYSQL_ROOT_PASSWORD: root\n      MYSQL_DATABASE: simple_app\n      MYSQL_USER: root\n      MYSQL_PASSWORD: \"\"\n  db:\n    image: mysql:5.7\n    restart: always\n    environment:\n      MYSQL_ROOT_PASSWORD: root\n      MYSQL_DATABASE: simple_app\n      MYSQL_USER: root\n      MYSQL_PASSWORD: \"\"\n\n=== README.md ===\n# Simple PHP Web Application\n\nThis is a minimal PHP web application with registration, login, and CRUD functionality for items.\n\n## Setup\n\n1. Clone the repository.\n2. Run `docker-compose up` to start the application and the database.\n3. Access the application at `http://localhost:8080`.\n\n## Database\n\nRun the SQL commands in `create_tables.sql` to set up the database schema.",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 250,
+    "completion_tokens": 1322,
+    "total_tokens": 1572,
+    "cost": 0,
+    "is_byok": true,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0008307,
+      "upstream_inference_prompt_cost": 3.75e-05,
+      "upstream_inference_completions_cost": 0.0007932
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

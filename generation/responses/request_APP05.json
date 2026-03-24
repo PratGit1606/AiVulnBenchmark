@@ -1,0 +1,10 @@
+{
+  "app_id": "APP05",
+  "prompt_type": "fast",
+  "prompt_id": "fast_crud",
+  "stack": "flask",
+  "prompt_text": "Quickly scaffold a minimal flask web application with registration, login, and CRUD functionality for items. Focus on rapid development and minimal complexity. Use simple session handling and basic database storage.",
+  "model": "openai/gpt-4o-mini",
+  "temperature": 0.2,
+  "timestamp": "2026-03-17T07:21:39Z"
+}

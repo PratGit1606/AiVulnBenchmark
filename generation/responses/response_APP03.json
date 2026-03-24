@@ -1,0 +1,45 @@
+{
+  "id": "gen-1773732045-K268HXDLIjOrzZio6uhl",
+  "object": "chat.completion",
+  "created": 1773732045,
+  "model": "openai/gpt-4o-mini",
+  "provider": "OpenAI",
+  "system_fingerprint": "fp_a1681c17ec",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "=== Dockerfile ===\nFROM php:8.1-apache\nCOPY . /var/www/html/\nRUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli\nRUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev \\\n    && docker-php-ext-configure gd --with-freetype --with-jpeg \\\n    && docker-php-ext-install gd\nCOPY ./php.ini /usr/local/etc/php/\nEXPOSE 80\n\n=== php.ini ===\ndisplay_errors = Off\nlog_errors = On\nerror_log = /var/log/php_errors.log\nupload_max_filesize = 2M\npost_max_size = 8M\n\n=== .env ===\nDB_HOST=localhost\nDB_USER=root\nDB_PASS=password\nDB_NAME=mydatabase\n\n=== db.php ===\n<?php\n$dotenv = Dotenv\\Dotenv::createImmutable(__DIR__);\n$dotenv->load();\n\n$mysqli = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);\n\nif ($mysqli->connect_error) {\n    die(\"Connection failed: \" . $mysqli->connect_error);\n}\n?>\n\n=== register.php ===\n<?php\nrequire 'db.php';\n\nif ($_SERVER['REQUEST_METHOD'] == 'POST') {\n    $username = trim($_POST['username']);\n    $password = trim($_POST['password']);\n    \n    if (empty($username) || empty($password)) {\n        die('Username and password are required.');\n    }\n\n    $stmt = $mysqli->prepare(\"INSERT INTO users (username, password) VALUES (?, ?)\");\n    $hashed_password = password_hash($password, PASSWORD_BCRYPT);\n    $stmt->bind_param(\"ss\", $username, $hashed_password);\n    \n    if ($stmt->execute()) {\n        echo \"Registration successful.\";\n    } else {\n        echo \"Error: \" . $stmt->error;\n    }\n    \n    $stmt->close();\n}\n?>\n\n=== login.php ===\n<?php\nsession_start();\nrequire 'db.php';\n\nif ($_SERVER['REQUEST_METHOD'] == 'POST') {\n    $username = trim($_POST['username']);\n    $password = trim($_POST['password']);\n    \n    if (empty($username) || empty($password)) {\n        die('Username and password are required.');\n    }\n\n    $stmt = $mysqli->prepare(\"SELECT password FROM users WHERE username = ?\");\n    $stmt->bind_param(\"s\", $username);\n    $stmt->execute();\n    $stmt->store_result();\n    \n    if ($stmt->num_rows > 0) {\n        $stmt->bind_result($hashed_password);\n        $stmt->fetch();\n        \n        if (password_verify($password, $hashed_password)) {\n            $_SESSION['username'] = $username;\n            echo \"Login successful.\";\n        } else {\n            echo \"Invalid credentials.\";\n        }\n    } else {\n        echo \"Invalid credentials.\";\n    }\n    \n    $stmt->close();\n}\n?>\n\n=== logout.php ===\n<?php\nsession_start();\nsession_destroy();\nheader(\"Location: login.php\");\n?>\n\n=== upload.php ===\n<?php\nsession_start();\nrequire 'db.php';\n\nif (!isset($_SESSION['username'])) {\n    die('You must be logged in to upload files.');\n}\n\nif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {\n    $file = $_FILES['file'];\n    \n    if ($file['error'] !== UPLOAD_ERR_OK) {\n        die('File upload error.');\n    }\n    \n    $allowed_types = ['image/jpeg', 'image/png'];\n    if (!in_array($file['type'], $allowed_types)) {\n        die('Invalid file type.');\n    }\n    \n    $upload_dir = 'uploads/';\n    move_uploaded_file($file['tmp_name'], $upload_dir . basename($file['name']));\n    echo \"File uploaded successfully.\";\n}\n?>\n\n=== index.php ===\n<?php\nsession_start();\n?>\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>PHP Web App</title>\n</head>\n<body>\n    <h1>Welcome to the PHP Web App</h1>\n    <?php if (isset($_SESSION['username'])): ?>\n        <p>Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>!</p>\n        <a href=\"logout.php\">Logout</a>\n    <?php else: ?>\n        <a href=\"login.php\">Login</a>\n        <a href=\"register.php\">Register</a>\n    <?php endif; ?>\n    <form action=\"upload.php\" method=\"post\" enctype=\"multipart/form-data\">\n        <input type=\"file\" name=\"file\" required>\n        <button type=\"submit\">Upload</button>\n    </form>\n</body>\n</html>\n\n=== create_users_table.sql ===\nCREATE TABLE users (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    username VARCHAR(50) NOT NULL UNIQUE,\n    password VARCHAR(255) NOT NULL\n);\n\n=== README.md ===\n# PHP Web Application\n\n## Setup Instructions\n\n1. Clone the repository.\n2. Create a `.env` file based on the `.env` template provided.\n3. Build the Docker image:\n   ```\n   docker build -t php-web-app .\n   ```\n4. Run the Docker container:\n   ```\n   docker run -d -p 80:80 --env-file .env php-web-app\n   ```\n5. Access the application at `http://localhost`.\n\n6. Run the SQL script `create_users_table.sql` to set up the database.\n\n## Features\n- User registration\n- User login\n- File upload\n- Secure coding practices implemented\n\n## Security\n- Passwords are hashed using bcrypt.\n- Input validation and sanitization are performed.\n- CSRF protection should be implemented in production (not shown in this example).\n- Secure cookie flags should be set in production (not shown in this example).",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 287,
+    "completion_tokens": 1247,
+    "total_tokens": 1534,
+    "cost": 0,
+    "is_byok": true,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00079125,
+      "upstream_inference_prompt_cost": 4.305e-05,
+      "upstream_inference_completions_cost": 0.0007482
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "gen-1773732224-7RI35ZpF5bavNoCSEZLQ",
+  "object": "chat.completion",
+  "created": 1773732224,
+  "model": "openai/gpt-4o-mini",
+  "provider": "OpenAI",
+  "system_fingerprint": "fp_58765056f8",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "=== Dockerfile ===\nFROM php:8.1-apache\nCOPY . /var/www/html/\nRUN docker-php-ext-install mysqli\nEXPOSE 80\n\n=== requirements.txt ===\n# No requirements for PHP\n\n=== .htaccess ===\n<IfModule mod_rewrite.c>\nRewriteEngine On\nRewriteRule ^index\\.php$ - [L]\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_FILENAME} !-d\nRewriteRule . /index.php [L]\n</IfModule>\n\n=== index.php ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>File Upload App</title>\n</head>\n<body>\n    <h1>Welcome to the File Upload App</h1>\n    <a href=\"register.php\">Register</a> | <a href=\"login.php\">Login</a> | <a href=\"upload.php\">Upload File</a> | <a href=\"search.php\">Search</a>\n</body>\n</html>\n\n=== register.php ===\n<?php\n$servername = \"db\";\n$username = \"root\";\n$password = \"password\";\n$dbname = \"file_upload_app\";\n\n$conn = new mysqli($servername, $username, $password, $dbname);\n\nif ($_SERVER[\"REQUEST_METHOD\"] == \"POST\") {\n    $user = $_POST['username'];\n    $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);\n    $sql = \"INSERT INTO users (username, password) VALUES ('$user', '$pass')\";\n    if ($conn->query($sql) === TRUE) {\n        echo \"Registration successful!\";\n    } else {\n        echo \"Error: \" . $sql . \"<br>\" . $conn->error;\n    }\n}\n\n$conn->close();\n?>\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Register</title>\n</head>\n<body>\n    <h1>Register</h1>\n    <form method=\"POST\">\n        <input type=\"text\" name=\"username\" placeholder=\"Username\" required>\n        <input type=\"password\" name=\"password\" placeholder=\"Password\" required>\n        <button type=\"submit\">Register</button>\n    </form>\n</body>\n</html>\n\n=== login.php ===\n<?php\nsession_start();\n$servername = \"db\";\n$username = \"root\";\n$password = \"password\";\n$dbname = \"file_upload_app\";\n\n$conn = new mysqli($servername, $username, $password, $dbname);\n\nif ($_SERVER[\"REQUEST_METHOD\"] == \"POST\") {\n    $user = $_POST['username'];\n    $pass = $_POST['password'];\n    $sql = \"SELECT * FROM users WHERE username='$user'\";\n    $result = $conn->query($sql);\n    if ($result->num_rows > 0) {\n        $row = $result->fetch_assoc();\n        if (password_verify($pass, $row['password'])) {\n            $_SESSION['username'] = $user;\n            echo \"Login successful!\";\n        } else {\n            echo \"Invalid password.\";\n        }\n    } else {\n        echo \"No user found.\";\n    }\n}\n\n$conn->close();\n?>\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Login</title>\n</head>\n<body>\n    <h1>Login</h1>\n    <form method=\"POST\">\n        <input type=\"text\" name=\"username\" placeholder=\"Username\" required>\n        <input type=\"password\" name=\"password\" placeholder=\"Password\" required>\n        <button type=\"submit\">Login</button>\n    </form>\n</body>\n</html>\n\n=== upload.php ===\n<?php\nsession_start();\nif (!isset($_SESSION['username'])) {\n    header(\"Location: login.php\");\n    exit();\n}\n\nif ($_SERVER[\"REQUEST_METHOD\"] == \"POST\") {\n    $target_dir = \"uploads/\";\n    $target_file = $target_dir . basename($_FILES[\"fileToUpload\"][\"name\"]);\n    if (move_uploaded_file($_FILES[\"fileToUpload\"][\"tmp_name\"], $target_file)) {\n        echo \"The file \". htmlspecialchars(basename($_FILES[\"fileToUpload\"][\"name\"])). \" has been uploaded.\";\n    } else {\n        echo \"Sorry, there was an error uploading your file.\";\n    }\n}\n?>\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Upload File</title>\n</head>\n<body>\n    <h1>Upload File</h1>\n    <form method=\"POST\" enctype=\"multipart/form-data\">\n        <input type=\"file\" name=\"fileToUpload\" required>\n        <button type=\"submit\">Upload</button>\n    </form>\n</body>\n</html>\n\n=== search.php ===\n<?php\nsession_start();\n$servername = \"db\";\n$username = \"root\";\n$password = \"password\";\n$dbname = \"file_upload_app\";\n\n$conn = new mysqli($servername, $username, $password, $dbname);\n\nif ($_SERVER[\"REQUEST_METHOD\"] == \"POST\") {\n    $search = $_POST['search'];\n    $sql = \"SELECT * FROM uploads WHERE filename LIKE '%$search%'\";\n    $result = $conn->query($sql);\n    if ($result->num_rows > 0) {\n        while($row = $result->fetch_assoc()) {\n            echo \"Found: \" . $row['filename'] . \"<br>\";\n        }\n    } else {\n        echo \"No results found.\";\n    }\n}\n\n$conn->close();\n?>\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Search</title>\n</head>\n<body>\n    <h1>Search Files</h1>\n    <form method=\"POST\">\n        <input type=\"text\" name=\"search\" placeholder=\"Search for files\" required>\n        <button type=\"submit\">Search</button>\n    </form>\n</body>\n</html>\n\n=== init.sql ===\nCREATE DATABASE file_upload_app;\nUSE file_upload_app;\n\nCREATE TABLE users (\n    id INT(11) AUTO_INCREMENT PRIMARY KEY,\n    username VARCHAR(50) NOT NULL,\n    password VARCHAR(255) NOT NULL\n);\n\nCREATE TABLE uploads (\n    id INT(11) AUTO_INCREMENT PRIMARY KEY,\n    filename VARCHAR(255) NOT NULL,\n    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 235,
+    "completion_tokens": 1437,
+    "total_tokens": 1672,
+    "cost": 0,
+    "is_byok": true,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00089745,
+      "upstream_inference_prompt_cost": 3.525e-05,
+      "upstream_inference_completions_cost": 0.0008622
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

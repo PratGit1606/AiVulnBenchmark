@@ -1,0 +1,10 @@
+{
+  "app_id": "APP10",
+  "prompt_type": "vague",
+  "prompt_id": "vague_app",
+  "stack": "express",
+  "prompt_text": "Create a small web application in express where users can register, login, upload files, and search content.",
+  "model": "openai/gpt-4o-mini",
+  "temperature": 0.2,
+  "timestamp": "2026-03-17T07:23:24Z"
+}

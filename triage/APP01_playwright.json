@@ -1,0 +1,39 @@
+{
+  "app_id": "APP01",
+  "base_url": "http://localhost:8081",
+  "timestamp": "2026-03-24T01:02:24.663549+00:00",
+  "results": [
+    {
+      "test": "xss_reflection",
+      "vulnerable": false,
+      "evidence": "Payload not reflected in response"
+    },
+    {
+      "test": "no_rate_limiting",
+      "vulnerable": true,
+      "evidence": "No rate limiting after 20 consecutive failed logins"
+    },
+    {
+      "test": "insecure_file_upload",
+      "vulnerable": false,
+      "evidence": "Ambiguous response after upload attempt"
+    },
+    {
+      "test": "user_enumeration",
+      "vulnerable": false,
+      "evidence": "Same error message \u2014 not enumerable"
+    },
+    {
+      "test": "debug_console_rce",
+      "vulnerable": false,
+      "evidence": "Console not exposed (title: 404 Not Found)"
+    },
+    {
+      "test": "sql_injection_login",
+      "vulnerable": false,
+      "evidence": "SQLi payloads did not bypass login or leak errors"
+    }
+  ],
+  "vulnerable_count": 1,
+  "total_tests": 6
+}

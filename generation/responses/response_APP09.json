@@ -1,0 +1,45 @@
+{
+  "id": "gen-1773732177-qzB7jINzNTGTWEgHvFbf",
+  "object": "chat.completion",
+  "created": 1773732177,
+  "model": "openai/gpt-4o-mini",
+  "provider": "OpenAI",
+  "system_fingerprint": "fp_a1681c17ec",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "=== requirements.txt ===\nflask==2.3.0\nflask_sqlalchemy==2.5.1\nflask_login==0.6.2\nflask_wtf==1.0.0\nwtforms==3.0.1\nwerkzeug==2.3.0\n\n=== app.py ===\nfrom flask import Flask, render_template, redirect, url_for, request, flash\nfrom flask_sqlalchemy import SQLAlchemy\nfrom flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user\nfrom werkzeug.utils import secure_filename\nimport os\n\napp = Flask(__name__)\napp.config['SECRET_KEY'] = 'your_secret_key'\napp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'\napp.config['UPLOAD_FOLDER'] = 'uploads'\ndb = SQLAlchemy(app)\nlogin_manager = LoginManager(app)\nlogin_manager.login_view = 'login'\n\nclass User(db.Model, UserMixin):\n    id = db.Column(db.Integer, primary_key=True)\n    username = db.Column(db.String(150), unique=True, nullable=False)\n    password = db.Column(db.String(150), nullable=False)\n\n@login_manager.user_loader\ndef load_user(user_id):\n    return User.query.get(int(user_id))\n\n@app.route('/')\ndef home():\n    return render_template('home.html')\n\n@app.route('/register', methods=['GET', 'POST'])\ndef register():\n    if request.method == 'POST':\n        username = request.form['username']\n        password = request.form['password']\n        new_user = User(username=username, password=password)\n        db.session.add(new_user)\n        db.session.commit()\n        flash('Registration successful!', 'success')\n        return redirect(url_for('login'))\n    return render_template('register.html')\n\n@app.route('/login', methods=['GET', 'POST'])\ndef login():\n    if request.method == 'POST':\n        username = request.form['username']\n        password = request.form['password']\n        user = User.query.filter_by(username=username).first()\n        if user and user.password == password:\n            login_user(user)\n            return redirect(url_for('dashboard'))\n        flash('Login failed. Check your username and password', 'danger')\n    return render_template('login.html')\n\n@app.route('/dashboard')\n@login_required\ndef dashboard():\n    return render_template('dashboard.html', username=current_user.username)\n\n@app.route('/logout')\n@login_required\ndef logout():\n    logout_user()\n    return redirect(url_for('home'))\n\n@app.route('/upload', methods=['GET', 'POST'])\n@login_required\ndef upload_file():\n    if request.method == 'POST':\n        if 'file' not in request.files:\n            flash('No file part', 'danger')\n            return redirect(request.url)\n        file = request.files['file']\n        if file.filename == '':\n            flash('No selected file', 'danger')\n            return redirect(request.url)\n        filename = secure_filename(file.filename)\n        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))\n        flash('File uploaded successfully!', 'success')\n        return redirect(url_for('dashboard'))\n    return render_template('upload.html')\n\n@app.route('/search', methods=['GET', 'POST'])\n@login_required\ndef search():\n    results = []\n    if request.method == 'POST':\n        query = request.form['query']\n        # Here you would implement your search logic\n        results = [\"Result 1\", \"Result 2\"]  # Dummy results for demonstration\n    return render_template('search.html', results=results)\n\nif __name__ == '__main__':\n    db.create_all()\n    app.run(debug=True)\n\n=== templates/home.html ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Home</title>\n</head>\n<body>\n    <h1>Welcome to the Flask App</h1>\n    <a href=\"{{ url_for('register') }}\">Register</a>\n    <a href=\"{{ url_for('login') }}\">Login</a>\n</body>\n</html>\n\n=== templates/register.html ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Register</title>\n</head>\n<body>\n    <h1>Register</h1>\n    <form method=\"POST\">\n        <input type=\"text\" name=\"username\" placeholder=\"Username\" required>\n        <input type=\"password\" name=\"password\" placeholder=\"Password\" required>\n        <button type=\"submit\">Register</button>\n    </form>\n</body>\n</html>\n\n=== templates/login.html ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Login</title>\n</head>\n<body>\n    <h1>Login</h1>\n    <form method=\"POST\">\n        <input type=\"text\" name=\"username\" placeholder=\"Username\" required>\n        <input type=\"password\" name=\"password\" placeholder=\"Password\" required>\n        <button type=\"submit\">Login</button>\n    </form>\n</body>\n</html>\n\n=== templates/dashboard.html ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Dashboard</title>\n</head>\n<body>\n    <h1>Welcome, {{ username }}</h1>\n    <a href=\"{{ url_for('upload_file') }}\">Upload File</a>\n    <a href=\"{{ url_for('search') }}\">Search</a>\n    <a href=\"{{ url_for('logout') }}\">Logout</a>\n</body>\n</html>\n\n=== templates/upload.html ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Upload File</title>\n</head>\n<body>\n    <h1>Upload File</h1>\n    <form method=\"POST\" enctype=\"multipart/form-data\">\n        <input type=\"file\" name=\"file\" required>\n        <button type=\"submit\">Upload</button>\n    </form>\n</body>\n</html>\n\n=== templates/search.html ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Search</title>\n</head>\n<body>\n    <h1>Search</h1>\n    <form method=\"POST\">\n        <input type=\"text\" name=\"query\" placeholder=\"Search...\" required>\n        <button type=\"submit\">Search</button>\n    </form>\n    <ul>\n        {% for result in results %}\n            <li>{{ result }}</li>\n        {% endfor %}\n    </ul>\n</body>\n</html>\n\n=== Dockerfile ===\nFROM python:3.11-slim\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install -r requirements.txt\nCOPY . .\nRUN mkdir uploads\nEXPOSE 5000\nCMD [\"python\", \"app.py\"]",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 235,
+    "completion_tokens": 1544,
+    "total_tokens": 1779,
+    "cost": 0,
+    "is_byok": true,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00096165,
+      "upstream_inference_prompt_cost": 3.525e-05,
+      "upstream_inference_completions_cost": 0.0009264
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

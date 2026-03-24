@@ -1,0 +1,45 @@
+{
+  "id": "gen-1773732205-P7cRIPl022DGV9ss5ReC",
+  "object": "chat.completion",
+  "created": 1773732205,
+  "model": "openai/gpt-4o-mini",
+  "provider": "OpenAI",
+  "system_fingerprint": "fp_58765056f8",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "=== package.json ===\n{\n  \"name\": \"file-upload-app\",\n  \"version\": \"1.0.0\",\n  \"main\": \"app.js\",\n  \"scripts\": {\n    \"start\": \"node app.js\"\n  },\n  \"dependencies\": {\n    \"express\": \"^4.18.2\",\n    \"multer\": \"^1.4.5-lts.1\",\n    \"mongoose\": \"^7.2.0\",\n    \"bcrypt\": \"^5.1.0\",\n    \"express-session\": \"^1.17.3\"\n  }\n}\n\n=== app.js ===\nconst express = require('express');\nconst mongoose = require('mongoose');\nconst session = require('express-session');\nconst multer = require('multer');\nconst bcrypt = require('bcrypt');\nconst path = require('path');\n\nconst app = express();\nconst PORT = process.env.PORT || 3000;\n\n// MongoDB connection\nmongoose.connect('mongodb://localhost:27017/fileupload', { useNewUrlParser: true, useUnifiedTopology: true });\n\n// User schema\nconst userSchema = new mongoose.Schema({\n  username: String,\n  password: String,\n});\n\nconst User = mongoose.model('User', userSchema);\n\n// Middleware\napp.use(express.urlencoded({ extended: true }));\napp.use(session({ secret: 'secret', resave: false, saveUninitialized: true }));\napp.use(express.static('uploads'));\napp.set('view engine', 'ejs');\n\n// File upload setup\nconst storage = multer.diskStorage({\n  destination: (req, file, cb) => {\n    cb(null, 'uploads/');\n  },\n  filename: (req, file, cb) => {\n    cb(null, Date.now() + path.extname(file.originalname));\n  },\n});\n\nconst upload = multer({ storage: storage });\n\n// Routes\napp.get('/', (req, res) => {\n  res.render('index');\n});\n\napp.post('/register', async (req, res) => {\n  const { username, password } = req.body;\n  const hashedPassword = await bcrypt.hash(password, 10);\n  const user = new User({ username, password: hashedPassword });\n  await user.save();\n  res.redirect('/');\n});\n\napp.post('/login', async (req, res) => {\n  const { username, password } = req.body;\n  const user = await User.findOne({ username });\n  if (user && await bcrypt.compare(password, user.password)) {\n    req.session.userId = user._id;\n    res.redirect('/upload');\n  } else {\n    res.redirect('/');\n  }\n});\n\napp.get('/upload', (req, res) => {\n  if (!req.session.userId) {\n    return res.redirect('/');\n  }\n  res.render('upload');\n});\n\napp.post('/upload', upload.single('file'), (req, res) => {\n  res.redirect('/upload');\n});\n\napp.get('/search', (req, res) => {\n  const searchTerm = req.query.q;\n  // Implement search logic here\n  res.send(`Search results for: ${searchTerm}`);\n});\n\napp.listen(PORT, () => {\n  console.log(`Server is running on http://localhost:${PORT}`);\n});\n\n=== views/index.ejs ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>File Upload App</title>\n</head>\n<body>\n    <h1>Register</h1>\n    <form action=\"/register\" method=\"POST\">\n        <input type=\"text\" name=\"username\" placeholder=\"Username\" required>\n        <input type=\"password\" name=\"password\" placeholder=\"Password\" required>\n        <button type=\"submit\">Register</button>\n    </form>\n    <h1>Login</h1>\n    <form action=\"/login\" method=\"POST\">\n        <input type=\"text\" name=\"username\" placeholder=\"Username\" required>\n        <input type=\"password\" name=\"password\" placeholder=\"Password\" required>\n        <button type=\"submit\">Login</button>\n    </form>\n</body>\n</html>\n\n=== views/upload.ejs ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Upload File</title>\n</head>\n<body>\n    <h1>Upload File</h1>\n    <form action=\"/upload\" method=\"POST\" enctype=\"multipart/form-data\">\n        <input type=\"file\" name=\"file\" required>\n        <button type=\"submit\">Upload</button>\n    </form>\n    <h1>Search</h1>\n    <form action=\"/search\" method=\"GET\">\n        <input type=\"text\" name=\"q\" placeholder=\"Search...\" required>\n        <button type=\"submit\">Search</button>\n    </form>\n</body>\n</html>\n\n=== Dockerfile ===\nFROM node:18-slim\nWORKDIR /app\nCOPY package.json .\nRUN npm install\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"app.js\"]\n\n=== uploads/ ===\n# This directory will be created at runtime for file uploads.",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 235,
+    "completion_tokens": 1087,
+    "total_tokens": 1322,
+    "cost": 0,
+    "is_byok": true,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00068745,
+      "upstream_inference_prompt_cost": 3.525e-05,
+      "upstream_inference_completions_cost": 0.0006522
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "app_id": "APP01",
+  "prompt_type": "secure",
+  "prompt_id": "secure_crud",
+  "stack": "flask",
+  "prompt_text": "Generate a production-ready flask web application implementing user registration, login, and CRUD functionality. Follow secure coding practices: validate and sanitize all inputs server-side, use parameterized database queries or ORM safely, implement CSRF protection, enforce password hashing (bcrypt or argon2), set secure cookie flags, and ensure safe file upload validation. Provide Dockerfile and deployment instructions.",
+  "model": "openai/gpt-4o-mini",
+  "temperature": 0.2,
+  "timestamp": "2026-03-17T07:17:44Z"
+}

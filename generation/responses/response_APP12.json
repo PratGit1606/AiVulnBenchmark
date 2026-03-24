@@ -1,0 +1,45 @@
+{
+  "id": "gen-1773732261-EDmiKrLVlPlVKmDGSDk2",
+  "object": "chat.completion",
+  "created": 1773732261,
+  "model": "openai/gpt-4o-mini",
+  "provider": "OpenAI",
+  "system_fingerprint": "fp_58765056f8",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "=== package.json ===\n{\n  \"name\": \"file-upload-app\",\n  \"version\": \"1.0.0\",\n  \"private\": true,\n  \"dependencies\": {\n    \"axios\": \"^0.21.1\",\n    \"react\": \"^17.0.2\",\n    \"react-dom\": \"^17.0.2\",\n    \"react-router-dom\": \"^5.2.0\",\n    \"react-scripts\": \"4.0.3\"\n  },\n  \"scripts\": {\n    \"start\": \"react-scripts start\",\n    \"build\": \"react-scripts build\",\n    \"test\": \"react-scripts test\",\n    \"eject\": \"react-scripts eject\"\n  },\n  \"eslintConfig\": {\n    \"extends\": [\n      \"react-app\",\n      \"react-app/jest\"\n    ]\n  },\n  \"browserslist\": {\n    \"production\": [\n      \">0.2%\",\n      \"not dead\",\n      \"not op_mini all\"\n    ],\n    \"development\": [\n      \"last 1 chrome version\",\n      \"last 1 firefox version\",\n      \"last 1 safari version\"\n    ]\n  }\n}\n\n=== src/index.js ===\nimport React from 'react';\nimport ReactDOM from 'react-dom';\nimport App from './App';\nimport { BrowserRouter } from 'react-router-dom';\n\nReactDOM.render(\n  <BrowserRouter>\n    <App />\n  </BrowserRouter>,\n  document.getElementById('root')\n);\n\n=== src/App.js ===\nimport React from 'react';\nimport { Route, Switch } from 'react-router-dom';\nimport Home from './components/Home';\nimport Register from './components/Register';\nimport Login from './components/Login';\nimport Upload from './components/Upload';\nimport Search from './components/Search';\n\nfunction App() {\n  return (\n    <div>\n      <Switch>\n        <Route path=\"/\" exact component={Home} />\n        <Route path=\"/register\" component={Register} />\n        <Route path=\"/login\" component={Login} />\n        <Route path=\"/upload\" component={Upload} />\n        <Route path=\"/search\" component={Search} />\n      </Switch>\n    </div>\n  );\n}\n\nexport default App;\n\n=== src/components/Home.js ===\nimport React from 'react';\n\nfunction Home() {\n  return <h1>Welcome to the File Upload App</h1>;\n}\n\nexport default Home;\n\n=== src/components/Register.js ===\nimport React, { useState } from 'react';\nimport axios from 'axios';\n\nfunction Register() {\n  const [username, setUsername] = useState('');\n  const [password, setPassword] = useState('');\n\n  const handleSubmit = async (e) => {\n    e.preventDefault();\n    await axios.post('/api/register', { username, password });\n    alert('User registered!');\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <h2>Register</h2>\n      <input type=\"text\" placeholder=\"Username\" onChange={(e) => setUsername(e.target.value)} required />\n      <input type=\"password\" placeholder=\"Password\" onChange={(e) => setPassword(e.target.value)} required />\n      <button type=\"submit\">Register</button>\n    </form>\n  );\n}\n\nexport default Register;\n\n=== src/components/Login.js ===\nimport React, { useState } from 'react';\nimport axios from 'axios';\n\nfunction Login() {\n  const [username, setUsername] = useState('');\n  const [password, setPassword] = useState('');\n\n  const handleSubmit = async (e) => {\n    e.preventDefault();\n    await axios.post('/api/login', { username, password });\n    alert('User logged in!');\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <h2>Login</h2>\n      <input type=\"text\" placeholder=\"Username\" onChange={(e) => setUsername(e.target.value)} required />\n      <input type=\"password\" placeholder=\"Password\" onChange={(e) => setPassword(e.target.value)} required />\n      <button type=\"submit\">Login</button>\n    </form>\n  );\n}\n\nexport default Login;\n\n=== src/components/Upload.js ===\nimport React, { useState } from 'react';\nimport axios from 'axios';\n\nfunction Upload() {\n  const [file, setFile] = useState(null);\n\n  const handleFileChange = (e) => {\n    setFile(e.target.files[0]);\n  };\n\n  const handleSubmit = async (e) => {\n    e.preventDefault();\n    const formData = new FormData();\n    formData.append('file', file);\n    await axios.post('/api/upload', formData);\n    alert('File uploaded!');\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <h2>Upload File</h2>\n      <input type=\"file\" onChange={handleFileChange} required />\n      <button type=\"submit\">Upload</button>\n    </form>\n  );\n}\n\nexport default Upload;\n\n=== src/components/Search.js ===\nimport React, { useState } from 'react';\nimport axios from 'axios';\n\nfunction Search() {\n  const [query, setQuery] = useState('');\n  const [results, setResults] = useState([]);\n\n  const handleSearch = async (e) => {\n    e.preventDefault();\n    const response = await axios.get(`/api/search?query=${query}`);\n    setResults(response.data);\n  };\n\n  return (\n    <div>\n      <form onSubmit={handleSearch}>\n        <h2>Search Files</h2>\n        <input type=\"text\" onChange={(e) => setQuery(e.target.value)} required />\n        <button type=\"submit\">Search</button>\n      </form>\n      <ul>\n        {results.map((result, index) => (\n          <li key={index}>{result}</li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n\nexport default Search;\n\n=== Dockerfile ===\nFROM node:14\nWORKDIR /app\nCOPY package.json .\nRUN npm install\nCOPY . .\nEXPOSE 3000\nCMD [\"npm\", \"start\"]\n\n=== server.js ===\nconst express = require('express');\nconst multer = require('multer');\nconst bodyParser = require('body-parser');\nconst cors = require('cors');\n\nconst app = express();\nconst upload = multer({ dest: 'uploads/' });\napp.use(cors());\napp.use(bodyParser.json());\n\nlet users = [];\nlet files = [];\n\napp.post('/api/register', (req, res) => {\n  const { username, password } = req.body;\n  users.push({ username, password });\n  res.sendStatus(201);\n});\n\napp.post('/api/login', (req, res) => {\n  const { username, password } = req.body;\n  const user = users.find(u => u.username === username && u.password === password);\n  if (user) {\n    res.sendStatus(200);\n  } else {\n    res.sendStatus(401);\n  }\n});\n\napp.post('/api/upload', upload.single('file'), (req, res) => {\n  files.push(req.file.filename);\n  res.sendStatus(201);\n});\n\napp.get('/api/search', (req, res) => {\n  const { query } = req.query;\n  const results = files.filter(file => file.includes(query));\n  res.json(results);\n});\n\nconst PORT = process.env.PORT || 5000;\napp.listen(PORT, () => {\n  console.log(`Server is running on port ${PORT}`);\n});",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 235,
+    "completion_tokens": 1558,
+    "total_tokens": 1793,
+    "cost": 0,
+    "is_byok": true,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00097005,
+      "upstream_inference_prompt_cost": 3.525e-05,
+      "upstream_inference_completions_cost": 0.0009348
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

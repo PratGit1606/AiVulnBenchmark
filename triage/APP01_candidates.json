@@ -1,0 +1,19 @@
+[
+  {
+    "vuln_id": "APP01-OTHER-001",
+    "class": "other",
+    "tool_hits": [
+      "bandit",
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "apps/APP01/app.py",
+        "line": 104
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "103         db.create_all()\n104     app.run(debug=False, host='0.0.0.0')\n105     \n"
+  }
+]

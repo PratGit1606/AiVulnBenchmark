@@ -1,0 +1,45 @@
+{
+  "id": "gen-1773732120-oBXxOnvXdSMAxbukIouR",
+  "object": "chat.completion",
+  "created": 1773732120,
+  "model": "openai/gpt-4o-mini",
+  "provider": "OpenAI",
+  "system_fingerprint": "fp_a1681c17ec",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "=== package.json ===\n{\n  \"name\": \"minimal-express-app\",\n  \"version\": \"1.0.0\",\n  \"main\": \"app.js\",\n  \"scripts\": {\n    \"start\": \"node app.js\"\n  },\n  \"dependencies\": {\n    \"express\": \"^4.18.2\",\n    \"express-session\": \"^1.17.3\",\n    \"body-parser\": \"^1.20.2\",\n    \"mongoose\": \"^7.2.0\"\n  }\n}\n\n=== app.js ===\nconst express = require('express');\nconst session = require('express-session');\nconst bodyParser = require('body-parser');\nconst mongoose = require('mongoose');\n\nconst app = express();\nconst PORT = process.env.PORT || 3000;\n\nmongoose.connect('mongodb://localhost:27017/minimal-express-app', {\n  useNewUrlParser: true,\n  useUnifiedTopology: true\n});\n\nconst userSchema = new mongoose.Schema({\n  username: String,\n  password: String\n});\n\nconst itemSchema = new mongoose.Schema({\n  name: String,\n  description: String,\n  userId: mongoose.Schema.Types.ObjectId\n});\n\nconst User = mongoose.model('User', userSchema);\nconst Item = mongoose.model('Item', itemSchema);\n\napp.use(bodyParser.urlencoded({ extended: true }));\napp.use(session({\n  secret: 'secret-key',\n  resave: false,\n  saveUninitialized: true\n}));\n\napp.get('/', (req, res) => {\n  res.send('<h1>Welcome to the Minimal Express App</h1>');\n});\n\napp.post('/register', async (req, res) => {\n  const { username, password } = req.body;\n  const user = new User({ username, password });\n  await user.save();\n  res.send('User registered!');\n});\n\napp.post('/login', async (req, res) => {\n  const { username, password } = req.body;\n  const user = await User.findOne({ username, password });\n  if (user) {\n    req.session.userId = user._id;\n    res.send('Logged in!');\n  } else {\n    res.send('Invalid credentials');\n  }\n});\n\napp.post('/items', async (req, res) => {\n  if (!req.session.userId) return res.status(401).send('Unauthorized');\n  const { name, description } = req.body;\n  const item = new Item({ name, description, userId: req.session.userId });\n  await item.save();\n  res.send('Item created!');\n});\n\napp.get('/items', async (req, res) => {\n  if (!req.session.userId) return res.status(401).send('Unauthorized');\n  const items = await Item.find({ userId: req.session.userId });\n  res.json(items);\n});\n\napp.put('/items/:id', async (req, res) => {\n  if (!req.session.userId) return res.status(401).send('Unauthorized');\n  const { id } = req.params;\n  const { name, description } = req.body;\n  await Item.findByIdAndUpdate(id, { name, description });\n  res.send('Item updated!');\n});\n\napp.delete('/items/:id', async (req, res) => {\n  if (!req.session.userId) return res.status(401).send('Unauthorized');\n  const { id } = req.params;\n  await Item.findByIdAndDelete(id);\n  res.send('Item deleted!');\n});\n\napp.listen(PORT, () => {\n  console.log(`Server is running on http://localhost:${PORT}`);\n});\n\n=== Dockerfile ===\nFROM node:18-slim\nWORKDIR /app\nCOPY package.json .\nRUN npm install\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"app.js\"]",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 250,
+    "completion_tokens": 771,
+    "total_tokens": 1021,
+    "cost": 0,
+    "is_byok": true,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0005001,
+      "upstream_inference_prompt_cost": 3.75e-05,
+      "upstream_inference_completions_cost": 0.0004626
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

