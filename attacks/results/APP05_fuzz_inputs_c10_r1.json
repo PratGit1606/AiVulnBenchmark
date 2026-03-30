@@ -1,0 +1,191 @@
+{
+  "app_id": "APP05",
+  "attack": "fuzz_inputs",
+  "concurrency": 10,
+  "duration_s": 30,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/add_item",
+    "item_list": "/",
+    "upload": null,
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false
+  },
+  "requests_total": 2371,
+  "successful_requests": 2208,
+  "failed_requests": 163,
+  "success_rate": 0.9313,
+  "errors": [
+    {
+      "req_idx": 5,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 15,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 25,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 35,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 45,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 55,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 65,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 75,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 95,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 85,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 105,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 115,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 125,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 135,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 145,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 155,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 165,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 175,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 185,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 195,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 205,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 215,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 225,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 235,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 245,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 255,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 265,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 275,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 295,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    },
+    {
+      "req_idx": 285,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.email\n[SQL: "
+    }
+  ],
+  "timing_stats": {
+    "min_ms": 3.27,
+    "max_ms": 1397.08,
+    "mean_ms": 126.25,
+    "p50_ms": 103.95,
+    "p95_ms": 336.77,
+    "p99_ms": 467.68
+  },
+  "extra": {},
+  "timestamp_start": "2026-03-29T21:50:15.814785+00:00",
+  "timestamp_end": "2026-03-29T21:50:45.969519+00:00"
+}

@@ -1,23 +1,137 @@
 {
-  "concurrency_levels": [1, 10, 50, 200],
-  "runs_per_configuration": 3,
-  "scanner_tools": [
-    "semgrep",
-    "bandit",
-    "eslint_security",
-    "dependency_check",
-    "owasp_zap"
-  ],
-  "attack_scenarios": [
-    "auth_storm",
-    "file_upload_race",
-    "double_spend_race",
-    "fuzz_inputs",
-    "timing_probe"
-  ],
-  "patch_modes": [
-    "none",
-    "ai_patch",
-    "canonical_patch"
-  ]
+  "APP01": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/dashboard",
+    "item_create": "/item/new",
+    "item_list": "/dashboard",
+    "upload": "/dashboard",
+    "logout": "/logout"
+  },
+  "APP02": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/items",
+    "item_list": "/items",
+    "upload": "/upload",
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "upload": "POST",
+      "logout": "GET"
+    },
+    "csrf_token_endpoint": "/csrf-token",
+    "csrf_required": true
+  },
+  "APP03": {
+    "login": "/login.php",
+    "register": "/register.php",
+    "dashboard": "/index.php",
+    "item_create": "/index.php",
+    "item_list": "/index.php",
+    "upload": "/upload.php",
+    "logout": "/logout.php",
+    "network": "app3-net"
+  },
+
+  "APP04": {
+    "health": "/health",
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": null,
+    "item_list": null,
+    "upload": "/upload",
+    "logout": null,
+    "methods": {
+      "health": "GET",
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "upload": "POST"
+    },
+    "csrf_token_endpoint": "/csrf-token",
+    "csrf_required": true
+  },
+  "APP05": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/add_item",
+    "item_list": "/",
+    "upload": null,
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false
+  },
+  "APP06": {
+    "health": "/health",
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/items",
+    "item_list": "/items",
+    "upload": "/upload",
+    "logout": "/logout",
+    "methods": {
+      "health": "GET",
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "upload": "POST",
+      "logout": "GET"
+    },
+    "csrf_token_endpoint": "/csrf-token",
+    "csrf_required": false
+  },
+  "APP07": {
+    "login": "/index.php",
+    "register": "/register.php",
+    "dashboard": "/dashboard.php",
+    "item_create": "/dashboard.php",
+    "item_list": "/dashboard.php",
+    "upload": null,
+    "logout": "/logout.php",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false,
+    "network": "app07-net"
+  },
+  "APP08": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/",
+    "item_list": "/",
+    "upload": null,
+    "logout": null,
+    "methods": {
+      "login": "GET",
+      "register": "GET",
+      "dashboard": "GET",
+      "item_create": "GET",
+      "item_list": "GET"
+    },
+    "csrf_required": false
+  }
 }

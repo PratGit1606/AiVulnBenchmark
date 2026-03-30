@@ -1,0 +1,40 @@
+{
+  "app_id": "APP05",
+  "attack": "auth_storm",
+  "concurrency": 50,
+  "duration_s": 30,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/add_item",
+    "item_list": "/",
+    "upload": null,
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false
+  },
+  "requests_total": 7158,
+  "successful_requests": 7158,
+  "failed_requests": 0,
+  "success_rate": 1.0,
+  "errors": [],
+  "timing_stats": {
+    "min_ms": 79.2,
+    "max_ms": 353.48,
+    "mean_ms": 210.1,
+    "p50_ms": 203.41,
+    "p95_ms": 265.94,
+    "p99_ms": 307.39
+  },
+  "extra": {},
+  "timestamp_start": "2026-03-29T21:49:30.153084+00:00",
+  "timestamp_end": "2026-03-29T21:50:00.380030+00:00"
+}

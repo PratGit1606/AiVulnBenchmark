@@ -1,0 +1,10 @@
+[
+  {
+    "type": "implementation_defect",
+    "endpoint": "upload",
+    "path": "/upload",
+    "method": "GET",
+    "status": 404,
+    "note": "upload at /upload (GET) returned HTTP 404"
+  }
+]

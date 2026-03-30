@@ -22,18 +22,21 @@ Pipeline stages:
 """
 
 import argparse, asyncio, csv, json, os, re, subprocess, sys, time
+import requests
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT         = Path(__file__).resolve().parent
-APPS_DIR     = ROOT / "HonorsThesis" / "apps"
-SCANS_DIR    = ROOT / "HonorsThesis" / "scans"
-TRIAGE_DIR   = ROOT / "HonorsThesis" / "triage"
-ATTACK_DIR   = ROOT / "HonorsThesis" / "attacks" / "results"
-LOGS_DIR     = ROOT / "HonorsThesis" / "logs"
-ARTIFACTS_DIR= ROOT / "HonorsThesis" / "artifacts"
-MATRIX_FILE  = ROOT / "HonorsThesis" / "prompts" / "experiment_matrix.csv"
-MANIFEST_FILE= ROOT / "HonorsThesis" / "generation" / "generation_manifest.json"
+APPS_DIR     = ROOT / "apps"
+SCANS_DIR    = ROOT / "scans"
+TRIAGE_DIR   = ROOT / "triage"
+ATTACK_DIR   = ROOT / "attacks" / "results"
+LOGS_DIR     = ROOT / "logs"
+ARTIFACTS_DIR= ROOT / "artifacts"
+MATRIX_FILE  = ROOT / "prompts" / "experiment_matrix.csv"
+MANIFEST_FILE= ROOT / "generation" / "generation_manifest.json"
+CONFIG_FILE = ROOT / "config" / "experiment_config.json"
+
 
 for d in (SCANS_DIR, TRIAGE_DIR, ATTACK_DIR, LOGS_DIR, ARTIFACTS_DIR):
     d.mkdir(parents=True, exist_ok=True)
@@ -49,6 +52,141 @@ CONCURRENCY_LEVELS = [1, 10, 50]
 SCENARIOS = ["auth_storm", "fuzz_inputs", "timing_probe",
              "file_upload_race", "double_spend_race"]
 
+
+def read_app_config():
+    if not CONFIG_FILE.exists():
+        return {}
+    try:
+        return json.loads(CONFIG_FILE.read_text())
+    except Exception:
+        return {}
+
+
+def get_app_meta(app_id):
+    cfg = read_app_config().get(app_id, {})
+    return cfg if isinstance(cfg, dict) else {}
+
+
+def get_endpoints(app_id):
+    defaults = {
+        "login": "/login",
+        "register": "/register",
+        "dashboard": "/dashboard",
+        "item_create": "/item/new",
+        "item_list": "/items",
+        "upload": "/upload",
+        "logout": "/logout",
+    }
+    cfg = get_app_meta(app_id)
+    route_overrides = {k: v for k, v in cfg.items() if isinstance(v, str)}
+    return {**defaults, **route_overrides}
+
+
+def get_route_method(app_id, route_name):
+    cfg = get_app_meta(app_id)
+    methods = cfg.get("methods", {})
+    if not isinstance(methods, dict):
+        methods = {}
+    return str(methods.get(route_name, "GET")).upper()
+
+
+def get_csrf_token_endpoint(app_id):
+    cfg = get_app_meta(app_id)
+    token_ep = cfg.get("csrf_token_endpoint", "/csrf-token")
+    return token_ep if isinstance(token_ep, str) else "/csrf-token"
+
+
+def route_requires_csrf(app_id):
+    cfg = get_app_meta(app_id)
+    return bool(cfg.get("csrf_required", False))
+
+
+def probe_endpoint(base_url, path, method="GET", timeout=3, csrf_token=None):
+    url = f"{base_url}{path}"
+    session = requests.Session()
+    headers = {}
+    if csrf_token:
+        headers["x-csrf-token"] = csrf_token
+
+    try:
+        if method.upper() == "POST":
+            resp = session.post(url, data={}, headers=headers, timeout=timeout, allow_redirects=False)
+        else:
+            resp = session.get(url, timeout=timeout, allow_redirects=False)
+
+        body = (resp.text or "")[:300].lower()
+        csrf_block = resp.status_code == 403 and "invalid csrf token" in body
+        usable = resp.status_code in {200, 201, 204, 301, 302, 400, 401, 403, 422, 429}
+        if csrf_block:
+            usable = True
+        return {
+            "path": path,
+            "method": method.upper(),
+            "status": resp.status_code,
+            "ok": usable,
+            "csrf_block": csrf_block,
+        }
+    except requests.RequestException as e:
+        return {"path": path, "method": method.upper(), "status": 0, "ok": False, "error": str(e)}
+
+
+def endpoint_usable(status):
+    return status in {200, 201, 204, 301, 302, 400, 401, 403, 422, 429}
+
+
+def stage_preflight(app_id, base_url):
+    endpoints = get_endpoints(app_id)
+    endpoint_status = {}
+    defects = []
+
+    for name in ["login", "register", "dashboard", "item_create", "item_list", "upload", "logout"]:
+        path = endpoints.get(name)
+        if not path:
+            continue
+
+        method = get_route_method(app_id, name)
+        info = probe_endpoint(base_url, path, method=method)
+        endpoint_status[name] = info
+
+        if info["status"] in {404, 500, 0}:
+            defects.append({
+                "type": "implementation_defect",
+                "endpoint": name,
+                "path": path,
+                "method": method,
+                "status": info["status"],
+                "note": f"{name} at {path} ({method}) returned HTTP {info['status']}"
+            })
+
+    scenario_requirements = {
+        "auth_storm": ["login"],
+        "fuzz_inputs": ["register", "login", "upload", "dashboard"],
+        "timing_probe": ["login"],
+        "file_upload_race": ["upload"],
+        "double_spend_race": ["item_create"],
+    }
+
+    scenario_applicability = {}
+    for scenario, needed in scenario_requirements.items():
+        reasons = []
+        usable = False
+
+        for ep in needed:
+            info = endpoint_status.get(ep)
+            if not info:
+                reasons.append(f"{ep} not configured")
+                continue
+            if endpoint_usable(info.get("status", 0)):
+                usable = True
+            else:
+                reasons.append(f"{ep} returned HTTP {info.get('status')}")
+
+        scenario_applicability[scenario] = {
+            "applicable": usable,
+            "reason": "; ".join(reasons) if reasons else "ok"
+        }
+
+    return endpoints, endpoint_status, defects, scenario_applicability
 
 def log(stage, msg, level="info"):
     colour = {"info": BLU, "ok": GRN, "warn": YLW, "fail": RED}.get(level, BLU)
@@ -115,95 +253,118 @@ def stage_build(app_id):
     return True, None
 
 
-def stage_deploy(app_id, port):
+def stage_deploy(app_id, port, endpoints=None):
     log("DEPLOY", f"Starting container on port {port}...")
-    image         = f"{app_id.lower()}_image:latest"
-    container     = f"{app_id.lower()}_bench"
+    image = f"{app_id.lower()}_image:latest"
+    container = f"{app_id.lower()}_bench"
 
     run(["docker", "rm", "-f", container], capture=True)
 
-    app_dir    = APPS_DIR / app_id
-    dockerfile = (app_dir / "Dockerfile").read_text() if (app_dir/"Dockerfile").exists() else ""
+    app_dir = APPS_DIR / app_id
+    dockerfile = (app_dir / "Dockerfile").read_text() if (app_dir / "Dockerfile").exists() else ""
     expose_match = re.search(r"EXPOSE\s+(\d+)", dockerfile)
     internal_port = expose_match.group(1) if expose_match else "5000"
+    
+    cfg = read_app_config().get(app_id, {})
+    network = cfg.get("network")
+    cmd = [
+    "docker", "run", "-d",
+    "--name", container,
+    "--env-file", str(ROOT / ".env"),
+    ]
+    if network:
+        cmd += ["--network", network]
+    cmd += ["-p", f"{port}:{internal_port}", image]
 
-    code, out, err = run(
-        ["docker", "run", "-d", "--name", container,
-         "-p", f"{port}:{internal_port}", image],
-        capture=True
-    )
+    code, out, err = run(cmd, capture=True)
     if code != 0:
         return False, f"docker run failed: {err.strip()}"
 
     import urllib.request, urllib.error
     base_url = f"http://localhost:{port}"
-    log("DEPLOY", f"Waiting for health check at {base_url}/health ...")
+    log("DEPLOY", f"Waiting for an available route on {base_url} ...")
+
+    probe_paths = []
+    if endpoints:
+        for key in ["health", "dashboard", "login", "register", "upload", "item_list", "item_create"]:
+            path = endpoints.get(key)
+            if path:
+                probe_paths.append(path)
+    probe_paths.extend(["/health", "/", "/index.php", "/login.php", "/register.php"])
+    probe_paths = list(dict.fromkeys(probe_paths))
+
+    last_logs = ""
     for attempt in range(18):
         time.sleep(3)
-        try:
-            r = urllib.request.urlopen(f"{base_url}/health", timeout=3)
-            if r.status == 200:
-                log("DEPLOY", f"Container healthy on {base_url}", "ok")
-                return True, base_url
-        except Exception:
-            pass
-        code2, out2, _ = run(["docker", "inspect", "--format",
-                               "{{.State.Status}}", container], capture=True)
+
+        for path in probe_paths:
+            try:
+                r = urllib.request.urlopen(f"{base_url}{path}", timeout=3)
+                if r.status in (200, 301, 302, 401, 403):
+                    log("DEPLOY", f"Container responding on {base_url}{path}", "ok")
+                    return True, base_url
+            except urllib.error.HTTPError as e:
+                if e.code in (200, 301, 302, 401, 403):
+                    log("DEPLOY", f"Container responding on {base_url}{path}", "ok")
+                    return True, base_url
+                if e.code == 500:
+                    last_logs = f"HTTP 500 on {path}"
+            except Exception:
+                pass
+
+        code2, out2, _ = run(["docker", "inspect", "--format", "{{.State.Status}}", container], capture=True)
         if out2.strip() == "exited":
             code3, logs, _ = run(["docker", "logs", "--tail", "20", container], capture=True)
             return False, f"Container exited during startup.\nLast logs:\n{logs}"
 
-    try:
-        r = urllib.request.urlopen(f"{base_url}/", timeout=3)
-        if r.status in (200, 302):
-            log("DEPLOY", f"No /health route but app responding on /", "warn")
-            return True, base_url
-    except Exception:
-        pass
-
     code3, logs, _ = run(["docker", "logs", "--tail", "20", container], capture=True)
+    if last_logs:
+        return True, f"{base_url} (usable, but some routes returned errors like: {last_logs})"
     return False, f"Health check failed after 54s.\nLast logs:\n{logs}"
 
 
 def stage_scan(app_id):
     log("SCAN", "Running static analysis tools...")
-    app_dir  = APPS_DIR / app_id
-    results  = {}
+    app_dir = APPS_DIR / app_id
+    results = {}
 
-    # Bandit (Python)
     py_files = list(app_dir.rglob("*.py"))
+    php_files = list(app_dir.rglob("*.php"))
+    js_files = list(app_dir.rglob("*.js")) + list(app_dir.rglob("*.jsx")) + list(app_dir.rglob("*.ts")) + list(app_dir.rglob("*.tsx"))
+
     if py_files:
-        code, out, err = run(
-            ["bandit", "-r", str(app_dir), "-f", "json"],
-            capture=True, timeout=60
-        )
+        code, out, err = run(["bandit", "-r", str(app_dir), "-f", "json"], capture=True, timeout=60)
         scan_file = SCANS_DIR / f"{app_id}_bandit.json"
         if out.strip():
             scan_file.write_text(out)
             try:
                 count = len(json.loads(out).get("results", []))
-                log("SCAN", f"Bandit: {count} findings", "ok" if count==0 else "warn")
+                log("SCAN", f"Bandit: {count} findings", "ok" if count == 0 else "warn")
                 results["bandit"] = count
-            except:
+            except Exception:
                 log("SCAN", "Bandit: output parse error", "warn")
-        else:
-            log("SCAN", "Bandit: no output (no Python files or tool error)", "warn")
 
-    # Semgrep
-    code, out, err = run(
-        ["semgrep", "--config=p/python", "--config=p/nodejs",
-         "--json", str(app_dir)],
-        capture=True, timeout=120
-    )
+    semgrep_cmd = ["semgrep"]
+    if php_files:
+        semgrep_cmd += ["--config=auto"]
+    elif py_files:
+        semgrep_cmd += ["--config=p/python"]
+    elif js_files:
+        semgrep_cmd += ["--config=p/nodejs"]
+    else:
+        semgrep_cmd += ["--config=auto"]
+
+    semgrep_cmd += ["--json", str(app_dir)]
+    code, out, err = run(semgrep_cmd, capture=True, timeout=180)
     scan_file = SCANS_DIR / f"{app_id}_semgrep.json"
     if out.strip():
         try:
             data = json.loads(out)
             scan_file.write_text(out)
             count = len(data.get("results", []))
-            log("SCAN", f"Semgrep: {count} findings", "ok" if count==0 else "warn")
+            log("SCAN", f"Semgrep: {count} findings", "ok" if count == 0 else "warn")
             results["semgrep"] = count
-        except:
+        except Exception:
             log("SCAN", "Semgrep: output parse error", "warn")
     else:
         log("SCAN", "Semgrep: no output", "warn")
@@ -213,13 +374,9 @@ def stage_scan(app_id):
 
     return True, results
 
-# ---------------------------------------------------------------------------
-# Stage 6 — Aggregate scans
-# ---------------------------------------------------------------------------
-
 def stage_aggregate_scans(app_id):
     log("AGGREGATE", "Aggregating scan results...")
-    script = ROOT / "HonorsThesis" / "scanning" / "aggregate_scans.py"
+    script = ROOT / "scanning" / "aggregate_scans.py"
     if not script.exists():
         log("AGGREGATE", "aggregate_scans.py not found — skipping", "warn")
         return True, []
@@ -238,9 +395,9 @@ def stage_aggregate_scans(app_id):
             pass
     return True, []
 
-def stage_attacks(app_id, base_url):
+def stage_attacks(app_id, base_url, scenario_applicability=None):
     log("ATTACK", f"Running {len(SCENARIOS)} scenarios × {len(CONCURRENCY_LEVELS)} concurrency levels...")
-    script   = ROOT / "HonorsThesis" / "attacks" / "run_mcp_scenario.py"
+    script = ROOT / "attacks" / "run_mcp_scenario.py"
     if not script.exists():
         log("ATTACK", "run_mcp_scenario.py not found — skipping", "warn")
         return True, {}
@@ -248,7 +405,26 @@ def stage_attacks(app_id, base_url):
     attack_results = {}
 
     for scenario in SCENARIOS:
+        app_ok = True
+        reason = "ok"
+        if scenario_applicability and scenario in scenario_applicability:
+            app_ok = scenario_applicability[scenario]["applicable"]
+            reason = scenario_applicability[scenario]["reason"]
+
         attack_results[scenario] = {}
+
+        if not app_ok:
+            log("ATTACK", f"{scenario}: skipped ({reason})", "warn")
+            for c in CONCURRENCY_LEVELS:
+                attack_results[scenario][c] = {
+                    "success_rate": None,
+                    "requests_total": 0,
+                    "timing_stats": {},
+                    "skipped": True,
+                    "reason": reason
+                }
+            continue
+
         for c in CONCURRENCY_LEVELS:
             duration = 15 if c == 1 else 30
             out_file = ATTACK_DIR / f"{app_id}_{scenario}_c{c}_r1.json"
@@ -265,13 +441,13 @@ def stage_attacks(app_id, base_url):
             if out_file.exists():
                 try:
                     data = json.loads(out_file.read_text())
-                    sr   = data.get("success_rate", 0)
+                    sr = data.get("success_rate", 0)
                     reqs = data.get("requests_total", 0)
                     attack_results[scenario][c] = data
                     log("ATTACK",
                         f"{scenario} c={c}: {reqs} reqs, {sr:.0%} success, "
-                        f"p50={data.get('timing_stats',{}).get('p50_ms','?')}ms")
-                except:
+                        f"p50={data.get('timing_stats', {}).get('p50_ms', '?')}ms")
+                except Exception:
                     log("ATTACK", f"{scenario} c={c}: result parse error", "warn")
             else:
                 log("ATTACK", f"{scenario} c={c}: no output file — {err[:100]}", "warn")
@@ -281,7 +457,7 @@ def stage_attacks(app_id, base_url):
 
 def stage_playwright(app_id, base_url):
     log("PLAYWRIGHT", "Running browser-based vulnerability verification...")
-    script = ROOT / "HonorsThesis" / "attacks" / "playwright_verify.py"
+    script = ROOT / "attacks" / "playwright_verify.py"
     if not script.exists():
         log("PLAYWRIGHT", "playwright_verify.py not found — skipping", "warn")
         return True, []
@@ -317,9 +493,9 @@ def compute_caf(attack_results, scenario):
     except:
         return None
 
-def stage_report(app_id, matrix_row, candidates, attack_results, playwright_results):
+def stage_report(app_id, matrix_row, candidates, attack_results, playwright_results, defects=None):
     manifest = read_manifest()
-    entry    = manifest.get(app_id, {})
+    entry = manifest.get(app_id, {})
 
     print(f"\n{BOLD}{'='*65}{RST}")
     print(f"{BOLD}  VULNERABILITY REPORT — {app_id}{RST}")
@@ -330,16 +506,24 @@ def stage_report(app_id, matrix_row, candidates, attack_results, playwright_resu
     print(f"  Commit      : {entry.get('commit_hash','?')[:12]}")
     print(f"{'='*65}\n")
 
-    print(f"{BOLD}  STATIC SCAN CANDIDATES ({len(candidates)}){RST}")
+    print(f"{BOLD}  IMPLEMENTATION DEFECTS / TEST LIMITATIONS{RST}")
+    if defects:
+        for d in defects:
+            print(f"  {RED}[DEFECT]{RST} {d['endpoint']} ({d['path']}) -> HTTP {d['status']}")
+            print(f"        {d['note']}")
+    else:
+        print(f"  {GRN}No implementation defects recorded in preflight{RST}")
+
+    print(f"\n{BOLD}  STATIC SCAN CANDIDATES ({len(candidates)}){RST}")
     if candidates:
         for c in candidates:
-            sev   = c.get("severity","?").upper()
-            cls   = c.get("class","?")
-            tools = ", ".join(c.get("tool_hits",[]))
-            locs  = c.get("locations",[{}])
-            loc   = f"{locs[0].get('file','?')}:{locs[0].get('line','?')}"
-            ev    = c.get("evidence","")[:80]
-            colour = RED if sev=="HIGH" else YLW if sev=="MEDIUM" else RST
+            sev = c.get("severity", "?").upper()
+            cls = c.get("class", "?")
+            tools = ", ".join(c.get("tool_hits", []))
+            locs = c.get("locations", [{}])
+            loc = f"{locs[0].get('file','?')}:{locs[0].get('line','?')}"
+            ev = c.get("evidence", "")[:80]
+            colour = RED if sev == "HIGH" else YLW if sev == "MEDIUM" else RST
             print(f"  {colour}[{sev}]{RST} {cls}")
             print(f"        tools : {tools}")
             print(f"        loc   : {loc}")
@@ -354,66 +538,70 @@ def stage_report(app_id, matrix_row, candidates, attack_results, playwright_resu
     vuln_attacks = []
     for scenario in SCENARIOS:
         sr = {}
+        skipped = False
+        skip_reason = ""
+
         for c in CONCURRENCY_LEVELS:
             data = attack_results.get(scenario, {}).get(c, {})
             sr[c] = data.get("success_rate", None)
+            if data.get("skipped"):
+                skipped = True
+                skip_reason = data.get("reason", "not applicable")
 
         caf = compute_caf(attack_results, scenario)
 
         def fmt(v):
-            return f"{v:.0%}" if v is not None else "  — "
+            return f"{v:.0%}" if isinstance(v, (int, float)) else "  — "
 
-        # Determine finding
-        finding = ""
-        colour  = RST
-        s1  = sr.get(1,  0) or 0
-        s50 = sr.get(50, 0) or 0
+        if skipped:
+            finding = f"SKIPPED — {skip_reason}"
+            colour = YLW
+        else:
+            finding = "No exploit signal observed"
+            colour = GRN
 
-        if scenario == "auth_storm":
-            if s1 >= 0.95:
-                finding = "NO RATE LIMITING — critical"
-                colour  = RED
-                vuln_attacks.append(("missing_rate_limit", "high", scenario, caf,
-                    f"{s1:.0%} login attempts succeed at c=1, {s50:.0%} at c=50"))
-            elif caf and caf > 2:
-                finding = f"Rate limit bypassable (CAF={caf})"
-                colour  = YLW
-                vuln_attacks.append(("rate_limit_bypass", "medium", scenario, caf,
-                    f"CAF={caf} — concurrency bypasses rate limiting"))
+            s1 = sr.get(1, 0) or 0
+            s50 = sr.get(50, 0) or 0
 
-        elif scenario == "fuzz_inputs":
-            if s1 >= 0.90:
-                finding = "All payloads accepted — check for XSS/SQLi"
-                colour  = YLW
+            if scenario == "auth_storm":
+                if s1 >= 0.95:
+                    finding = "NO RATE LIMITING — critical"
+                    colour = RED
+                    vuln_attacks.append(("missing_rate_limit", "high", scenario, caf,
+                        f"{s1:.0%} login attempts succeed at c=1, {s50:.0%} at c=50"))
+                elif caf and caf > 2:
+                    finding = f"Rate limit bypassable (CAF={caf})"
+                    colour = YLW
+                    vuln_attacks.append(("rate_limit_bypass", "medium", scenario, caf,
+                        f"CAF={caf} — concurrency bypasses rate limiting"))
 
-        elif scenario == "timing_probe":
-            for c_level in CONCURRENCY_LEVELS:
-                d = attack_results.get(scenario,{}).get(c_level,{})
-                delta = d.get("extra",{}).get("timing_delta_ms", 0)
-                if abs(delta or 0) > 20:
-                    finding = f"Timing delta {delta}ms — user enumeration possible"
-                    colour  = YLW
-                    vuln_attacks.append(("user_enumeration", "medium", scenario, None,
-                        f"Timing delta {delta}ms at c={c_level}"))
-                    break
-            if not finding:
-                finding = "Timing constant — OK"
-                colour  = GRN
+            elif scenario == "fuzz_inputs":
+                if s1 >= 0.90:
+                    finding = "Payloads accepted — inspect for XSS/SQLi"
+                    colour = YLW
 
-        elif scenario == "file_upload_race":
-            if s1 >= 0.90:
-                finding = "Malicious files accepted — check uploads/ dir"
-                colour  = YLW
+            elif scenario == "timing_probe":
+                for c_level in CONCURRENCY_LEVELS:
+                    d = attack_results.get(scenario, {}).get(c_level, {})
+                    delta = d.get("extra", {}).get("timing_delta_ms", 0)
+                    if abs(delta or 0) > 20:
+                        finding = f"Timing delta {delta}ms — user enumeration possible"
+                        colour = YLW
+                        vuln_attacks.append(("user_enumeration", "medium", scenario, None,
+                            f"Timing delta {delta}ms at c={c_level}"))
+                        break
 
-        elif scenario == "double_spend_race":
-            if s50 > s1 * 1.5 and s50 > 0.1:
-                finding = f"Race condition — CAF={caf}"
-                colour  = RED
-                vuln_attacks.append(("race_condition", "high", scenario, caf,
-                    f"Success rate jumps from {s1:.0%} to {s50:.0%} under concurrency"))
-            elif s1 == 0 and s50 == 0:
-                finding = "0% — endpoint may not exist or requires auth"
-                colour  = YLW
+            elif scenario == "file_upload_race":
+                if s1 >= 0.90:
+                    finding = "Malicious files accepted — check uploads handling"
+                    colour = YLW
+
+            elif scenario == "double_spend_race":
+                if s50 > s1 * 1.5 and s50 > 0.1:
+                    finding = f"Race condition — CAF={caf}"
+                    colour = RED
+                    vuln_attacks.append(("race_condition", "high", scenario, caf,
+                        f"Success rate jumps from {s1:.0%} to {s50:.0%} under concurrency"))
 
         print(f"  {scenario:<22} {fmt(sr.get(1)):>6} {fmt(sr.get(10)):>6} "
               f"{fmt(sr.get(50)):>6} {str(caf) if caf else '—':>6}  "
@@ -421,7 +609,7 @@ def stage_report(app_id, matrix_row, candidates, attack_results, playwright_resu
 
     print(f"\n{BOLD}  BROWSER VERIFICATION (Playwright){RST}")
     pw_vulns = [r for r in playwright_results if r.get("vulnerable")]
-    pw_ok    = [r for r in playwright_results if not r.get("vulnerable")]
+    pw_ok = [r for r in playwright_results if not r.get("vulnerable")]
 
     for r in pw_vulns:
         print(f"  {RED}[VULNERABLE]{RST} {r['test']}")
@@ -433,31 +621,33 @@ def stage_report(app_id, matrix_row, candidates, attack_results, playwright_resu
     all_vulns = []
     for r in pw_vulns:
         all_vulns.append({
-            "vuln_id":    f"{app_id}-PW-{r['test'].upper()[:8]}",
+            "vuln_id": f"{app_id}-PW-{r['test'].upper()[:8]}",
             "vuln_class": r["test"],
-            "severity":   "high" if "rate" in r["test"] or "upload" in r["test"] else "medium",
-            "exploit_single": "1.0", "exploit_concurrent": "1.0",
-            "poc_notes":  r["evidence"][:200],
+            "severity": "high" if "rate" in r["test"] or "upload" in r["test"] else "medium",
+            "exploit_single": "1.0",
+            "exploit_concurrent": "1.0",
+            "poc_notes": r["evidence"][:200],
             "confirmed_by": "playwright",
-            "timestamp":  datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         })
+
     for cls, sev, scenario, caf, notes in vuln_attacks:
         all_vulns.append({
-            "vuln_id":    f"{app_id}-ATK-{cls.upper()[:8]}",
+            "vuln_id": f"{app_id}-ATK-{cls.upper()[:8]}",
             "vuln_class": cls,
-            "severity":   sev,
-            "exploit_single":     "1.0",
+            "severity": sev,
+            "exploit_single": "1.0",
             "exploit_concurrent": "1.0",
-            "poc_notes":  notes[:200],
+            "poc_notes": notes[:200],
             "confirmed_by": "attack_runner",
-            "timestamp":  datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         })
 
     print(f"\n{BOLD}  CONFIRMED VULNERABILITIES — {len(all_vulns)} total{RST}")
     print(f"  {'-'*65}")
     if all_vulns:
         for v in all_vulns:
-            sev    = v["severity"].upper()
+            sev = v["severity"].upper()
             colour = RED if sev == "HIGH" else YLW
             print(f"\n  {colour}{BOLD}[{sev}] {v['vuln_class']}{RST}")
             print(f"  ID     : {v['vuln_id']}")
@@ -469,30 +659,32 @@ def stage_report(app_id, matrix_row, candidates, attack_results, playwright_resu
     print(f"\n{'='*65}\n")
     return all_vulns
 
-def stage_save(app_id, all_vulns, matrix_row):
+def stage_save(app_id, all_vulns, matrix_row, defects=None):
     log("SAVE", "Writing triage CSV and snapshot...")
 
-    # confirmed.csv
     csv_path = TRIAGE_DIR / f"{app_id}_confirmed.csv"
-    fields   = ["vuln_id","vuln_class","severity","exploit_single",
-                "exploit_concurrent","poc_notes","confirmed_by","timestamp"]
+    fields = ["vuln_id","vuln_class","severity","exploit_single",
+              "exploit_concurrent","poc_notes","confirmed_by","timestamp"]
     with open(csv_path, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields)
         w.writeheader()
         w.writerows(all_vulns)
     log("SAVE", f"Triage CSV → {csv_path}", "ok")
 
-    # aggregate_results
-    script = ROOT / "HonorsThesis" / "analysis" / "aggregate_results.py"
+    if defects:
+        defects_path = TRIAGE_DIR / f"{app_id}_implementation_defects.json"
+        defects_path.write_text(json.dumps(defects, indent=2))
+        log("SAVE", f"Defects JSON → {defects_path}", "ok")
+
+    script = ROOT / "analysis" / "aggregate_results.py"
     if script.exists():
         run(["python3", str(script), "--app", app_id], capture=True)
         log("SAVE", "benchmark_results.csv updated", "ok")
 
-    # snapshot
-    script2 = ROOT / "HonorsThesis" / "orchestrator" / "snapshot_run.py"
+    script2 = ROOT / "orchestrator" / "snapshot_run.py"
     if script2.exists():
         run(["python3", str(script2), "--app-id", app_id], capture=True)
-        snap = ROOT / "HonorsThesis" / "artifacts" / app_id / "snapshot.json"
+        snap = ROOT / "artifacts" / app_id / "snapshot.json"
         log("SAVE", f"Snapshot → {snap}", "ok")
 
     return True, None
@@ -510,16 +702,12 @@ def run_pipeline(app_id, port):
     print(f"{'='*65}{RST}\n")
 
     stages = [
-        ("VERIFY",    lambda: stage_verify(app_id)),
-        ("BUILD",     lambda: stage_build(app_id)),
-        ("DEPLOY",    lambda: stage_deploy(app_id, port)),
-        ("SCAN",      lambda: stage_scan(app_id)),
-        ("AGGREGATE", lambda: stage_aggregate_scans(app_id)),
+        ("VERIFY", lambda: stage_verify(app_id)),
+        ("BUILD", lambda: stage_build(app_id)),
+        ("DEPLOY", lambda: stage_deploy(app_id, port, get_endpoints(app_id))),
     ]
 
     base_url = None
-    candidates = []
-
     for name, fn in stages:
         ok, result = fn()
         if not ok:
@@ -528,17 +716,20 @@ def run_pipeline(app_id, port):
             return False
         if name == "DEPLOY":
             base_url = result
-        if name == "AGGREGATE":
-            candidates = result
 
-    ok, attack_results = stage_attacks(app_id, base_url)
+    endpoints, endpoint_status, defects, scenario_applicability = stage_preflight(app_id, base_url)
 
+    ok, scan_results = stage_scan(app_id)
+    ok, candidates = stage_aggregate_scans(app_id)
+
+    ok, attack_results = stage_attacks(app_id, base_url, scenario_applicability)
     ok, playwright_results = stage_playwright(app_id, base_url)
 
     all_vulns = stage_report(
-        app_id, matrix_row, candidates, attack_results, playwright_results)
+        app_id, matrix_row, candidates, attack_results, playwright_results, defects
+    )
 
-    stage_save(app_id, all_vulns, matrix_row)
+    stage_save(app_id, all_vulns, matrix_row, defects)
 
     container = f"{app_id.lower()}_bench"
     log("DONE", f"Container '{container}' still running on {base_url}", "ok")

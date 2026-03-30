@@ -3,13 +3,52 @@
   "attack": "double_spend_race",
   "concurrency": 50,
   "duration_s": 30,
-  "requests_total": 8383,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/dashboard",
+    "item_create": "/item/new",
+    "item_list": "/dashboard",
+    "upload": "/dashboard",
+    "logout": "/logout"
+  },
+  "requests_total": 10580,
   "successful_requests": 0,
-  "failed_requests": 8383,
+  "failed_requests": 10580,
   "success_rate": 0.0,
   "errors": [
     {
-      "req_idx": 28,
+      "req_idx": 15,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 41,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 47,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 7,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 4,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 27,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 18,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
@@ -24,37 +63,42 @@
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
-      "req_idx": 13,
+      "req_idx": 21,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
-      "req_idx": 7,
+      "req_idx": 10,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
-      "req_idx": 34,
+      "req_idx": 38,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
-      "req_idx": 42,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 25,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 27,
+      "req_idx": 30,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
       "req_idx": 36,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 44,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 33,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 13,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
@@ -69,27 +113,17 @@
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
+      "req_idx": 42,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
       "req_idx": 22,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
-      "req_idx": 47,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 10,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 33,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 19,
+      "req_idx": 25,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
@@ -99,7 +133,7 @@
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
-      "req_idx": 48,
+      "req_idx": 19,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
@@ -109,7 +143,12 @@
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
-      "req_idx": 4,
+      "req_idx": 48,
+      "status": 404,
+      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
+    },
+    {
+      "req_idx": 28,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
@@ -119,22 +158,7 @@
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
     {
-      "req_idx": 30,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
       "req_idx": 5,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 41,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 31,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     },
@@ -142,32 +166,17 @@
       "req_idx": 11,
       "status": 404,
       "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 37,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 14,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
-    },
-    {
-      "req_idx": 44,
-      "status": 404,
-      "snippet": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try agai"
     }
   ],
   "timing_stats": {
-    "min_ms": 30.0,
-    "max_ms": 408.52,
-    "mean_ms": 178.4,
-    "p50_ms": 173.15,
-    "p95_ms": 231.09,
-    "p99_ms": 281.86
+    "min_ms": 17.41,
+    "max_ms": 275.55,
+    "mean_ms": 141.77,
+    "p50_ms": 140.01,
+    "p95_ms": 183.23,
+    "p99_ms": 216.53
   },
   "extra": {},
-  "timestamp_start": "2026-03-24T00:49:02.100525+00:00",
-  "timestamp_end": "2026-03-24T00:49:32.235210+00:00"
+  "timestamp_start": "2026-03-24T03:44:11.403405+00:00",
+  "timestamp_end": "2026-03-24T03:44:41.524148+00:00"
 }

@@ -1,0 +1,9 @@
+[
+  {
+    "type": "implementation_defect",
+    "endpoint": "item_create",
+    "path": "/item/new",
+    "status": 404,
+    "note": "item_create at /item/new returned HTTP 404"
+  }
+]

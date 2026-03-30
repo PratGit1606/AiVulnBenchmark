@@ -1,0 +1,58 @@
+{
+  "app_id": "APP02",
+  "base_url": "http://localhost:8082",
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/items",
+    "item_list": "/items",
+    "upload": "/upload",
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "upload": "POST",
+      "logout": "GET"
+    },
+    "csrf_token_endpoint": "/csrf-token",
+    "csrf_required": true
+  },
+  "timestamp": "2026-03-29T01:18:23.429049+00:00",
+  "results": [
+    {
+      "test": "xss_reflection",
+      "vulnerable": false,
+      "evidence": "Payload not reflected at /"
+    },
+    {
+      "test": "rate_limit",
+      "vulnerable": true,
+      "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+    },
+    {
+      "test": "file_upload_validation",
+      "vulnerable": false,
+      "evidence": "Upload response ambiguous: no alert text"
+    },
+    {
+      "test": "debug_console_rce",
+      "vulnerable": false,
+      "evidence": "Debug console not accessible on any known path"
+    },
+    {
+      "test": "user_enumeration",
+      "vulnerable": true,
+      "evidence": "Different error messages for valid vs invalid email:\n  real:  {\"errors\":[{\"value\":\"admin@admin.com\",\"msg\":\"invalid value\",\"param\":\"username\",\"location\":\"body\"}]}\n  fake:  {\"errors\":[{\"value\":\"zzznobody999@fake.com\",\"msg\":\"invalid value\",\"param\":\"username\",\"location\":\"body\"}]}"
+    },
+    {
+      "test": "idor_item_edit",
+      "vulnerable": false,
+      "evidence": "Item creation form not found at /items"
+    }
+  ],
+  "vulnerable_count": 2
+}

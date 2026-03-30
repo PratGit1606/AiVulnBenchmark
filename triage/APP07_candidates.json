@@ -1,0 +1,18 @@
+[
+  {
+    "vuln_id": "APP07-OTHER-001",
+    "class": "other",
+    "tool_hits": [
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP07/docker-compose.yml",
+        "line": 20
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "requires login"
+  }
+]

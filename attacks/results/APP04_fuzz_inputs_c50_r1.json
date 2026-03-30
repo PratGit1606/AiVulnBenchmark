@@ -1,0 +1,192 @@
+{
+  "app_id": "APP04",
+  "attack": "fuzz_inputs",
+  "concurrency": 50,
+  "duration_s": 30,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": null,
+    "item_list": null,
+    "upload": "/upload",
+    "logout": null,
+    "health": "/health",
+    "methods": {
+      "health": "GET",
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "upload": "POST"
+    },
+    "csrf_token_endpoint": "/csrf-token",
+    "csrf_required": true
+  },
+  "requests_total": 398,
+  "successful_requests": 0,
+  "failed_requests": 398,
+  "success_rate": 0.0,
+  "errors": [
+    {
+      "req_idx": 0,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 50,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 2,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 6,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 4,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 8,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 12,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 10,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 11,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 14,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 15,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 18,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 19,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 20,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 16,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 22,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 24,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 23,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 26,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 27,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 28,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 30,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 3,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 7,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 31,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 36,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 34,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /upload</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 35,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 32,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 40,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /register</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "timing_stats": {
+    "min_ms": 19.3,
+    "max_ms": 15991.67,
+    "mean_ms": 3968.66,
+    "p50_ms": 76.56,
+    "p95_ms": 15818.54,
+    "p99_ms": 15976.64
+  },
+  "extra": {},
+  "timestamp_start": "2026-03-29T18:00:30.936765+00:00",
+  "timestamp_end": "2026-03-29T18:01:03.569462+00:00"
+}

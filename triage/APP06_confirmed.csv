@@ -1,0 +1,4 @@
+vuln_id,vuln_class,severity,exploit_single,exploit_concurrent,poc_notes,confirmed_by,timestamp
+APP06-PW-RATE_LIM,rate_limit,high,1.0,1.0,All 20 login attempts completed with no rate limit or lockout response,playwright,2026-03-29T21:37:29.527536+00:00
+APP06-PW-IDOR_ITE,idor_item_edit,medium,1.0,1.0,User B accessed User A's item (id=17748202473318fef12c7fe456) at http://localhost:8081/items/17748202473318fef12c7fe456,playwright,2026-03-29T21:37:29.527562+00:00
+APP06-ATK-MISSING_,missing_rate_limit,high,1.0,1.0,"100% login attempts succeed at c=1, 100% at c=50",attack_runner,2026-03-29T21:37:29.527566+00:00

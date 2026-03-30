@@ -1,0 +1,41 @@
+{
+  "app_id": "APP07",
+  "attack": "auth_storm",
+  "concurrency": 50,
+  "duration_s": 30,
+  "endpoints_used": {
+    "login": "/index.php",
+    "register": "/register.php",
+    "dashboard": "/dashboard.php",
+    "item_create": "/dashboard.php",
+    "item_list": "/dashboard.php",
+    "upload": null,
+    "logout": "/logout.php",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false,
+    "network": "app07-net"
+  },
+  "requests_total": 7168,
+  "successful_requests": 7168,
+  "failed_requests": 0,
+  "success_rate": 1.0,
+  "errors": [],
+  "timing_stats": {
+    "min_ms": 3.11,
+    "max_ms": 4407.0,
+    "mean_ms": 209.46,
+    "p50_ms": 202.05,
+    "p95_ms": 299.91,
+    "p99_ms": 327.87
+  },
+  "extra": {},
+  "timestamp_start": "2026-03-29T22:27:37.646187+00:00",
+  "timestamp_end": "2026-03-29T22:28:07.747953+00:00"
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "vuln_id": "APP04-AUTH_WEA-001",
+    "class": "auth_weakness",
+    "tool_hits": [
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+        "line": 18
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "requires login"
+  },
+  {
+    "vuln_id": "APP04-XSS-002",
+    "class": "xss",
+    "tool_hits": [
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+        "line": 18
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "requires login"
+  }
+]

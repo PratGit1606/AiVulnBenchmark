@@ -1,7 +1,7 @@
 {
   "snapshot_version": "1.0",
   "app_id": "APP01",
-  "timestamp": "2026-03-24T01:06:56.049919+00:00",
+  "timestamp": "2026-03-29T00:38:13.909821+00:00",
   "generation": {
     "prompt_type": "secure",
     "stack": "flask",
@@ -12,7 +12,7 @@
   },
   "deployment": {
     "docker_image_name": "app01_image:latest",
-    "docker_image_id": "sha256:632e480ccea5435d1fa2b0fabc42e6ae02dc02ec8bdfff4289ef4cb409951e4b"
+    "docker_image_id": "sha256:02318b51770da520911021329b2d624305badf23d744fd8a07ad2b2f31087394"
   },
   "scans": {
     "files": [
@@ -23,78 +23,113 @@
   "triage": {
     "confirmed_csv": "triage/APP01_confirmed.csv",
     "candidates_json": "triage/APP01_candidates.json",
-    "confirmed_count": 5,
+    "confirmed_count": 2,
     "candidate_count": 1
   },
   "attacks": [
     {
+      "file": "attacks/results/APP01_auth_storm_c10_r1.json",
+      "scenario": "auth_storm",
+      "concurrency": 10,
+      "requests_total": 5600,
+      "success_rate": 1.0
+    },
+    {
       "file": "attacks/results/APP01_auth_storm_c1_r1.json",
       "scenario": "auth_storm",
       "concurrency": 1,
-      "requests_total": 3419,
+      "requests_total": 2002,
       "success_rate": 1.0
     },
     {
       "file": "attacks/results/APP01_auth_storm_c50_r1.json",
       "scenario": "auth_storm",
       "concurrency": 50,
-      "requests_total": 8261,
+      "requests_total": 5504,
       "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP01_double_spend_race_c10_r1.json",
+      "scenario": "double_spend_race",
+      "concurrency": 10,
+      "requests_total": 12144,
+      "success_rate": 0.0
     },
     {
       "file": "attacks/results/APP01_double_spend_race_c1_r1.json",
       "scenario": "double_spend_race",
       "concurrency": 1,
-      "requests_total": 3524,
+      "requests_total": 3886,
       "success_rate": 0.0
     },
     {
       "file": "attacks/results/APP01_double_spend_race_c50_r1.json",
       "scenario": "double_spend_race",
       "concurrency": 50,
-      "requests_total": 8383,
+      "requests_total": 10580,
       "success_rate": 0.0
+    },
+    {
+      "file": "attacks/results/APP01_file_upload_race_c10_r1.json",
+      "scenario": "file_upload_race",
+      "concurrency": 10,
+      "requests_total": 1915,
+      "success_rate": 1.0
     },
     {
       "file": "attacks/results/APP01_file_upload_race_c1_r1.json",
       "scenario": "file_upload_race",
       "concurrency": 1,
-      "requests_total": 947,
+      "requests_total": 505,
       "success_rate": 1.0
     },
     {
       "file": "attacks/results/APP01_file_upload_race_c50_r1.json",
       "scenario": "file_upload_race",
       "concurrency": 50,
-      "requests_total": 3436,
+      "requests_total": 2476,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP01_fuzz_inputs_c10_r1.json",
+      "scenario": "fuzz_inputs",
+      "concurrency": 10,
+      "requests_total": 3738,
       "success_rate": 1.0
     },
     {
       "file": "attacks/results/APP01_fuzz_inputs_c1_r1.json",
       "scenario": "fuzz_inputs",
       "concurrency": 1,
-      "requests_total": 2017,
+      "requests_total": 1428,
       "success_rate": 1.0
     },
     {
       "file": "attacks/results/APP01_fuzz_inputs_c50_r1.json",
       "scenario": "fuzz_inputs",
       "concurrency": 50,
-      "requests_total": 4895,
+      "requests_total": 4053,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP01_timing_probe_c10_r1.json",
+      "scenario": "timing_probe",
+      "concurrency": 10,
+      "requests_total": 4107,
       "success_rate": 1.0
     },
     {
       "file": "attacks/results/APP01_timing_probe_c1_r1.json",
       "scenario": "timing_probe",
       "concurrency": 1,
-      "requests_total": 2847,
+      "requests_total": 1819,
       "success_rate": 1.0
     },
     {
       "file": "attacks/results/APP01_timing_probe_c50_r1.json",
       "scenario": "timing_probe",
       "concurrency": 50,
-      "requests_total": 6557,
+      "requests_total": 3747,
       "success_rate": 1.0
     }
   ],

@@ -1,0 +1,56 @@
+{
+  "app_id": "APP05",
+  "base_url": "http://localhost:8081",
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/add_item",
+    "item_list": "/",
+    "upload": null,
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false
+  },
+  "timestamp": "2026-03-29T21:55:44.657195+00:00",
+  "results": [
+    {
+      "test": "xss_reflection",
+      "vulnerable": false,
+      "evidence": "Payload not reflected or executed on tested surfaces"
+    },
+    {
+      "test": "rate_limit",
+      "vulnerable": false,
+      "evidence": "Login form not found"
+    },
+    {
+      "test": "file_upload_validation",
+      "vulnerable": false,
+      "evidence": "Upload endpoint not configured"
+    },
+    {
+      "test": "debug_console_rce",
+      "vulnerable": true,
+      "evidence": "Debug console or stack trace exposed at /console"
+    },
+    {
+      "test": "user_enumeration",
+      "vulnerable": false,
+      "evidence": "Same error message for both"
+    },
+    {
+      "test": "idor_item_edit",
+      "vulnerable": false,
+      "evidence": "Item creation form not found at /add_item"
+    }
+  ],
+  "vulnerable_count": 1
+}

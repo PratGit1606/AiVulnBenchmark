@@ -1,0 +1,35 @@
+{
+  "app_id": "APP03",
+  "attack": "timing_probe",
+  "concurrency": 50,
+  "duration_s": 30,
+  "endpoints_used": {
+    "login": "/login.php",
+    "register": "/register.php",
+    "dashboard": "/index.php",
+    "item_create": "/index.php",
+    "item_list": "/index.php",
+    "upload": "/upload.php",
+    "logout": "/logout.php",
+    "network": "app3-net"
+  },
+  "requests_total": 9611,
+  "successful_requests": 9611,
+  "failed_requests": 0,
+  "success_rate": 1.0,
+  "errors": [],
+  "timing_stats": {
+    "min_ms": 2.38,
+    "max_ms": 4910.29,
+    "mean_ms": 156.7,
+    "p50_ms": 117.38,
+    "p95_ms": 294.67,
+    "p99_ms": 393.95
+  },
+  "extra": {
+    "timing_delta_ms": 5.86,
+    "enumeration_signal": "NO"
+  },
+  "timestamp_start": "2026-03-29T02:44:22.474686+00:00",
+  "timestamp_end": "2026-03-29T02:44:52.752436+00:00"
+}

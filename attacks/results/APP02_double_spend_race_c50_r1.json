@@ -1,0 +1,193 @@
+{
+  "app_id": "APP02",
+  "attack": "double_spend_race",
+  "concurrency": 50,
+  "duration_s": 30,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/items",
+    "item_list": "/items",
+    "upload": "/upload",
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "upload": "POST",
+      "logout": "GET"
+    },
+    "csrf_token_endpoint": "/csrf-token",
+    "csrf_required": true
+  },
+  "requests_total": 22835,
+  "successful_requests": 0,
+  "failed_requests": 22835,
+  "success_rate": 0.0,
+  "errors": [
+    {
+      "req_idx": 38,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 49,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 46,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 41,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 39,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 48,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 5,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 7,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 2,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 47,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 4,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 1,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 3,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 8,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 15,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 13,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 6,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 9,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 14,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 10,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 11,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 12,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 0,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 44,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 40,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 42,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 27,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 16,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 43,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    },
+    {
+      "req_idx": 37,
+      "status": 404,
+      "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /items</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "timing_stats": {
+    "min_ms": 3.06,
+    "max_ms": 250.5,
+    "mean_ms": 62.73,
+    "p50_ms": 59.78,
+    "p95_ms": 86.37,
+    "p99_ms": 108.96
+  },
+  "extra": {},
+  "timestamp_start": "2026-03-29T01:17:36.359071+00:00",
+  "timestamp_end": "2026-03-29T01:18:06.439878+00:00"
+}

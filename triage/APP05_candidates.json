@@ -1,0 +1,52 @@
+[
+  {
+    "vuln_id": "APP05-DEBUG_EN-001",
+    "class": "debug_enabled",
+    "tool_hits": [
+      "bandit",
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+        "line": 103
+      }
+    ],
+    "confidence": "medium",
+    "severity": "high",
+    "evidence": "102         db.create_all()\n103     app.run(host='0.0.0.0', port=5000, debug=True)\n"
+  },
+  {
+    "vuln_id": "APP05-OTHER-002",
+    "class": "other",
+    "tool_hits": [
+      "bandit",
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+        "line": 103
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "102         db.create_all()\n103     app.run(host='0.0.0.0', port=5000, debug=True)\n"
+  },
+  {
+    "vuln_id": "APP05-HARDCODE-003",
+    "class": "hardcoded_secret",
+    "tool_hits": [
+      "bandit"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+        "line": 6
+      }
+    ],
+    "confidence": "medium",
+    "severity": "low",
+    "evidence": "5 app = Flask(__name__)\n6 app.config['SECRET_KEY'] = 'your_secret_key'\n7 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'\n"
+  }
+]

@@ -1,0 +1,2 @@
+vuln_id,vuln_class,severity,exploit_single,exploit_concurrent,poc_notes,confirmed_by,timestamp
+APP03-ATK-MISSING_,missing_rate_limit,high,1.0,1.0,"100% login attempts succeed at c=1, 100% at c=50",attack_runner,2026-03-29T02:47:31.932870+00:00

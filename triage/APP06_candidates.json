@@ -1,0 +1,106 @@
+[
+  {
+    "vuln_id": "APP06-AUTH_WEA-001",
+    "class": "auth_weakness",
+    "tool_hits": [
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 13
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "requires login"
+  },
+  {
+    "vuln_id": "APP06-XSS-002",
+    "class": "xss",
+    "tool_hits": [
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 13
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "requires login"
+  },
+  {
+    "vuln_id": "APP06-XSS-003",
+    "class": "xss",
+    "tool_hits": [
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 256
+      },
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 257
+      },
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 258
+      },
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 259
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "requires login"
+  },
+  {
+    "vuln_id": "APP06-XSS-004",
+    "class": "xss",
+    "tool_hits": [
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 260
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "requires login"
+  },
+  {
+    "vuln_id": "APP06-XSS-005",
+    "class": "xss",
+    "tool_hits": [
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 281
+      },
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 283
+      },
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 284
+      },
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+        "line": 285
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "requires login"
+  }
+]

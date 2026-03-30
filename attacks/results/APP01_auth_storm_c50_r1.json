@@ -3,20 +3,29 @@
   "attack": "auth_storm",
   "concurrency": 50,
   "duration_s": 30,
-  "requests_total": 8261,
-  "successful_requests": 8261,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/dashboard",
+    "item_create": "/item/new",
+    "item_list": "/dashboard",
+    "upload": "/dashboard",
+    "logout": "/logout"
+  },
+  "requests_total": 5504,
+  "successful_requests": 5504,
   "failed_requests": 0,
   "success_rate": 1.0,
   "errors": [],
   "timing_stats": {
-    "min_ms": 48.05,
-    "max_ms": 376.01,
-    "mean_ms": 181.78,
-    "p50_ms": 180.96,
-    "p95_ms": 234.44,
-    "p99_ms": 267.04
+    "min_ms": 108.95,
+    "max_ms": 394.46,
+    "mean_ms": 273.42,
+    "p50_ms": 269.67,
+    "p95_ms": 317.12,
+    "p99_ms": 352.8
   },
   "extra": {},
-  "timestamp_start": "2026-03-24T00:45:58.985024+00:00",
-  "timestamp_end": "2026-03-24T00:46:29.152249+00:00"
+  "timestamp_start": "2026-03-29T00:33:25.896958+00:00",
+  "timestamp_end": "2026-03-29T00:33:56.179970+00:00"
 }

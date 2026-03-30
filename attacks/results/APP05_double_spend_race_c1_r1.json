@@ -1,0 +1,42 @@
+{
+  "app_id": "APP05",
+  "attack": "double_spend_race",
+  "concurrency": 1,
+  "duration_s": 15,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/add_item",
+    "item_list": "/",
+    "upload": null,
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false
+  },
+  "requests_total": 413,
+  "successful_requests": 413,
+  "failed_requests": 0,
+  "success_rate": 1.0,
+  "errors": [],
+  "timing_stats": {
+    "min_ms": 19.53,
+    "max_ms": 131.99,
+    "mean_ms": 36.18,
+    "p50_ms": 28.11,
+    "p95_ms": 102.2,
+    "p99_ms": 126.36
+  },
+  "extra": {
+    "duplicate_count": 413
+  },
+  "timestamp_start": "2026-03-29T21:52:33.346734+00:00",
+  "timestamp_end": "2026-03-29T21:52:48.431414+00:00"
+}

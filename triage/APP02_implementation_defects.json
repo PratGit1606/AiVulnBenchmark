@@ -1,0 +1,10 @@
+[
+  {
+    "type": "implementation_defect",
+    "endpoint": "item_list",
+    "path": "/items",
+    "method": "GET",
+    "status": 404,
+    "note": "item_list at /items (GET) returned HTTP 404"
+  }
+]

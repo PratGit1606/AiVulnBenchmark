@@ -1,0 +1,43 @@
+{
+  "app_id": "APP07",
+  "attack": "double_spend_race",
+  "concurrency": 1,
+  "duration_s": 15,
+  "endpoints_used": {
+    "login": "/index.php",
+    "register": "/register.php",
+    "dashboard": "/dashboard.php",
+    "item_create": "/dashboard.php",
+    "item_list": "/dashboard.php",
+    "upload": null,
+    "logout": "/logout.php",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false,
+    "network": "app07-net"
+  },
+  "requests_total": 3251,
+  "successful_requests": 3251,
+  "failed_requests": 0,
+  "success_rate": 1.0,
+  "errors": [],
+  "timing_stats": {
+    "min_ms": 1.97,
+    "max_ms": 11.51,
+    "mean_ms": 4.2,
+    "p50_ms": 4.08,
+    "p95_ms": 6.1,
+    "p99_ms": 7.53
+  },
+  "extra": {
+    "duplicate_count": 0
+  },
+  "timestamp_start": "2026-03-29T22:30:40.109163+00:00",
+  "timestamp_end": "2026-03-29T22:30:55.269649+00:00"
+}

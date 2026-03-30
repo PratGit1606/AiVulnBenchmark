@@ -1,0 +1,193 @@
+{
+  "app_id": "APP02",
+  "attack": "auth_storm",
+  "concurrency": 50,
+  "duration_s": 30,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/items",
+    "item_list": "/items",
+    "upload": "/upload",
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "upload": "POST",
+      "logout": "GET"
+    },
+    "csrf_token_endpoint": "/csrf-token",
+    "csrf_required": true
+  },
+  "requests_total": 100,
+  "successful_requests": 0,
+  "failed_requests": 100,
+  "success_rate": 0.0,
+  "errors": [
+    {
+      "req_idx": 0,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 3,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 4,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 12,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 28,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 27,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 48,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 47,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 46,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 45,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 44,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 43,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 42,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 41,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 40,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 39,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 38,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 37,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 36,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 35,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 34,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 33,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 32,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 31,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 30,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 29,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 11,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 25,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 26,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 24,
+      "status": 0,
+      "snippet": ""
+    }
+  ],
+  "timing_stats": {
+    "min_ms": 15316.35,
+    "max_ms": 16007.4,
+    "mean_ms": 15657.06,
+    "p50_ms": 15940.82,
+    "p95_ms": 16002.08,
+    "p99_ms": 16007.4
+  },
+  "extra": {},
+  "timestamp_start": "2026-03-29T01:12:21.377611+00:00",
+  "timestamp_end": "2026-03-29T01:12:52.802877+00:00"
+}

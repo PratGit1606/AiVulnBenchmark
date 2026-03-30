@@ -1,0 +1,57 @@
+{
+  "app_id": "APP07",
+  "base_url": "http://localhost:8081",
+  "endpoints_used": {
+    "login": "/index.php",
+    "register": "/register.php",
+    "dashboard": "/dashboard.php",
+    "item_create": "/dashboard.php",
+    "item_list": "/dashboard.php",
+    "upload": null,
+    "logout": "/logout.php",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false,
+    "network": "app07-net"
+  },
+  "timestamp": "2026-03-29T22:32:31.328835+00:00",
+  "results": [
+    {
+      "test": "xss_reflection",
+      "vulnerable": false,
+      "evidence": "Payload not reflected or executed on tested surfaces"
+    },
+    {
+      "test": "rate_limit",
+      "vulnerable": true,
+      "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+    },
+    {
+      "test": "file_upload_validation",
+      "vulnerable": false,
+      "evidence": "Upload endpoint not configured"
+    },
+    {
+      "test": "debug_console_rce",
+      "vulnerable": false,
+      "evidence": "Debug console not accessible on any known path"
+    },
+    {
+      "test": "user_enumeration",
+      "vulnerable": false,
+      "evidence": "Same error message for both"
+    },
+    {
+      "test": "idor_item_edit",
+      "vulnerable": false,
+      "evidence": "Item creation form not found at /dashboard.php"
+    }
+  ],
+  "vulnerable_count": 1
+}

@@ -1,0 +1,48 @@
+{
+  "app_id": "APP03",
+  "base_url": "http://localhost:8083",
+  "endpoints_used": {
+    "login": "/login.php",
+    "register": "/register.php",
+    "dashboard": "/index.php",
+    "item_create": "/index.php",
+    "item_list": "/index.php",
+    "upload": "/upload.php",
+    "logout": "/logout.php",
+    "network": "app3-net"
+  },
+  "timestamp": "2026-03-29T02:47:31.847390+00:00",
+  "results": [
+    {
+      "test": "xss_reflection",
+      "vulnerable": false,
+      "evidence": "Payload not reflected at /index.php"
+    },
+    {
+      "test": "rate_limit",
+      "vulnerable": false,
+      "evidence": "Login form not found on UI root"
+    },
+    {
+      "test": "file_upload_validation",
+      "vulnerable": false,
+      "evidence": "Upload response ambiguous: no alert text"
+    },
+    {
+      "test": "debug_console_rce",
+      "vulnerable": false,
+      "evidence": "Debug console not accessible on any known path"
+    },
+    {
+      "test": "user_enumeration",
+      "vulnerable": false,
+      "evidence": "Same error message for both \u2014 not enumerable"
+    },
+    {
+      "test": "idor_item_edit",
+      "vulnerable": false,
+      "evidence": "Item creation form not found at /index.php"
+    }
+  ],
+  "vulnerable_count": 0
+}

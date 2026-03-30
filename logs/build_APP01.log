@@ -1,11 +1,12 @@
+
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 212B 0.1s done
-#1 DONE 0.2s
+#1 transferring dockerfile: 212B 0.0s done
+#1 DONE 0.0s
 
 #2 [internal] load metadata for docker.io/library/python:3.11-slim
-#2 DONE 1.5s
+#2 DONE 1.0s
 
 #3 [internal] load .dockerignore
 #3 transferring context: 2B done
@@ -14,167 +15,31 @@
 #4 [internal] load build context
 #4 DONE 0.0s
 
-#5 [1/6] FROM docker.io/library/python:3.11-slim@sha256:124d73aee6fbab06658af5fe54d559e708e4bad6e40b7045c481a4d351b7a9eb
-#5 resolve docker.io/library/python:3.11-slim@sha256:124d73aee6fbab06658af5fe54d559e708e4bad6e40b7045c481a4d351b7a9eb 0.0s done
-#5 ...
+#5 [1/6] FROM docker.io/library/python:3.11-slim@sha256:9358444059ed78e2975ada2c189f1c1a3144a5dab6f35bff8c981afb38946634
+#5 resolve docker.io/library/python:3.11-slim@sha256:9358444059ed78e2975ada2c189f1c1a3144a5dab6f35bff8c981afb38946634 0.1s done
+#5 DONE 0.1s
 
 #4 [internal] load build context
-#4 transferring context: 39.36kB 0.0s done
+#4 transferring context: 3.10kB 0.0s done
 #4 DONE 0.1s
 
-#5 [1/6] FROM docker.io/library/python:3.11-slim@sha256:124d73aee6fbab06658af5fe54d559e708e4bad6e40b7045c481a4d351b7a9eb
-#5 sha256:124d73aee6fbab06658af5fe54d559e708e4bad6e40b7045c481a4d351b7a9eb 10.37kB / 10.37kB done
-#5 sha256:16cb75beff0e104520a4bc4e98b08987b6978b82e37b81b87d786504e17579e7 1.75kB / 1.75kB done
-#5 sha256:e67db9b14d098500c534b3acb73f5503fad7eed29720b8870d12dadb98ae245b 5.48kB / 5.48kB done
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 0B / 29.78MB 0.1s
-#5 sha256:6944007a5b45fe41656cd72b1691b1419bf9d39641e7afbc937f3a3abd07e575 0B / 1.29MB 0.1s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 0B / 14.37MB 0.1s
-#5 sha256:6944007a5b45fe41656cd72b1691b1419bf9d39641e7afbc937f3a3abd07e575 249.86kB / 1.29MB 1.2s
-#5 sha256:6944007a5b45fe41656cd72b1691b1419bf9d39641e7afbc937f3a3abd07e575 1.05MB / 1.29MB 1.3s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 1.05MB / 14.37MB 1.3s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 2.10MB / 29.78MB 1.5s
-#5 sha256:6944007a5b45fe41656cd72b1691b1419bf9d39641e7afbc937f3a3abd07e575 1.29MB / 1.29MB 1.3s done
-#5 sha256:7524aba74b8cc45ff3cf2f089fd9a638dfd58b001763194d0819c8d7c75d598f 0B / 250B 1.5s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 2.10MB / 14.37MB 1.6s
-#5 sha256:7524aba74b8cc45ff3cf2f089fd9a638dfd58b001763194d0819c8d7c75d598f 250B / 250B 1.6s done
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 3.15MB / 14.37MB 2.0s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 4.19MB / 29.78MB 2.2s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 4.19MB / 14.37MB 2.2s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 5.24MB / 14.37MB 2.5s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 6.29MB / 29.78MB 2.6s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 6.29MB / 14.37MB 2.8s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 7.34MB / 14.37MB 3.1s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 8.39MB / 29.78MB 3.3s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 8.39MB / 14.37MB 3.3s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 9.44MB / 14.37MB 3.6s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 10.49MB / 29.78MB 3.8s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 10.49MB / 14.37MB 3.9s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 11.53MB / 14.37MB 4.1s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 12.58MB / 29.78MB 4.5s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 12.58MB / 14.37MB 4.5s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 13.63MB / 14.37MB 4.6s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 14.68MB / 29.78MB 4.8s
-#5 sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 14.37MB / 14.37MB 4.7s done
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 16.78MB / 29.78MB 5.6s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 18.87MB / 29.78MB 6.3s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 20.97MB / 29.78MB 6.9s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 23.07MB / 29.78MB 7.3s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 25.17MB / 29.78MB 7.7s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 27.26MB / 29.78MB 7.9s
-#5 sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 29.78MB / 29.78MB 8.2s done
-#5 extracting sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f
-#5 extracting sha256:ec781dee3f4719c2ca0dd9e73cb1d4ed834ed1a406495eb6e44b6dfaad5d1f8f 2.7s done
-#5 extracting sha256:6944007a5b45fe41656cd72b1691b1419bf9d39641e7afbc937f3a3abd07e575
-#5 extracting sha256:6944007a5b45fe41656cd72b1691b1419bf9d39641e7afbc937f3a3abd07e575 0.3s done
-#5 extracting sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88
-#5 extracting sha256:e35b92e2619d5152fbb45e6ccb02dbb1007c5784ad19a5e235bf05ca6e226a88 2.1s done
-#5 extracting sha256:7524aba74b8cc45ff3cf2f089fd9a638dfd58b001763194d0819c8d7c75d598f
-#5 extracting sha256:7524aba74b8cc45ff3cf2f089fd9a638dfd58b001763194d0819c8d7c75d598f done
-#5 DONE 14.0s
-
 #6 [2/6] WORKDIR /app
-#6 DONE 0.5s
+#6 CACHED
 
-#7 [3/6] COPY requirements.txt .
-#7 DONE 0.1s
+#7 [4/6] RUN pip install --no-cache-dir -r requirements.txt
+#7 CACHED
 
-#8 [4/6] RUN pip install --no-cache-dir -r requirements.txt
-#8 3.461 Collecting Flask==2.3.0 (from -r requirements.txt (line 1))
-#8 3.544   Downloading Flask-2.3.0-py3-none-any.whl.metadata (3.7 kB)
-#8 3.596 Collecting Flask-SQLAlchemy==2.5.1 (from -r requirements.txt (line 2))
-#8 3.613   Downloading Flask_SQLAlchemy-2.5.1-py2.py3-none-any.whl.metadata (3.1 kB)
-#8 3.650 Collecting Flask-WTF==1.0.0 (from -r requirements.txt (line 3))
-#8 3.667   Downloading Flask_WTF-1.0.0-py3-none-any.whl.metadata (1.9 kB)
-#8 3.697 Collecting Flask-Login==0.6.2 (from -r requirements.txt (line 4))
-#8 3.712   Downloading Flask_Login-0.6.2-py3-none-any.whl.metadata (5.8 kB)
-#8 3.754 Collecting Flask-Migrate==3.1.0 (from -r requirements.txt (line 5))
-#8 3.769   Downloading Flask_Migrate-3.1.0-py3-none-any.whl.metadata (3.1 kB)
-#8 3.870 Collecting bcrypt==3.2.0 (from -r requirements.txt (line 6))
-#8 3.887   Downloading bcrypt-3.2.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl.metadata (7.5 kB)
-#8 3.924 Collecting python-dotenv==0.21.0 (from -r requirements.txt (line 7))
-#8 3.939   Downloading python_dotenv-0.21.0-py3-none-any.whl.metadata (20 kB)
-#8 3.996 Collecting Werkzeug>=2.3.0 (from Flask==2.3.0->-r requirements.txt (line 1))
-#8 4.012   Downloading werkzeug-3.1.6-py3-none-any.whl.metadata (4.0 kB)
-#8 4.044 Collecting Jinja2>=3.1.2 (from Flask==2.3.0->-r requirements.txt (line 1))
-#8 4.060   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
-#8 4.087 Collecting itsdangerous>=2.1.2 (from Flask==2.3.0->-r requirements.txt (line 1))
-#8 4.108   Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
-#8 4.165 Collecting click>=8.1.3 (from Flask==2.3.0->-r requirements.txt (line 1))
-#8 4.180   Downloading click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
-#8 4.212 Collecting blinker>=1.6.2 (from Flask==2.3.0->-r requirements.txt (line 1))
-#8 4.224   Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
-#8 4.681 Collecting SQLAlchemy>=0.8.0 (from Flask-SQLAlchemy==2.5.1->-r requirements.txt (line 2))
-#8 4.697   Downloading sqlalchemy-2.0.48-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
-#8 4.729 Collecting WTForms (from Flask-WTF==1.0.0->-r requirements.txt (line 3))
-#8 4.753   Downloading wtforms-3.2.1-py3-none-any.whl.metadata (5.3 kB)
-#8 4.867 Collecting alembic>=0.7 (from Flask-Migrate==3.1.0->-r requirements.txt (line 5))
-#8 4.887   Downloading alembic-1.18.4-py3-none-any.whl.metadata (7.2 kB)
-#8 5.044 Collecting cffi>=1.1 (from bcrypt==3.2.0->-r requirements.txt (line 6))
-#8 5.062   Downloading cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.6 kB)
-#8 5.100 Collecting six>=1.4.1 (from bcrypt==3.2.0->-r requirements.txt (line 6))
-#8 5.120   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
-#8 5.216 Collecting Mako (from alembic>=0.7->Flask-Migrate==3.1.0->-r requirements.txt (line 5))
-#8 5.242   Downloading mako-1.3.10-py3-none-any.whl.metadata (2.9 kB)
-#8 5.302 Collecting typing-extensions>=4.12 (from alembic>=0.7->Flask-Migrate==3.1.0->-r requirements.txt (line 5))
-#8 5.324   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
-#8 5.359 Collecting pycparser (from cffi>=1.1->bcrypt==3.2.0->-r requirements.txt (line 6))
-#8 5.383   Downloading pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
-#8 5.489 Collecting MarkupSafe>=2.0 (from Jinja2>=3.1.2->Flask==2.3.0->-r requirements.txt (line 1))
-#8 5.506   Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
-#8 5.739 Collecting greenlet>=1 (from SQLAlchemy>=0.8.0->Flask-SQLAlchemy==2.5.1->-r requirements.txt (line 2))
-#8 5.759   Downloading greenlet-3.3.2-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.7 kB)
-#8 5.823 Downloading Flask-2.3.0-py3-none-any.whl (96 kB)
-#8 5.847    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.0/97.0 kB 5.4 MB/s eta 0:00:00
-#8 5.864 Downloading Flask_SQLAlchemy-2.5.1-py2.py3-none-any.whl (17 kB)
-#8 5.887 Downloading Flask_WTF-1.0.0-py3-none-any.whl (12 kB)
-#8 5.909 Downloading Flask_Login-0.6.2-py3-none-any.whl (17 kB)
-#8 5.927 Downloading Flask_Migrate-3.1.0-py3-none-any.whl (20 kB)
-#8 5.946 Downloading bcrypt-3.2.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (61 kB)
-#8 5.955    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.9/61.9 kB 16.2 MB/s eta 0:00:00
-#8 5.972 Downloading python_dotenv-0.21.0-py3-none-any.whl (18 kB)
-#8 6.000 Downloading alembic-1.18.4-py3-none-any.whl (263 kB)
-#8 6.040    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 263.9/263.9 kB 7.7 MB/s eta 0:00:00
-#8 6.062 Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
-#8 6.091 Downloading cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (215 kB)
-#8 6.122    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 215.6/215.6 kB 8.4 MB/s eta 0:00:00
-#8 6.142 Downloading click-8.3.1-py3-none-any.whl (108 kB)
-#8 6.154    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 108.3/108.3 kB 16.9 MB/s eta 0:00:00
-#8 6.178 Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
-#8 6.196 Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
-#8 6.209    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.9/134.9 kB 17.1 MB/s eta 0:00:00
-#8 6.227 Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
-#8 6.247 Downloading sqlalchemy-2.0.48-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
-#8 6.754    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 6.6 MB/s eta 0:00:00
-#8 6.780 Downloading werkzeug-3.1.6-py3-none-any.whl (225 kB)
-#8 6.802    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 225.2/225.2 kB 13.5 MB/s eta 0:00:00
-#8 6.822 Downloading wtforms-3.2.1-py3-none-any.whl (152 kB)
-#8 6.842    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 152.5/152.5 kB 9.5 MB/s eta 0:00:00
-#8 6.859 Downloading greenlet-3.3.2-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (594 kB)
-#8 6.950    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 594.2/594.2 kB 6.8 MB/s eta 0:00:00
-#8 6.971 Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
-#8 6.988 Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
-#8 6.997    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 44.6/44.6 kB 43.2 MB/s eta 0:00:00
-#8 7.019 Downloading mako-1.3.10-py3-none-any.whl (78 kB)
-#8 7.031    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 18.9 MB/s eta 0:00:00
-#8 7.052 Downloading pycparser-3.0-py3-none-any.whl (48 kB)
-#8 7.059    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.2/48.2 kB 49.9 MB/s eta 0:00:00
-#8 7.208 Installing collected packages: typing-extensions, six, python-dotenv, pycparser, MarkupSafe, itsdangerous, greenlet, click, blinker, WTForms, Werkzeug, SQLAlchemy, Mako, Jinja2, cffi, Flask, bcrypt, alembic, Flask-WTF, Flask-SQLAlchemy, Flask-Login, Flask-Migrate
-#8 9.722 Successfully installed Flask-2.3.0 Flask-Login-0.6.2 Flask-Migrate-3.1.0 Flask-SQLAlchemy-2.5.1 Flask-WTF-1.0.0 Jinja2-3.1.6 Mako-1.3.10 MarkupSafe-3.0.3 SQLAlchemy-2.0.48 WTForms-3.2.1 Werkzeug-3.1.6 alembic-1.18.4 bcrypt-3.2.0 blinker-1.9.0 cffi-2.0.0 click-8.3.1 greenlet-3.3.2 itsdangerous-2.2.0 pycparser-3.0 python-dotenv-0.21.0 six-1.17.0 typing-extensions-4.15.0
-#8 9.722 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
-#8 9.878 
-#8 9.878 [notice] A new release of pip is available: 24.0 -> 26.0.1
-#8 9.878 [notice] To update, run: pip install --upgrade pip
-#8 DONE 10.3s
+#8 [3/6] COPY requirements.txt .
+#8 CACHED
 
 #9 [5/6] COPY . .
-#9 DONE 0.1s
+#9 CACHED
 
 #10 [6/6] RUN mkdir uploads
-#10 DONE 0.4s
+#10 CACHED
 
 #11 exporting to image
-#11 exporting layers
-#11 exporting layers 0.5s done
-#11 writing image sha256:c727101d8b1dfd2788cc0260bb5fb56d6975c6b5960c911a2b3e98f8200997ac done
-#11 naming to docker.io/library/app01_image:latest done
-#11 DONE 0.5s
+#11 exporting layers done
+#11 writing image sha256:02318b51770da520911021329b2d624305badf23d744fd8a07ad2b2f31087394 done
+#11 naming to docker.io/library/app01_image:latest 0.0s done
+#11 DONE 0.0s

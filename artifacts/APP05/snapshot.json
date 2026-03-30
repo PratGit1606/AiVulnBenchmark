@@ -1,0 +1,122 @@
+{
+  "snapshot_version": "1.0",
+  "app_id": "APP05",
+  "timestamp": "2026-03-29T21:55:44.777107+00:00",
+  "generation": {
+    "prompt_type": "fast",
+    "stack": "flask",
+    "model_name": "openai/gpt-4o-mini",
+    "commit_hash": "42a92a041446c001b4976053bbe76ac3e2a4cfa7",
+    "repo_path": "HonorsThesis/apps/APP05",
+    "timestamp": "2026-03-17T07:21:39Z"
+  },
+  "deployment": {
+    "docker_image_name": "app05_image:latest",
+    "docker_image_id": "sha256:84ad365d884193d62e43f3856c25bdbf41b183c2ef1bf84ebcf0648665a4a1c9"
+  },
+  "scans": {
+    "files": [
+      "scans/APP05_bandit.json",
+      "scans/APP05_semgrep.json"
+    ]
+  },
+  "triage": {
+    "confirmed_csv": "triage/APP05_confirmed.csv",
+    "candidates_json": "triage/APP05_candidates.json",
+    "confirmed_count": 2,
+    "candidate_count": 3
+  },
+  "attacks": [
+    {
+      "file": "attacks/results/APP05_auth_storm_c10_r1.json",
+      "scenario": "auth_storm",
+      "concurrency": 10,
+      "requests_total": 5443,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP05_auth_storm_c1_r1.json",
+      "scenario": "auth_storm",
+      "concurrency": 1,
+      "requests_total": 1531,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP05_auth_storm_c50_r1.json",
+      "scenario": "auth_storm",
+      "concurrency": 50,
+      "requests_total": 7158,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP05_double_spend_race_c10_r1.json",
+      "scenario": "double_spend_race",
+      "concurrency": 10,
+      "requests_total": 549,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP05_double_spend_race_c1_r1.json",
+      "scenario": "double_spend_race",
+      "concurrency": 1,
+      "requests_total": 413,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP05_double_spend_race_c50_r1.json",
+      "scenario": "double_spend_race",
+      "concurrency": 50,
+      "requests_total": 414,
+      "success_rate": 0.9831
+    },
+    {
+      "file": "attacks/results/APP05_fuzz_inputs_c10_r1.json",
+      "scenario": "fuzz_inputs",
+      "concurrency": 10,
+      "requests_total": 2371,
+      "success_rate": 0.9313
+    },
+    {
+      "file": "attacks/results/APP05_fuzz_inputs_c1_r1.json",
+      "scenario": "fuzz_inputs",
+      "concurrency": 1,
+      "requests_total": 1635,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP05_fuzz_inputs_c50_r1.json",
+      "scenario": "fuzz_inputs",
+      "concurrency": 50,
+      "requests_total": 1687,
+      "success_rate": 0.8998
+    },
+    {
+      "file": "attacks/results/APP05_timing_probe_c10_r1.json",
+      "scenario": "timing_probe",
+      "concurrency": 10,
+      "requests_total": 5636,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP05_timing_probe_c1_r1.json",
+      "scenario": "timing_probe",
+      "concurrency": 1,
+      "requests_total": 1555,
+      "success_rate": 1.0
+    },
+    {
+      "file": "attacks/results/APP05_timing_probe_c50_r1.json",
+      "scenario": "timing_probe",
+      "concurrency": 50,
+      "requests_total": 7729,
+      "success_rate": 1.0
+    }
+  ],
+  "logs": [
+    "logs/build_APP05.log"
+  ],
+  "analysis": {
+    "benchmark_csv": "analysis/benchmark_results.csv"
+  },
+  "status": "triaged"
+}

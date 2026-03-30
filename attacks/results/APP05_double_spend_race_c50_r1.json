@@ -1,0 +1,78 @@
+{
+  "app_id": "APP05",
+  "attack": "double_spend_race",
+  "concurrency": 50,
+  "duration_s": 30,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/add_item",
+    "item_list": "/",
+    "upload": null,
+    "logout": "/logout",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "logout": "GET"
+    },
+    "csrf_required": false
+  },
+  "requests_total": 414,
+  "successful_requests": 407,
+  "failed_requests": 7,
+  "success_rate": 0.9831,
+  "errors": [
+    {
+      "req_idx": 41,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked\n[SQL: INSERT INTO it"
+    },
+    {
+      "req_idx": 81,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked\n[SQL: INSERT INTO it"
+    },
+    {
+      "req_idx": 145,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.TimeoutError: QueuePool limit of size 5 overflow 10 reached, connection timed out, t"
+    },
+    {
+      "req_idx": 124,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked\n[SQL: INSERT INTO it"
+    },
+    {
+      "req_idx": 166,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked\n[SQL: INSERT INTO it"
+    },
+    {
+      "req_idx": 213,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked\n[SQL: INSERT INTO it"
+    },
+    {
+      "req_idx": 288,
+      "status": 500,
+      "snippet": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked\n[SQL: INSERT INTO it"
+    }
+  ],
+  "timing_stats": {
+    "min_ms": 463.2,
+    "max_ms": 9296.16,
+    "mean_ms": 3898.69,
+    "p50_ms": 3579.84,
+    "p95_ms": 6990.59,
+    "p99_ms": 8096.16
+  },
+  "extra": {
+    "duplicate_count": 1369
+  },
+  "timestamp_start": "2026-03-29T21:53:19.382353+00:00",
+  "timestamp_end": "2026-03-29T21:55:38.004958+00:00"
+}
