@@ -1,0 +1,1124 @@
+{
+  "APP01": {
+    "candidates": [
+      {
+        "vuln_id": "APP01-OTHER-001",
+        "class": "other",
+        "tool_hits": [
+          "bandit",
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP01/app.py",
+            "line": 104
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "103         db.create_all()\n104     app.run(debug=False, host='0.0.0.0')\n105     \n"
+      }
+    ],
+    "implementation_defects": [
+      {
+        "type": "implementation_defect",
+        "endpoint": "item_create",
+        "path": "/item/new",
+        "status": 404,
+        "note": "item_create at /item/new returned HTTP 404"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP01",
+      "base_url": "http://localhost:8081",
+      "endpoints_used": {
+        "login": "/login",
+        "register": "/register",
+        "dashboard": "/dashboard",
+        "item_create": "/item/new",
+        "item_list": "/dashboard",
+        "upload": "/dashboard",
+        "logout": "/logout"
+      },
+      "timestamp": "2026-03-29T00:38:13.691491+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Payload not reflected at /dashboard"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": true,
+          "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "No file input found at /dashboard"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": false,
+          "evidence": "Debug console not accessible on any known path"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": false,
+          "evidence": "Same error message for both — not enumerable"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": false,
+          "evidence": "Item creation form not found at /item/new"
+        }
+      ],
+      "vulnerable_count": 1
+    }
+  },
+  "APP02": {
+    "candidates": [
+      {
+        "vuln_id": "APP02-AUTH_WEA-001",
+        "class": "auth_weakness",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP02/app.js",
+            "line": 28
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      },
+      {
+        "vuln_id": "APP02-XSS-002",
+        "class": "xss",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP02/app.js",
+            "line": 28
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      }
+    ],
+    "implementation_defects": [
+      {
+        "type": "implementation_defect",
+        "endpoint": "item_list",
+        "path": "/items",
+        "method": "GET",
+        "status": 404,
+        "note": "item_list at /items (GET) returned HTTP 404"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP02",
+      "base_url": "http://localhost:8082",
+      "endpoints_used": {
+        "login": "/login",
+        "register": "/register",
+        "dashboard": "/",
+        "item_create": "/items",
+        "item_list": "/items",
+        "upload": "/upload",
+        "logout": "/logout",
+        "methods": {
+          "login": "POST",
+          "register": "POST",
+          "dashboard": "GET",
+          "item_create": "POST",
+          "item_list": "GET",
+          "upload": "POST",
+          "logout": "GET"
+        },
+        "csrf_token_endpoint": "/csrf-token",
+        "csrf_required": true
+      },
+      "timestamp": "2026-03-29T01:18:23.429049+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Payload not reflected at /"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": true,
+          "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "Upload response ambiguous: no alert text"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": false,
+          "evidence": "Debug console not accessible on any known path"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": true,
+          "evidence": "Different error messages for valid vs invalid email:\n  real:  {\"errors\":[{\"value\":\"admin@admin.com\",\"msg\":\"invalid value\",\"param\":\"username\",\"location\":\"body\"}]}\n  fake:  {\"errors\":[{\"value\":\"zzznobody999@fake.com\",\"msg\":\"invalid value\",\"param\":\"username\",\"location\":\"body\"}]}"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": false,
+          "evidence": "Item creation form not found at /items"
+        }
+      ],
+      "vulnerable_count": 2
+    }
+  },
+  "APP03": {
+    "candidates": [],
+    "implementation_defects": [
+      {
+        "type": "implementation_defect",
+        "endpoint": "login",
+        "path": "/login.php",
+        "method": "GET",
+        "status": 0,
+        "note": "login at /login.php (GET) returned HTTP 0"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "register",
+        "path": "/register.php",
+        "method": "GET",
+        "status": 0,
+        "note": "register at /register.php (GET) returned HTTP 0"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "upload",
+        "path": "/upload.php",
+        "method": "GET",
+        "status": 0,
+        "note": "upload at /upload.php (GET) returned HTTP 0"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP03",
+      "base_url": "http://localhost:8083",
+      "endpoints_used": {
+        "login": "/login.php",
+        "register": "/register.php",
+        "dashboard": "/index.php",
+        "item_create": "/index.php",
+        "item_list": "/index.php",
+        "upload": "/upload.php",
+        "logout": "/logout.php",
+        "network": "app3-net"
+      },
+      "timestamp": "2026-03-29T02:47:31.847390+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Payload not reflected at /index.php"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": false,
+          "evidence": "Login form not found on UI root"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "Upload response ambiguous: no alert text"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": false,
+          "evidence": "Debug console not accessible on any known path"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": false,
+          "evidence": "Same error message for both — not enumerable"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": false,
+          "evidence": "Item creation form not found at /index.php"
+        }
+      ],
+      "vulnerable_count": 0
+    }
+  },
+  "APP04": {
+    "candidates": [
+      {
+        "vuln_id": "APP04-AUTH_WEA-001",
+        "class": "auth_weakness",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+            "line": 18
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      },
+      {
+        "vuln_id": "APP04-XSS-002",
+        "class": "xss",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+            "line": 18
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      }
+    ],
+    "implementation_defects": [
+      {
+        "type": "implementation_defect",
+        "endpoint": "item_create",
+        "path": "/item/new",
+        "method": "GET",
+        "status": 404,
+        "note": "item_create at /item/new (GET) returned HTTP 404"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "item_list",
+        "path": "/items",
+        "method": "GET",
+        "status": 404,
+        "note": "item_list at /items (GET) returned HTTP 404"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "logout",
+        "path": "/logout",
+        "method": "GET",
+        "status": 404,
+        "note": "logout at /logout (GET) returned HTTP 404"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP04",
+      "base_url": "http://localhost:8084",
+      "endpoints_used": {
+        "login": "/login",
+        "register": "/register",
+        "dashboard": "/",
+        "item_create": null,
+        "item_list": null,
+        "upload": "/upload",
+        "logout": null,
+        "health": "/health",
+        "methods": {
+          "health": "GET",
+          "login": "POST",
+          "register": "POST",
+          "dashboard": "GET",
+          "upload": "POST"
+        },
+        "csrf_token_endpoint": "/csrf-token",
+        "csrf_required": true
+      },
+      "timestamp": "2026-03-29T18:03:45.959458+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Payload not reflected at /"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": false,
+          "evidence": "Login form not found on UI root"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "No file input found at /"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": false,
+          "evidence": "Debug console not accessible on any known path"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": false,
+          "evidence": "Same error message for both — not enumerable"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": false,
+          "evidence": "Error: Page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n  - navigating to \"http://localhost:8084None\", waiting until \"load\"\n"
+        }
+      ],
+      "vulnerable_count": 0
+    }
+  },
+  "APP05": {
+    "candidates": [
+      {
+        "vuln_id": "APP05-DEBUG_EN-001",
+        "class": "debug_enabled",
+        "tool_hits": [
+          "bandit",
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+            "line": 103
+          }
+        ],
+        "confidence": "medium",
+        "severity": "high",
+        "evidence": "102         db.create_all()\n103     app.run(host='0.0.0.0', port=5000, debug=True)\n"
+      },
+      {
+        "vuln_id": "APP05-OTHER-002",
+        "class": "other",
+        "tool_hits": [
+          "bandit",
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+            "line": 103
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "102         db.create_all()\n103     app.run(host='0.0.0.0', port=5000, debug=True)\n"
+      },
+      {
+        "vuln_id": "APP05-HARDCODE-003",
+        "class": "hardcoded_secret",
+        "tool_hits": [
+          "bandit"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+            "line": 6
+          }
+        ],
+        "confidence": "medium",
+        "severity": "low",
+        "evidence": "5 app = Flask(__name__)\n6 app.config['SECRET_KEY'] = 'your_secret_key'\n7 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'\n"
+      }
+    ],
+    "implementation_defects": [
+      {
+        "type": "implementation_defect",
+        "endpoint": "upload",
+        "path": "/upload",
+        "method": "GET",
+        "status": 404,
+        "note": "upload at /upload (GET) returned HTTP 404"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP05",
+      "base_url": "http://localhost:8081",
+      "endpoints_used": {
+        "login": "/login",
+        "register": "/register",
+        "dashboard": "/",
+        "item_create": "/add_item",
+        "item_list": "/",
+        "upload": null,
+        "logout": "/logout",
+        "methods": {
+          "login": "POST",
+          "register": "POST",
+          "dashboard": "GET",
+          "item_create": "POST",
+          "item_list": "GET",
+          "logout": "GET"
+        },
+        "csrf_required": false
+      },
+      "timestamp": "2026-03-29T21:55:44.657195+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Payload not reflected or executed on tested surfaces"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": false,
+          "evidence": "Login form not found"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "Upload endpoint not configured"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": true,
+          "evidence": "Debug console or stack trace exposed at /console"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": false,
+          "evidence": "Same error message for both"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": false,
+          "evidence": "Item creation form not found at /add_item"
+        }
+      ],
+      "vulnerable_count": 1
+    }
+  },
+  "APP06": {
+    "candidates": [
+      {
+        "vuln_id": "APP06-AUTH_WEA-001",
+        "class": "auth_weakness",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 13
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      },
+      {
+        "vuln_id": "APP06-XSS-002",
+        "class": "xss",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 13
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      },
+      {
+        "vuln_id": "APP06-XSS-003",
+        "class": "xss",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 256
+          },
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 257
+          },
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 258
+          },
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 259
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      },
+      {
+        "vuln_id": "APP06-XSS-004",
+        "class": "xss",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 260
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      },
+      {
+        "vuln_id": "APP06-XSS-005",
+        "class": "xss",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 281
+          },
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 283
+          },
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 284
+          },
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+            "line": 285
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      }
+    ],
+    "implementation_defects": [
+      {
+        "type": "implementation_defect",
+        "endpoint": "upload",
+        "path": "/upload",
+        "method": "GET",
+        "status": 404,
+        "note": "upload at /upload (GET) returned HTTP 404"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "logout",
+        "path": "/logout",
+        "method": "GET",
+        "status": 404,
+        "note": "logout at /logout (GET) returned HTTP 404"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP06",
+      "base_url": "http://localhost:8081",
+      "endpoints_used": {
+        "login": "/login",
+        "register": "/register",
+        "dashboard": "/",
+        "item_create": "/items",
+        "item_list": "/items",
+        "upload": "/upload",
+        "logout": "/logout",
+        "health": "/health",
+        "methods": {
+          "health": "GET",
+          "login": "POST",
+          "register": "POST",
+          "dashboard": "GET",
+          "item_create": "POST",
+          "item_list": "GET",
+          "upload": "POST",
+          "logout": "GET"
+        },
+        "csrf_token_endpoint": "/csrf-token",
+        "csrf_required": false
+      },
+      "timestamp": "2026-03-29T21:37:29.502219+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Payload not reflected or executed on tested surfaces"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": true,
+          "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "Upload response ambiguous: unauthorized"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": false,
+          "evidence": "Debug console not accessible on any known path"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": false,
+          "evidence": "Same error message for both"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": true,
+          "evidence": "User B accessed User A's item (id=17748202473318fef12c7fe456) at http://localhost:8081/items/17748202473318fef12c7fe456"
+        }
+      ],
+      "vulnerable_count": 2
+    }
+  },
+  "APP07": {
+    "candidates": [
+      {
+        "vuln_id": "APP07-OTHER-001",
+        "class": "other",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP07/docker-compose.yml",
+            "line": 20
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      }
+    ],
+    "implementation_defects": [
+      {
+        "type": "implementation_defect",
+        "endpoint": "upload",
+        "path": "/upload",
+        "method": "GET",
+        "status": 404,
+        "note": "upload at /upload (GET) returned HTTP 404"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP07",
+      "base_url": "http://localhost:8081",
+      "endpoints_used": {
+        "login": "/index.php",
+        "register": "/register.php",
+        "dashboard": "/dashboard.php",
+        "item_create": "/dashboard.php",
+        "item_list": "/dashboard.php",
+        "upload": null,
+        "logout": "/logout.php",
+        "methods": {
+          "login": "POST",
+          "register": "POST",
+          "dashboard": "GET",
+          "item_create": "POST",
+          "item_list": "GET",
+          "logout": "GET"
+        },
+        "csrf_required": false,
+        "network": "app07-net"
+      },
+      "timestamp": "2026-03-29T22:32:31.328835+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Payload not reflected or executed on tested surfaces"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": true,
+          "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "Upload endpoint not configured"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": false,
+          "evidence": "Debug console not accessible on any known path"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": false,
+          "evidence": "Same error message for both"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": false,
+          "evidence": "Item creation form not found at /dashboard.php"
+        }
+      ],
+      "vulnerable_count": 1
+    }
+  },
+  "APP08": {
+    "candidates": [
+      {
+        "vuln_id": "APP08-AUTH_WEA-001",
+        "class": "auth_weakness",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP08/server.js",
+            "line": 9
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      },
+      {
+        "vuln_id": "APP08-XSS-002",
+        "class": "xss",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP08/server.js",
+            "line": 9
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP08",
+      "base_url": "http://localhost:8081",
+      "endpoints_used": {
+        "login": "/login",
+        "register": "/register",
+        "dashboard": "/",
+        "item_create": "/",
+        "item_list": "/",
+        "upload": null,
+        "logout": null,
+        "methods": {
+          "login": "GET",
+          "register": "GET",
+          "dashboard": "GET",
+          "item_create": "GET",
+          "item_list": "GET"
+        },
+        "csrf_required": false
+      },
+      "timestamp": "2026-03-30T07:11:34.392448+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Payload not reflected or executed on tested surfaces"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": false,
+          "evidence": "Login form not found"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "Upload endpoint not configured"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": false,
+          "evidence": "Debug console not accessible on any known path"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": false,
+          "evidence": "Same error message for both"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": false,
+          "evidence": "Item creation form not found at /"
+        }
+      ],
+      "vulnerable_count": 0
+    }
+  },
+  "APP09": {
+    "candidates": [
+      {
+        "vuln_id": "APP09-OTHER-001",
+        "class": "other",
+        "tool_hits": [
+          "bandit",
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP09/app.py",
+            "line": 96
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "95         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)\n96     app.run(debug=False, host='0.0.0.0', port=5000)\n"
+      },
+      {
+        "vuln_id": "APP09-HARDCODE-002",
+        "class": "hardcoded_secret",
+        "tool_hits": [
+          "bandit"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP09/app.py",
+            "line": 8
+          }
+        ],
+        "confidence": "medium",
+        "severity": "low",
+        "evidence": "7 app = Flask(__name__)\n8 app.config['SECRET_KEY'] = 'your_secret_key'\n9 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'\n"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP09",
+      "base_url": "http://localhost:8081",
+      "endpoints_used": {
+        "login": "/login",
+        "register": "/register",
+        "dashboard": "/dashboard",
+        "item_create": "/dashboard",
+        "item_list": "/search",
+        "upload": "/upload",
+        "logout": "/logout",
+        "search": "/search",
+        "methods": {
+          "login": "POST",
+          "register": "POST",
+          "dashboard": "GET",
+          "item_create": "POST",
+          "item_list": "GET",
+          "upload": "POST",
+          "logout": "GET",
+          "search": "GET"
+        },
+        "csrf_required": false
+      },
+      "timestamp": "2026-03-30T09:16:16.847108+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Payload not reflected or executed on tested surfaces"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": true,
+          "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "No file input found at /upload"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": false,
+          "evidence": "Debug console not accessible on any known path"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": false,
+          "evidence": "Same error message for both"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": false,
+          "evidence": "Item creation form not found at /dashboard"
+        }
+      ],
+      "vulnerable_count": 1
+    }
+  },
+  "APP10": {
+    "candidates": [
+      {
+        "vuln_id": "APP10-AUTH_WEA-001",
+        "class": "auth_weakness",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+            "line": 17
+          },
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+            "line": 18
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      },
+      {
+        "vuln_id": "APP10-XSS-002",
+        "class": "xss",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+            "line": 17
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      },
+      {
+        "vuln_id": "APP10-XSS-003",
+        "class": "xss",
+        "tool_hits": [
+          "semgrep"
+        ],
+        "locations": [
+          {
+            "file": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+            "line": 124
+          }
+        ],
+        "confidence": "medium",
+        "severity": "medium",
+        "evidence": "requires login"
+      }
+    ],
+    "implementation_defects": [
+      {
+        "type": "implementation_defect",
+        "endpoint": "register",
+        "path": "/register",
+        "method": "POST",
+        "status": 0,
+        "note": "register at /register (POST) returned HTTP 0"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "dashboard",
+        "path": "/",
+        "method": "GET",
+        "status": 0,
+        "note": "dashboard at / (GET) returned HTTP 0"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "item_create",
+        "path": "/items",
+        "method": "POST",
+        "status": 0,
+        "note": "item_create at /items (POST) returned HTTP 0"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "item_list",
+        "path": "/items",
+        "method": "GET",
+        "status": 0,
+        "note": "item_list at /items (GET) returned HTTP 0"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "upload",
+        "path": "/upload",
+        "method": "POST",
+        "status": 0,
+        "note": "upload at /upload (POST) returned HTTP 0"
+      },
+      {
+        "type": "implementation_defect",
+        "endpoint": "logout",
+        "path": "/logout",
+        "method": "GET",
+        "status": 0,
+        "note": "logout at /logout (GET) returned HTTP 0"
+      }
+    ],
+    "playwright": {
+      "app_id": "APP10",
+      "base_url": "http://localhost:8081",
+      "endpoints_used": {
+        "login": "/login",
+        "register": "/register",
+        "dashboard": "/",
+        "item_create": "/items",
+        "item_list": "/items",
+        "upload": "/upload",
+        "logout": "/logout",
+        "health": "/health",
+        "methods": {
+          "health": "GET",
+          "login": "POST",
+          "register": "POST",
+          "dashboard": "GET",
+          "item_create": "POST",
+          "item_list": "GET",
+          "upload": "POST",
+          "logout": "GET"
+        },
+        "csrf_required": false
+      },
+      "timestamp": "2026-03-30T10:48:07.554672+00:00",
+      "results": [
+        {
+          "test": "xss_reflection",
+          "vulnerable": false,
+          "evidence": "Error: Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8081/register\nCall log:\n  - navigating to \"http://localhost:8081/register\", waiting until \"load\"\n"
+        },
+        {
+          "test": "rate_limit",
+          "vulnerable": true,
+          "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+        },
+        {
+          "test": "file_upload_validation",
+          "vulnerable": false,
+          "evidence": "Error: Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8081/upload\nCall log:\n  - navigating to \"http://localhost:8081/upload\", waiting until \"load\"\n"
+        },
+        {
+          "test": "debug_console_rce",
+          "vulnerable": false,
+          "evidence": "Debug console not accessible on any known path"
+        },
+        {
+          "test": "user_enumeration",
+          "vulnerable": false,
+          "evidence": "Same error message for both"
+        },
+        {
+          "test": "idor_item_edit",
+          "vulnerable": false,
+          "evidence": "Error: Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8081/register\nCall log:\n  - navigating to \"http://localhost:8081/register\", waiting until \"load\"\n"
+        }
+      ],
+      "vulnerable_count": 1
+    }
+  }
+}

@@ -1,0 +1,3592 @@
+{
+  "APP01": {
+    "bandit": {
+      "errors": [],
+      "generated_at": "2026-03-29T00:32:27Z",
+      "metrics": {
+        "/home/pratham/HonorsThesis/apps/APP01/app.py": {
+          "CONFIDENCE.HIGH": 0,
+          "CONFIDENCE.LOW": 0,
+          "CONFIDENCE.MEDIUM": 1,
+          "CONFIDENCE.UNDEFINED": 0,
+          "SEVERITY.HIGH": 0,
+          "SEVERITY.LOW": 0,
+          "SEVERITY.MEDIUM": 1,
+          "SEVERITY.UNDEFINED": 0,
+          "loc": 90,
+          "nosec": 0,
+          "skipped_tests": 0
+        },
+        "_totals": {
+          "CONFIDENCE.HIGH": 0,
+          "CONFIDENCE.LOW": 0,
+          "CONFIDENCE.MEDIUM": 1,
+          "CONFIDENCE.UNDEFINED": 0,
+          "SEVERITY.HIGH": 0,
+          "SEVERITY.LOW": 0,
+          "SEVERITY.MEDIUM": 1,
+          "SEVERITY.UNDEFINED": 0,
+          "loc": 90,
+          "nosec": 0,
+          "skipped_tests": 0
+        }
+      },
+      "results": [
+        {
+          "code": "103         db.create_all()\n104     app.run(debug=False, host='0.0.0.0')\n105     \n",
+          "col_offset": 30,
+          "end_col_offset": 39,
+          "filename": "/home/pratham/HonorsThesis/apps/APP01/app.py",
+          "issue_confidence": "MEDIUM",
+          "issue_cwe": {
+            "id": 605,
+            "link": "https://cwe.mitre.org/data/definitions/605.html"
+          },
+          "issue_severity": "MEDIUM",
+          "issue_text": "Possible binding to all interfaces.",
+          "line_number": 104,
+          "line_range": [
+            104
+          ],
+          "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html",
+          "test_id": "B104",
+          "test_name": "hardcoded_bind_all_interfaces"
+        }
+      ]
+    },
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [
+        {
+          "check_id": "python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host",
+          "path": "/home/pratham/HonorsThesis/apps/APP01/app.py",
+          "start": {
+            "line": 104,
+            "col": 5,
+            "offset": 4056
+          },
+          "end": {
+            "line": 104,
+            "col": 41,
+            "offset": 4092
+          },
+          "extra": {
+            "message": "Running flask app with host 0.0.0.0 could expose the server publicly.",
+            "metadata": {
+              "cwe": [
+                "CWE-668: Exposure of Resource to Wrong Sphere"
+              ],
+              "owasp": [
+                "A01:2021 - Broken Access Control",
+                "A01:2025 - Broken Access Control"
+              ],
+              "category": "security",
+              "technology": [
+                "flask"
+              ],
+              "references": [
+                "https://owasp.org/Top10/A01_2021-Broken_Access_Control"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Other"
+              ],
+              "source": "https://semgrep.dev/r/python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host",
+              "shortlink": "https://sg.run/eLby"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP01/app.py"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 0.5067460536956787,
+        "profiling_times": {
+          "config_time": 1.339390754699707,
+          "core_time": 1.7461457252502441,
+          "ignores_time": 0.0008203983306884766,
+          "total_time": 3.369224786758423
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.18316102027893066,
+          "per_file_time": {
+            "mean": 0.18316102027893066,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 0.9933774834437086,
+          "rules_selected_ratio": 0.08609271523178808,
+          "rules_matched_ratio": 0.08609271523178808
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 301516544
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  },
+  "APP02": {
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+          "path": "/home/pratham/HonorsThesis/apps/APP02/app.js",
+          "start": {
+            "line": 28,
+            "col": 9,
+            "offset": 909
+          },
+          "end": {
+            "line": 33,
+            "col": 3,
+            "offset": 1030
+          },
+          "extra": {
+            "message": "Don’t use the default session cookie name Using the default session cookie name can open your app to attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to fingerprint the server and target attacks accordingly.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+              "shortlink": "https://sg.run/1Z5x"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+          "path": "/home/pratham/HonorsThesis/apps/APP02/app.js",
+          "start": {
+            "line": 28,
+            "col": 9,
+            "offset": 909
+          },
+          "end": {
+            "line": 33,
+            "col": 3,
+            "offset": 1030
+          },
+          "extra": {
+            "message": "Default session middleware settings: `domain` not set. It indicates the domain of the cookie; use it to compare against the domain of the server in which the URL is being requested. If they match, then check the path attribute next.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+              "shortlink": "https://sg.run/rd41"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+          "path": "/home/pratham/HonorsThesis/apps/APP02/app.js",
+          "start": {
+            "line": 28,
+            "col": 9,
+            "offset": 909
+          },
+          "end": {
+            "line": 33,
+            "col": 3,
+            "offset": 1030
+          },
+          "extra": {
+            "message": "Default session middleware settings: `expires` not set. Use it to set expiration date for persistent cookies.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+              "shortlink": "https://sg.run/N4eG"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+          "path": "/home/pratham/HonorsThesis/apps/APP02/app.js",
+          "start": {
+            "line": 28,
+            "col": 9,
+            "offset": 909
+          },
+          "end": {
+            "line": 33,
+            "col": 3,
+            "offset": 1030
+          },
+          "extra": {
+            "message": "Default session middleware settings: `httpOnly` not set. It ensures the cookie is sent only over HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+              "shortlink": "https://sg.run/ydBO"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+          "path": "/home/pratham/HonorsThesis/apps/APP02/app.js",
+          "start": {
+            "line": 28,
+            "col": 9,
+            "offset": 909
+          },
+          "end": {
+            "line": 33,
+            "col": 3,
+            "offset": 1030
+          },
+          "extra": {
+            "message": "Default session middleware settings: `path` not set. It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+              "shortlink": "https://sg.run/b7pd"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP02/app.js"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 0.526637077331543,
+        "profiling_times": {
+          "config_time": 1.21988844871521,
+          "core_time": 1.7301990985870361,
+          "ignores_time": 0.0002396106719970703,
+          "total_time": 3.11090350151062
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.33442091941833496,
+          "per_file_time": {
+            "mean": 0.33442091941833496,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 1,
+          "rules_selected_ratio": 0.3055555555555556,
+          "rules_matched_ratio": 0.3055555555555556
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 181386944
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  },
+  "APP03": {
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP03/.env",
+          "/home/pratham/HonorsThesis/apps/APP03/Dockerfile",
+          "/home/pratham/HonorsThesis/apps/APP03/README.md",
+          "/home/pratham/HonorsThesis/apps/APP03/create_users_table.sql",
+          "/home/pratham/HonorsThesis/apps/APP03/db.php",
+          "/home/pratham/HonorsThesis/apps/APP03/index.php",
+          "/home/pratham/HonorsThesis/apps/APP03/login.php",
+          "/home/pratham/HonorsThesis/apps/APP03/logout.php",
+          "/home/pratham/HonorsThesis/apps/APP03/php.ini",
+          "/home/pratham/HonorsThesis/apps/APP03/register.php",
+          "/home/pratham/HonorsThesis/apps/APP03/upload.php"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 1.3900949954986572,
+        "profiling_times": {
+          "config_time": 2.641756057739258,
+          "core_time": 2.3272132873535156,
+          "ignores_time": 0.0016238689422607422,
+          "total_time": 5.135985374450684
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.42232680320739746,
+          "per_file_time": {
+            "mean": 0.014562993214048189,
+            "std_dev": 0.0001924141114050058
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 0.9920106524633822,
+          "rules_selected_ratio": 0.0426098535286285,
+          "rules_matched_ratio": 0.0426098535286285
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 1216368768
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  },
+  "APP04": {
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+          "path": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+          "start": {
+            "line": 18,
+            "col": 9,
+            "offset": 572
+          },
+          "end": {
+            "line": 23,
+            "col": 3,
+            "offset": 702
+          },
+          "extra": {
+            "message": "Don’t use the default session cookie name Using the default session cookie name can open your app to attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to fingerprint the server and target attacks accordingly.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+              "shortlink": "https://sg.run/1Z5x"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+          "path": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+          "start": {
+            "line": 18,
+            "col": 9,
+            "offset": 572
+          },
+          "end": {
+            "line": 23,
+            "col": 3,
+            "offset": 702
+          },
+          "extra": {
+            "message": "Default session middleware settings: `domain` not set. It indicates the domain of the cookie; use it to compare against the domain of the server in which the URL is being requested. If they match, then check the path attribute next.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+              "shortlink": "https://sg.run/rd41"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+          "path": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+          "start": {
+            "line": 18,
+            "col": 9,
+            "offset": 572
+          },
+          "end": {
+            "line": 23,
+            "col": 3,
+            "offset": 702
+          },
+          "extra": {
+            "message": "Default session middleware settings: `expires` not set. Use it to set expiration date for persistent cookies.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+              "shortlink": "https://sg.run/N4eG"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+          "path": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+          "start": {
+            "line": 18,
+            "col": 9,
+            "offset": 572
+          },
+          "end": {
+            "line": 23,
+            "col": 3,
+            "offset": 702
+          },
+          "extra": {
+            "message": "Default session middleware settings: `httpOnly` not set. It ensures the cookie is sent only over HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+              "shortlink": "https://sg.run/ydBO"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+          "path": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+          "start": {
+            "line": 18,
+            "col": 9,
+            "offset": 572
+          },
+          "end": {
+            "line": 23,
+            "col": 3,
+            "offset": 702
+          },
+          "extra": {
+            "message": "Default session middleware settings: `path` not set. It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+              "shortlink": "https://sg.run/b7pd"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-secure",
+          "path": "/home/pratham/HonorsThesis/apps/APP04/server.js",
+          "start": {
+            "line": 18,
+            "col": 9,
+            "offset": 572
+          },
+          "end": {
+            "line": 23,
+            "col": 3,
+            "offset": 702
+          },
+          "extra": {
+            "message": "Default session middleware settings: `secure` not set. It ensures the browser only sends the cookie over HTTPS.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-secure",
+              "shortlink": "https://sg.run/9oKz"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP04/client/src/App.js",
+          "/home/pratham/HonorsThesis/apps/APP04/client/src/index.js",
+          "/home/pratham/HonorsThesis/apps/APP04/models/User.js",
+          "/home/pratham/HonorsThesis/apps/APP04/server.js"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 0.22503185272216797,
+        "profiling_times": {
+          "config_time": 1.1855504512786865,
+          "core_time": 1.563295841217041,
+          "ignores_time": 0.00026154518127441406,
+          "total_time": 2.9988343715667725
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.36463093757629395,
+          "per_file_time": {
+            "mean": 0.09115773439407349,
+            "std_dev": 0.014079122383190422
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 1,
+          "rules_selected_ratio": 0.0763888888888889,
+          "rules_matched_ratio": 0.0763888888888889
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 191952384
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  },
+  "APP05": {
+    "bandit": {
+      "errors": [],
+      "generated_at": "2026-03-29T21:48:37Z",
+      "metrics": {
+        "/home/pratham/HonorsThesis/apps/APP05/app.py": {
+          "CONFIDENCE.HIGH": 0,
+          "CONFIDENCE.LOW": 0,
+          "CONFIDENCE.MEDIUM": 3,
+          "CONFIDENCE.UNDEFINED": 0,
+          "SEVERITY.HIGH": 1,
+          "SEVERITY.LOW": 1,
+          "SEVERITY.MEDIUM": 1,
+          "SEVERITY.UNDEFINED": 0,
+          "loc": 82,
+          "nosec": 0,
+          "skipped_tests": 0
+        },
+        "_totals": {
+          "CONFIDENCE.HIGH": 0,
+          "CONFIDENCE.LOW": 0,
+          "CONFIDENCE.MEDIUM": 3,
+          "CONFIDENCE.UNDEFINED": 0,
+          "SEVERITY.HIGH": 1,
+          "SEVERITY.LOW": 1,
+          "SEVERITY.MEDIUM": 1,
+          "SEVERITY.UNDEFINED": 0,
+          "loc": 82,
+          "nosec": 0,
+          "skipped_tests": 0
+        }
+      },
+      "results": [
+        {
+          "code": "5 app = Flask(__name__)\n6 app.config['SECRET_KEY'] = 'your_secret_key'\n7 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'\n",
+          "col_offset": 11,
+          "end_col_offset": 23,
+          "filename": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+          "issue_confidence": "MEDIUM",
+          "issue_cwe": {
+            "id": 259,
+            "link": "https://cwe.mitre.org/data/definitions/259.html"
+          },
+          "issue_severity": "LOW",
+          "issue_text": "Possible hardcoded password: 'your_secret_key'",
+          "line_number": 6,
+          "line_range": [
+            6
+          ],
+          "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html",
+          "test_id": "B105",
+          "test_name": "hardcoded_password_string"
+        },
+        {
+          "code": "102         db.create_all()\n103     app.run(host='0.0.0.0', port=5000, debug=True)\n",
+          "col_offset": 4,
+          "end_col_offset": 50,
+          "filename": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+          "issue_confidence": "MEDIUM",
+          "issue_cwe": {
+            "id": 94,
+            "link": "https://cwe.mitre.org/data/definitions/94.html"
+          },
+          "issue_severity": "HIGH",
+          "issue_text": "A Flask app appears to be run with debug=True, which exposes the Werkzeug debugger and allows the execution of arbitrary code.",
+          "line_number": 103,
+          "line_range": [
+            103
+          ],
+          "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b201_flask_debug_true.html",
+          "test_id": "B201",
+          "test_name": "flask_debug_true"
+        },
+        {
+          "code": "102         db.create_all()\n103     app.run(host='0.0.0.0', port=5000, debug=True)\n",
+          "col_offset": 17,
+          "end_col_offset": 26,
+          "filename": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+          "issue_confidence": "MEDIUM",
+          "issue_cwe": {
+            "id": 605,
+            "link": "https://cwe.mitre.org/data/definitions/605.html"
+          },
+          "issue_severity": "MEDIUM",
+          "issue_text": "Possible binding to all interfaces.",
+          "line_number": 103,
+          "line_range": [
+            103
+          ],
+          "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html",
+          "test_id": "B104",
+          "test_name": "hardcoded_bind_all_interfaces"
+        }
+      ]
+    },
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [
+        {
+          "check_id": "python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host",
+          "path": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+          "start": {
+            "line": 103,
+            "col": 5,
+            "offset": 3108
+          },
+          "end": {
+            "line": 103,
+            "col": 51,
+            "offset": 3154
+          },
+          "extra": {
+            "message": "Running flask app with host 0.0.0.0 could expose the server publicly.",
+            "metadata": {
+              "cwe": [
+                "CWE-668: Exposure of Resource to Wrong Sphere"
+              ],
+              "owasp": [
+                "A01:2021 - Broken Access Control",
+                "A01:2025 - Broken Access Control"
+              ],
+              "category": "security",
+              "technology": [
+                "flask"
+              ],
+              "references": [
+                "https://owasp.org/Top10/A01_2021-Broken_Access_Control"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Other"
+              ],
+              "source": "https://semgrep.dev/r/python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host",
+              "shortlink": "https://sg.run/eLby"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "python.flask.security.audit.debug-enabled.debug-enabled",
+          "path": "/home/pratham/HonorsThesis/apps/APP05/app.py",
+          "start": {
+            "line": 103,
+            "col": 5,
+            "offset": 3108
+          },
+          "end": {
+            "line": 103,
+            "col": 51,
+            "offset": 3154
+          },
+          "extra": {
+            "message": "Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug' using system environment variables.",
+            "metadata": {
+              "cwe": [
+                "CWE-489: Active Debug Code"
+              ],
+              "owasp": "A06:2017 - Security Misconfiguration",
+              "references": [
+                "https://labs.detectify.com/2015/10/02/how-patreon-got-hacked-publicly-exposed-werkzeug-debugger/"
+              ],
+              "category": "security",
+              "technology": [
+                "flask"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Active Debug Code"
+              ],
+              "source": "https://semgrep.dev/r/python.flask.security.audit.debug-enabled.debug-enabled",
+              "shortlink": "https://sg.run/dKrd"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP05/app.py"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 0.23079204559326172,
+        "profiling_times": {
+          "config_time": 0.7415792942047119,
+          "core_time": 0.9541585445404053,
+          "ignores_time": 0.0003616809844970703,
+          "total_time": 1.798419713973999
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.08265805244445801,
+          "per_file_time": {
+            "mean": 0.08265805244445801,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 0.9933774834437086,
+          "rules_selected_ratio": 0.08609271523178808,
+          "rules_matched_ratio": 0.08609271523178808
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 296585600
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  },
+  "APP06": {
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 13,
+            "col": 9,
+            "offset": 443
+          },
+          "end": {
+            "line": 17,
+            "col": 3,
+            "offset": 553
+          },
+          "extra": {
+            "message": "Don’t use the default session cookie name Using the default session cookie name can open your app to attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to fingerprint the server and target attacks accordingly.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+              "shortlink": "https://sg.run/1Z5x"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 13,
+            "col": 9,
+            "offset": 443
+          },
+          "end": {
+            "line": 17,
+            "col": 3,
+            "offset": 553
+          },
+          "extra": {
+            "message": "Default session middleware settings: `domain` not set. It indicates the domain of the cookie; use it to compare against the domain of the server in which the URL is being requested. If they match, then check the path attribute next.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+              "shortlink": "https://sg.run/rd41"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 13,
+            "col": 9,
+            "offset": 443
+          },
+          "end": {
+            "line": 17,
+            "col": 3,
+            "offset": 553
+          },
+          "extra": {
+            "message": "Default session middleware settings: `expires` not set. Use it to set expiration date for persistent cookies.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+              "shortlink": "https://sg.run/N4eG"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 13,
+            "col": 9,
+            "offset": 443
+          },
+          "end": {
+            "line": 17,
+            "col": 3,
+            "offset": 553
+          },
+          "extra": {
+            "message": "Default session middleware settings: `httpOnly` not set. It ensures the cookie is sent only over HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+              "shortlink": "https://sg.run/ydBO"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 13,
+            "col": 9,
+            "offset": 443
+          },
+          "end": {
+            "line": 17,
+            "col": 3,
+            "offset": 553
+          },
+          "extra": {
+            "message": "Default session middleware settings: `path` not set. It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+              "shortlink": "https://sg.run/b7pd"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-secure",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 13,
+            "col": 9,
+            "offset": 443
+          },
+          "end": {
+            "line": 17,
+            "col": 3,
+            "offset": 553
+          },
+          "extra": {
+            "message": "Default session middleware settings: `secure` not set. It ensures the browser only sends the cookie over HTTPS.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-secure",
+              "shortlink": "https://sg.run/9oKz"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.xss.direct-response-write.direct-response-write",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 256,
+            "col": 14,
+            "offset": 6842
+          },
+          "end": {
+            "line": 261,
+            "col": 7,
+            "offset": 7043
+          },
+          "extra": {
+            "message": "Detected directly writing to a Response object from user-defined input. This bypasses any HTML escaping and may expose your application to a Cross-Site-scripting (XSS) vulnerability. Instead, use 'resp.render()' to render safely escaped HTML.",
+            "metadata": {
+              "interfile": true,
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "MEDIUM",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.xss.direct-response-write.direct-response-write",
+              "shortlink": "https://sg.run/vzGl"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.injection.raw-html-format.raw-html-format",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 257,
+            "col": 1,
+            "offset": 6865
+          },
+          "end": {
+            "line": 258,
+            "col": 1,
+            "offset": 6898
+          },
+          "extra": {
+            "message": "User data flows into the host portion of this manually-constructed HTML. This can introduce a Cross-Site-Scripting (XSS) vulnerability if this comes from user-provided input. Consider using a sanitization library such as DOMPurify to sanitize the HTML within.",
+            "metadata": {
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.injection.raw-html-format.raw-html-format",
+              "shortlink": "https://sg.run/5DO3"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.injection.raw-html-format.raw-html-format",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 258,
+            "col": 1,
+            "offset": 6898
+          },
+          "end": {
+            "line": 259,
+            "col": 1,
+            "offset": 6936
+          },
+          "extra": {
+            "message": "User data flows into the host portion of this manually-constructed HTML. This can introduce a Cross-Site-Scripting (XSS) vulnerability if this comes from user-provided input. Consider using a sanitization library such as DOMPurify to sanitize the HTML within.",
+            "metadata": {
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.injection.raw-html-format.raw-html-format",
+              "shortlink": "https://sg.run/5DO3"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.injection.raw-html-format.raw-html-format",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 259,
+            "col": 1,
+            "offset": 6936
+          },
+          "end": {
+            "line": 260,
+            "col": 1,
+            "offset": 6976
+          },
+          "extra": {
+            "message": "User data flows into the host portion of this manually-constructed HTML. This can introduce a Cross-Site-Scripting (XSS) vulnerability if this comes from user-provided input. Consider using a sanitization library such as DOMPurify to sanitize the HTML within.",
+            "metadata": {
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.injection.raw-html-format.raw-html-format",
+              "shortlink": "https://sg.run/5DO3"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.injection.raw-html-format.raw-html-format",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 260,
+            "col": 1,
+            "offset": 6976
+          },
+          "end": {
+            "line": 261,
+            "col": 1,
+            "offset": 7037
+          },
+          "extra": {
+            "message": "User data flows into the host portion of this manually-constructed HTML. This can introduce a Cross-Site-Scripting (XSS) vulnerability if this comes from user-provided input. Consider using a sanitization library such as DOMPurify to sanitize the HTML within.",
+            "metadata": {
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.injection.raw-html-format.raw-html-format",
+              "shortlink": "https://sg.run/5DO3"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.xss.direct-response-write.direct-response-write",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 281,
+            "col": 14,
+            "offset": 7466
+          },
+          "end": {
+            "line": 288,
+            "col": 7,
+            "offset": 7775
+          },
+          "extra": {
+            "message": "Detected directly writing to a Response object from user-defined input. This bypasses any HTML escaping and may expose your application to a Cross-Site-scripting (XSS) vulnerability. Instead, use 'resp.render()' to render safely escaped HTML.",
+            "metadata": {
+              "interfile": true,
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "MEDIUM",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.xss.direct-response-write.direct-response-write",
+              "shortlink": "https://sg.run/vzGl"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.injection.raw-html-format.raw-html-format",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 283,
+            "col": 1,
+            "offset": 7519
+          },
+          "end": {
+            "line": 284,
+            "col": 1,
+            "offset": 7585
+          },
+          "extra": {
+            "message": "User data flows into the host portion of this manually-constructed HTML. This can introduce a Cross-Site-Scripting (XSS) vulnerability if this comes from user-provided input. Consider using a sanitization library such as DOMPurify to sanitize the HTML within.",
+            "metadata": {
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.injection.raw-html-format.raw-html-format",
+              "shortlink": "https://sg.run/5DO3"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.injection.raw-html-format.raw-html-format",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 284,
+            "col": 1,
+            "offset": 7585
+          },
+          "end": {
+            "line": 285,
+            "col": 1,
+            "offset": 7641
+          },
+          "extra": {
+            "message": "User data flows into the host portion of this manually-constructed HTML. This can introduce a Cross-Site-Scripting (XSS) vulnerability if this comes from user-provided input. Consider using a sanitization library such as DOMPurify to sanitize the HTML within.",
+            "metadata": {
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.injection.raw-html-format.raw-html-format",
+              "shortlink": "https://sg.run/5DO3"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.injection.raw-html-format.raw-html-format",
+          "path": "/home/pratham/HonorsThesis/apps/APP06/app.js",
+          "start": {
+            "line": 285,
+            "col": 1,
+            "offset": 7641
+          },
+          "end": {
+            "line": 286,
+            "col": 1,
+            "offset": 7711
+          },
+          "extra": {
+            "message": "User data flows into the host portion of this manually-constructed HTML. This can introduce a Cross-Site-Scripting (XSS) vulnerability if this comes from user-provided input. Consider using a sanitization library such as DOMPurify to sanitize the HTML within.",
+            "metadata": {
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.injection.raw-html-format.raw-html-format",
+              "shortlink": "https://sg.run/5DO3"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP06/app.js"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 0.15564918518066406,
+        "profiling_times": {
+          "config_time": 0.6943178176879883,
+          "core_time": 1.2150208950042725,
+          "ignores_time": 0.00018167495727539062,
+          "total_time": 2.0081963539123535
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.4782588481903076,
+          "per_file_time": {
+            "mean": 0.4782588481903076,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 1,
+          "rules_selected_ratio": 0.4166666666666667,
+          "rules_matched_ratio": 0.4166666666666667
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 217004352
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  },
+  "APP07": {
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [
+        {
+          "check_id": "yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+          "path": "/home/pratham/HonorsThesis/apps/APP07/docker-compose.yml",
+          "start": {
+            "line": 20,
+            "col": 3,
+            "offset": 304
+          },
+          "end": {
+            "line": 20,
+            "col": 5,
+            "offset": 306
+          },
+          "extra": {
+            "message": "Service 'db' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this.",
+            "metadata": {
+              "cwe": [
+                "CWE-732: Incorrect Permission Assignment for Critical Resource"
+              ],
+              "owasp": [
+                "A05:2021 - Security Misconfiguration",
+                "A06:2017 - Security Misconfiguration",
+                "A02:2025 - Security Misconfiguration"
+              ],
+              "references": [
+                "https://raesene.github.io/blog/2019/06/01/docker-capabilities-and-no-new-privs/",
+                "https://www.kernel.org/doc/Documentation/prctl/no_new_privs.txt",
+                "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-4-add-no-new-privileges-flag"
+              ],
+              "category": "security",
+              "technology": [
+                "docker-compose"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "audit"
+              ],
+              "likelihood": "LOW",
+              "impact": "HIGH",
+              "confidence": "LOW",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Improper Authorization"
+              ],
+              "source": "https://semgrep.dev/r/yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+              "shortlink": "https://sg.run/0n8q"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+          "path": "/home/pratham/HonorsThesis/apps/APP07/docker-compose.yml",
+          "start": {
+            "line": 20,
+            "col": 3,
+            "offset": 304
+          },
+          "end": {
+            "line": 20,
+            "col": 5,
+            "offset": 306
+          },
+          "extra": {
+            "message": "Service 'db' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this.",
+            "metadata": {
+              "cwe": [
+                "CWE-732: Incorrect Permission Assignment for Critical Resource"
+              ],
+              "owasp": [
+                "A05:2021 - Security Misconfiguration",
+                "A06:2017 - Security Misconfiguration",
+                "A02:2025 - Security Misconfiguration"
+              ],
+              "references": [
+                "https://docs.docker.com/compose/compose-file/compose-file-v3/#domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir",
+                "https://blog.atomist.com/security-of-docker-kubernetes/",
+                "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-8-set-filesystem-and-volumes-to-read-only"
+              ],
+              "category": "security",
+              "technology": [
+                "docker-compose"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "audit"
+              ],
+              "likelihood": "LOW",
+              "impact": "HIGH",
+              "confidence": "LOW",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Improper Authorization"
+              ],
+              "source": "https://semgrep.dev/r/yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+              "shortlink": "https://sg.run/e4JE"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP07/Dockerfile",
+          "/home/pratham/HonorsThesis/apps/APP07/README.md",
+          "/home/pratham/HonorsThesis/apps/APP07/create_tables.sql",
+          "/home/pratham/HonorsThesis/apps/APP07/dashboard.php",
+          "/home/pratham/HonorsThesis/apps/APP07/db.php",
+          "/home/pratham/HonorsThesis/apps/APP07/docker-compose.yml",
+          "/home/pratham/HonorsThesis/apps/APP07/index.php",
+          "/home/pratham/HonorsThesis/apps/APP07/logout.php",
+          "/home/pratham/HonorsThesis/apps/APP07/register.php"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 1.3853390216827393,
+        "profiling_times": {
+          "config_time": 2.4932992458343506,
+          "core_time": 2.2201409339904785,
+          "ignores_time": 0.0016841888427734375,
+          "total_time": 4.879616737365723
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.46739864349365234,
+          "per_file_time": {
+            "mean": 0.018695945739746096,
+            "std_dev": 0.00019985856876755865
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 0.9476923076923077,
+          "rules_selected_ratio": 0.10153846153846154,
+          "rules_matched_ratio": 0.10153846153846154
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 1143320576
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  },
+  "APP08": {
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+          "path": "/home/pratham/HonorsThesis/apps/APP08/server.js",
+          "start": {
+            "line": 9,
+            "col": 9,
+            "offset": 230
+          },
+          "end": {
+            "line": 9,
+            "col": 78,
+            "offset": 299
+          },
+          "extra": {
+            "message": "Don’t use the default session cookie name Using the default session cookie name can open your app to attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to fingerprint the server and target attacks accordingly.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+              "shortlink": "https://sg.run/1Z5x"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+          "path": "/home/pratham/HonorsThesis/apps/APP08/server.js",
+          "start": {
+            "line": 9,
+            "col": 9,
+            "offset": 230
+          },
+          "end": {
+            "line": 9,
+            "col": 78,
+            "offset": 299
+          },
+          "extra": {
+            "message": "Default session middleware settings: `domain` not set. It indicates the domain of the cookie; use it to compare against the domain of the server in which the URL is being requested. If they match, then check the path attribute next.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+              "shortlink": "https://sg.run/rd41"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+          "path": "/home/pratham/HonorsThesis/apps/APP08/server.js",
+          "start": {
+            "line": 9,
+            "col": 9,
+            "offset": 230
+          },
+          "end": {
+            "line": 9,
+            "col": 78,
+            "offset": 299
+          },
+          "extra": {
+            "message": "Default session middleware settings: `expires` not set. Use it to set expiration date for persistent cookies.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+              "shortlink": "https://sg.run/N4eG"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+          "path": "/home/pratham/HonorsThesis/apps/APP08/server.js",
+          "start": {
+            "line": 9,
+            "col": 9,
+            "offset": 230
+          },
+          "end": {
+            "line": 9,
+            "col": 78,
+            "offset": 299
+          },
+          "extra": {
+            "message": "Default session middleware settings: `httpOnly` not set. It ensures the cookie is sent only over HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+              "shortlink": "https://sg.run/ydBO"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+          "path": "/home/pratham/HonorsThesis/apps/APP08/server.js",
+          "start": {
+            "line": 9,
+            "col": 9,
+            "offset": 230
+          },
+          "end": {
+            "line": 9,
+            "col": 78,
+            "offset": 299
+          },
+          "extra": {
+            "message": "Default session middleware settings: `path` not set. It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+              "shortlink": "https://sg.run/b7pd"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-secure",
+          "path": "/home/pratham/HonorsThesis/apps/APP08/server.js",
+          "start": {
+            "line": 9,
+            "col": 9,
+            "offset": 230
+          },
+          "end": {
+            "line": 9,
+            "col": 78,
+            "offset": 299
+          },
+          "extra": {
+            "message": "Default session middleware settings: `secure` not set. It ensures the browser only sends the cookie over HTTPS.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-secure",
+              "shortlink": "https://sg.run/9oKz"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-session-hardcoded-secret.express-session-hardcoded-secret",
+          "path": "/home/pratham/HonorsThesis/apps/APP08/server.js",
+          "start": {
+            "line": 9,
+            "col": 19,
+            "offset": 240
+          },
+          "end": {
+            "line": 9,
+            "col": 35,
+            "offset": 256
+          },
+          "extra": {
+            "message": "A hard-coded credential was detected. It is not recommended to store credentials in source-code, as this risks secrets being leaked and used by either an internal or external malicious adversary. It is recommended to use environment variables to securely provide credentials or retrieve credentials from a secure vault or HSM (Hardware Security Module).",
+            "metadata": {
+              "interfile": true,
+              "cwe": [
+                "CWE-798: Use of Hard-coded Credentials"
+              ],
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html"
+              ],
+              "owasp": [
+                "A07:2021 - Identification and Authentication Failures",
+                "A07:2025 - Authentication Failures"
+              ],
+              "category": "security",
+              "technology": [
+                "express",
+                "secrets"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "HIGH",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Hard-coded Secrets"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-session-hardcoded-secret.express-session-hardcoded-secret",
+              "shortlink": "https://sg.run/LYvG"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP08/server.js",
+          "/home/pratham/HonorsThesis/apps/APP08/src/App.js",
+          "/home/pratham/HonorsThesis/apps/APP08/src/ItemList.js",
+          "/home/pratham/HonorsThesis/apps/APP08/src/Login.js",
+          "/home/pratham/HonorsThesis/apps/APP08/src/Register.js",
+          "/home/pratham/HonorsThesis/apps/APP08/src/index.js"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 0.1356661319732666,
+        "profiling_times": {
+          "config_time": 0.9072976112365723,
+          "core_time": 0.9641144275665283,
+          "ignores_time": 0.00015234947204589844,
+          "total_time": 2.070129871368408
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.25345468521118164,
+          "per_file_time": {
+            "mean": 0.042242447535196945,
+            "std_dev": 0.002120685170982344
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 1,
+          "rules_selected_ratio": 0.05092592592592592,
+          "rules_matched_ratio": 0.05092592592592592
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 193111488
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  },
+  "APP09": {
+    "bandit": {
+      "errors": [],
+      "generated_at": "2026-03-30T09:10:34Z",
+      "metrics": {
+        "/home/pratham/HonorsThesis/apps/APP09/app.py": {
+          "CONFIDENCE.HIGH": 0,
+          "CONFIDENCE.LOW": 0,
+          "CONFIDENCE.MEDIUM": 2,
+          "CONFIDENCE.UNDEFINED": 0,
+          "SEVERITY.HIGH": 0,
+          "SEVERITY.LOW": 1,
+          "SEVERITY.MEDIUM": 1,
+          "SEVERITY.UNDEFINED": 0,
+          "loc": 83,
+          "nosec": 0,
+          "skipped_tests": 0
+        },
+        "_totals": {
+          "CONFIDENCE.HIGH": 0,
+          "CONFIDENCE.LOW": 0,
+          "CONFIDENCE.MEDIUM": 2,
+          "CONFIDENCE.UNDEFINED": 0,
+          "SEVERITY.HIGH": 0,
+          "SEVERITY.LOW": 1,
+          "SEVERITY.MEDIUM": 1,
+          "SEVERITY.UNDEFINED": 0,
+          "loc": 83,
+          "nosec": 0,
+          "skipped_tests": 0
+        }
+      },
+      "results": [
+        {
+          "code": "7 app = Flask(__name__)\n8 app.config['SECRET_KEY'] = 'your_secret_key'\n9 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'\n",
+          "col_offset": 11,
+          "end_col_offset": 23,
+          "filename": "/home/pratham/HonorsThesis/apps/APP09/app.py",
+          "issue_confidence": "MEDIUM",
+          "issue_cwe": {
+            "id": 259,
+            "link": "https://cwe.mitre.org/data/definitions/259.html"
+          },
+          "issue_severity": "LOW",
+          "issue_text": "Possible hardcoded password: 'your_secret_key'",
+          "line_number": 8,
+          "line_range": [
+            8
+          ],
+          "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html",
+          "test_id": "B105",
+          "test_name": "hardcoded_password_string"
+        },
+        {
+          "code": "95         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)\n96     app.run(debug=False, host='0.0.0.0', port=5000)\n",
+          "col_offset": 30,
+          "end_col_offset": 39,
+          "filename": "/home/pratham/HonorsThesis/apps/APP09/app.py",
+          "issue_confidence": "MEDIUM",
+          "issue_cwe": {
+            "id": 605,
+            "link": "https://cwe.mitre.org/data/definitions/605.html"
+          },
+          "issue_severity": "MEDIUM",
+          "issue_text": "Possible binding to all interfaces.",
+          "line_number": 96,
+          "line_range": [
+            96
+          ],
+          "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html",
+          "test_id": "B104",
+          "test_name": "hardcoded_bind_all_interfaces"
+        }
+      ]
+    },
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [
+        {
+          "check_id": "python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host",
+          "path": "/home/pratham/HonorsThesis/apps/APP09/app.py",
+          "start": {
+            "line": 96,
+            "col": 5,
+            "offset": 3288
+          },
+          "end": {
+            "line": 96,
+            "col": 52,
+            "offset": 3335
+          },
+          "extra": {
+            "message": "Running flask app with host 0.0.0.0 could expose the server publicly.",
+            "metadata": {
+              "cwe": [
+                "CWE-668: Exposure of Resource to Wrong Sphere"
+              ],
+              "owasp": [
+                "A01:2021 - Broken Access Control",
+                "A01:2025 - Broken Access Control"
+              ],
+              "category": "security",
+              "technology": [
+                "flask"
+              ],
+              "references": [
+                "https://owasp.org/Top10/A01_2021-Broken_Access_Control"
+              ],
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "MEDIUM",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Other"
+              ],
+              "source": "https://semgrep.dev/r/python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host",
+              "shortlink": "https://sg.run/eLby"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP09/app.py"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 0.24480891227722168,
+        "profiling_times": {
+          "config_time": 0.9549822807312012,
+          "core_time": 0.9298222064971924,
+          "ignores_time": 0.0003299713134765625,
+          "total_time": 2.0686228275299072
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.07848477363586426,
+          "per_file_time": {
+            "mean": 0.07848477363586426,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 0.9933774834437086,
+          "rules_selected_ratio": 0.08609271523178808,
+          "rules_matched_ratio": 0.08609271523178808
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 297112704
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  },
+  "APP10": {
+    "semgrep": {
+      "version": "1.156.0",
+      "results": [
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+          "path": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+          "start": {
+            "line": 17,
+            "col": 9,
+            "offset": 408
+          },
+          "end": {
+            "line": 21,
+            "col": 3,
+            "offset": 483
+          },
+          "extra": {
+            "message": "Don’t use the default session cookie name Using the default session cookie name can open your app to attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to fingerprint the server and target attacks accordingly.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
+              "shortlink": "https://sg.run/1Z5x"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+          "path": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+          "start": {
+            "line": 17,
+            "col": 9,
+            "offset": 408
+          },
+          "end": {
+            "line": 21,
+            "col": 3,
+            "offset": 483
+          },
+          "extra": {
+            "message": "Default session middleware settings: `domain` not set. It indicates the domain of the cookie; use it to compare against the domain of the server in which the URL is being requested. If they match, then check the path attribute next.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-domain",
+              "shortlink": "https://sg.run/rd41"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+          "path": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+          "start": {
+            "line": 17,
+            "col": 9,
+            "offset": 408
+          },
+          "end": {
+            "line": 21,
+            "col": 3,
+            "offset": 483
+          },
+          "extra": {
+            "message": "Default session middleware settings: `expires` not set. Use it to set expiration date for persistent cookies.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-expires",
+              "shortlink": "https://sg.run/N4eG"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+          "path": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+          "start": {
+            "line": 17,
+            "col": 9,
+            "offset": 408
+          },
+          "end": {
+            "line": 21,
+            "col": 3,
+            "offset": 483
+          },
+          "extra": {
+            "message": "Default session middleware settings: `httpOnly` not set. It ensures the cookie is sent only over HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-httponly",
+              "shortlink": "https://sg.run/ydBO"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+          "path": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+          "start": {
+            "line": 17,
+            "col": 9,
+            "offset": 408
+          },
+          "end": {
+            "line": 21,
+            "col": 3,
+            "offset": 483
+          },
+          "extra": {
+            "message": "Default session middleware settings: `path` not set. It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-path",
+              "shortlink": "https://sg.run/b7pd"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-secure",
+          "path": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+          "start": {
+            "line": 17,
+            "col": 9,
+            "offset": 408
+          },
+          "end": {
+            "line": 21,
+            "col": 3,
+            "offset": 483
+          },
+          "extra": {
+            "message": "Default session middleware settings: `secure` not set. It ensures the browser only sends the cookie over HTTPS.",
+            "metadata": {
+              "cwe": [
+                "CWE-522: Insufficiently Protected Credentials"
+              ],
+              "owasp": [
+                "A02:2017 - Broken Authentication",
+                "A04:2021 - Insecure Design",
+                "A06:2025 - Insecure Design"
+              ],
+              "source-rule-url": "https://expressjs.com/en/advanced/best-practice-security.html",
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "LOW",
+              "confidence": "MEDIUM",
+              "references": [
+                "https://owasp.org/Top10/A04_2021-Insecure_Design"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Cryptographic Issues"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-cookie-settings.express-cookie-session-no-secure",
+              "shortlink": "https://sg.run/9oKz"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.express-session-hardcoded-secret.express-session-hardcoded-secret",
+          "path": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+          "start": {
+            "line": 18,
+            "col": 3,
+            "offset": 420
+          },
+          "end": {
+            "line": 18,
+            "col": 19,
+            "offset": 436
+          },
+          "extra": {
+            "message": "A hard-coded credential was detected. It is not recommended to store credentials in source-code, as this risks secrets being leaked and used by either an internal or external malicious adversary. It is recommended to use environment variables to securely provide credentials or retrieve credentials from a secure vault or HSM (Hardware Security Module).",
+            "metadata": {
+              "interfile": true,
+              "cwe": [
+                "CWE-798: Use of Hard-coded Credentials"
+              ],
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html"
+              ],
+              "owasp": [
+                "A07:2021 - Identification and Authentication Failures",
+                "A07:2025 - Authentication Failures"
+              ],
+              "category": "security",
+              "technology": [
+                "express",
+                "secrets"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "HIGH",
+              "impact": "HIGH",
+              "confidence": "HIGH",
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "vulnerability_class": [
+                "Hard-coded Secrets"
+              ],
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.express-session-hardcoded-secret.express-session-hardcoded-secret",
+              "shortlink": "https://sg.run/LYvG"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        },
+        {
+          "check_id": "javascript.express.security.audit.xss.direct-response-write.direct-response-write",
+          "path": "/home/pratham/HonorsThesis/apps/APP10/app.js",
+          "start": {
+            "line": 124,
+            "col": 12,
+            "offset": 2670
+          },
+          "end": {
+            "line": 124,
+            "col": 45,
+            "offset": 2703
+          },
+          "extra": {
+            "message": "Detected directly writing to a Response object from user-defined input. This bypasses any HTML escaping and may expose your application to a Cross-Site-scripting (XSS) vulnerability. Instead, use 'resp.render()' to render safely escaped HTML.",
+            "metadata": {
+              "interfile": true,
+              "references": [
+                "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+              ],
+              "owasp": [
+                "A07:2017 - Cross-Site Scripting (XSS)",
+                "A03:2021 - Injection",
+                "A05:2025 - Injection"
+              ],
+              "cwe": [
+                "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+              ],
+              "category": "security",
+              "technology": [
+                "express"
+              ],
+              "cwe2022-top25": true,
+              "cwe2021-top25": true,
+              "subcategory": [
+                "vuln"
+              ],
+              "likelihood": "MEDIUM",
+              "impact": "MEDIUM",
+              "confidence": "MEDIUM",
+              "vulnerability_class": [
+                "Cross-Site-Scripting (XSS)"
+              ],
+              "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+              "source": "https://semgrep.dev/r/javascript.express.security.audit.xss.direct-response-write.direct-response-write",
+              "shortlink": "https://sg.run/vzGl"
+            },
+            "severity": "WARNING",
+            "fingerprint": "requires login",
+            "lines": "requires login",
+            "validation_state": "NO_VALIDATOR",
+            "engine_kind": "OSS"
+          }
+        }
+      ],
+      "errors": [],
+      "paths": {
+        "scanned": [
+          "/home/pratham/HonorsThesis/apps/APP10/app.js"
+        ]
+      },
+      "time": {
+        "rules": [],
+        "rules_parse_time": 0.16669917106628418,
+        "profiling_times": {
+          "config_time": 0.7211410999298096,
+          "core_time": 1.0359954833984375,
+          "ignores_time": 0.00017070770263671875,
+          "total_time": 1.9605767726898193
+        },
+        "parsing_time": {
+          "total_time": 0,
+          "per_file_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "scanning_time": {
+          "total_time": 0.16368579864501953,
+          "per_file_time": {
+            "mean": 0.16368579864501953,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_files": []
+        },
+        "matching_time": {
+          "total_time": 0,
+          "per_file_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+          "total_time": 0,
+          "per_def_and_rule_time": {
+            "mean": 0,
+            "std_dev": 0
+          },
+          "very_slow_stats": {
+            "time_ratio": 0,
+            "count_ratio": 0
+          },
+          "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+          "project_level_time": 0,
+          "file_level_time": 0,
+          "rules_with_project_prefilters_ratio": 0,
+          "rules_with_file_prefilters_ratio": 1,
+          "rules_selected_ratio": 0.4444444444444444,
+          "rules_matched_ratio": 0.4444444444444444
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 187780160
+      },
+      "engine_requested": "OSS",
+      "skipped_rules": [],
+      "profiling_results": []
+    }
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "app_id": "APP08",
+  "attack": "file_upload_race",
+  "concurrency": 50,
+  "duration_s": 30,
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/",
+    "item_list": "/",
+    "upload": null,
+    "logout": null,
+    "methods": {
+      "login": "GET",
+      "register": "GET",
+      "dashboard": "GET",
+      "item_create": "GET",
+      "item_list": "GET"
+    },
+    "csrf_required": false
+  },
+  "requests_total": 221800,
+  "successful_requests": 0,
+  "failed_requests": 221800,
+  "success_rate": 0.0,
+  "errors": [
+    {
+      "req_idx": 0,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 1,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 2,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 3,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 4,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 5,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 6,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 7,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 8,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 9,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 10,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 11,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 12,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 13,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 14,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 15,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 16,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 17,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 18,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 19,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 20,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 21,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 22,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 23,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 24,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 25,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 26,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 27,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 28,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    },
+    {
+      "req_idx": 29,
+      "status": 0,
+      "snippet": "http://localhost:8081None"
+    }
+  ],
+  "timing_stats": {
+    "min_ms": 0.01,
+    "max_ms": 101.39,
+    "mean_ms": 0.02,
+    "p50_ms": 0.01,
+    "p95_ms": 0.04,
+    "p99_ms": 0.11
+  },
+  "extra": {},
+  "timestamp_start": "2026-03-30T07:03:23.209333+00:00",
+  "timestamp_end": "2026-03-30T07:10:05.531970+00:00"
+}

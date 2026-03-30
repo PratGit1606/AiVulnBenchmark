@@ -133,5 +133,47 @@
       "item_list": "GET"
     },
     "csrf_required": false
+  },
+  "APP09": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/dashboard",
+    "item_create": "/dashboard",
+    "item_list": "/search",
+    "upload": "/upload",
+    "logout": "/logout",
+    "search": "/search",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "upload": "POST",
+      "logout": "GET",
+      "search": "GET"
+    },
+    "csrf_required": false
+  },
+  "APP10": {
+    "health": "/health",
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/items",
+    "item_list": "/items",
+    "upload": "/upload",
+    "logout": "/logout",
+    "methods": {
+      "health": "GET",
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "upload": "POST",
+      "logout": "GET"
+    },
+    "csrf_required": false
   }
 }

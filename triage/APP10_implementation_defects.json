@@ -1,0 +1,50 @@
+[
+  {
+    "type": "implementation_defect",
+    "endpoint": "register",
+    "path": "/register",
+    "method": "POST",
+    "status": 0,
+    "note": "register at /register (POST) returned HTTP 0"
+  },
+  {
+    "type": "implementation_defect",
+    "endpoint": "dashboard",
+    "path": "/",
+    "method": "GET",
+    "status": 0,
+    "note": "dashboard at / (GET) returned HTTP 0"
+  },
+  {
+    "type": "implementation_defect",
+    "endpoint": "item_create",
+    "path": "/items",
+    "method": "POST",
+    "status": 0,
+    "note": "item_create at /items (POST) returned HTTP 0"
+  },
+  {
+    "type": "implementation_defect",
+    "endpoint": "item_list",
+    "path": "/items",
+    "method": "GET",
+    "status": 0,
+    "note": "item_list at /items (GET) returned HTTP 0"
+  },
+  {
+    "type": "implementation_defect",
+    "endpoint": "upload",
+    "path": "/upload",
+    "method": "POST",
+    "status": 0,
+    "note": "upload at /upload (POST) returned HTTP 0"
+  },
+  {
+    "type": "implementation_defect",
+    "endpoint": "logout",
+    "path": "/logout",
+    "method": "GET",
+    "status": 0,
+    "note": "logout at /logout (GET) returned HTTP 0"
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "vuln_id": "APP09-OTHER-001",
+    "class": "other",
+    "tool_hits": [
+      "bandit",
+      "semgrep"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP09/app.py",
+        "line": 96
+      }
+    ],
+    "confidence": "medium",
+    "severity": "medium",
+    "evidence": "95         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)\n96     app.run(debug=False, host='0.0.0.0', port=5000)\n"
+  },
+  {
+    "vuln_id": "APP09-HARDCODE-002",
+    "class": "hardcoded_secret",
+    "tool_hits": [
+      "bandit"
+    ],
+    "locations": [
+      {
+        "file": "/home/pratham/HonorsThesis/apps/APP09/app.py",
+        "line": 8
+      }
+    ],
+    "confidence": "medium",
+    "severity": "low",
+    "evidence": "7 app = Flask(__name__)\n8 app.config['SECRET_KEY'] = 'your_secret_key'\n9 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'\n"
+  }
+]

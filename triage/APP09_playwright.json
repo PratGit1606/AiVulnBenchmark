@@ -1,0 +1,59 @@
+{
+  "app_id": "APP09",
+  "base_url": "http://localhost:8081",
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/dashboard",
+    "item_create": "/dashboard",
+    "item_list": "/search",
+    "upload": "/upload",
+    "logout": "/logout",
+    "search": "/search",
+    "methods": {
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "upload": "POST",
+      "logout": "GET",
+      "search": "GET"
+    },
+    "csrf_required": false
+  },
+  "timestamp": "2026-03-30T09:16:16.847108+00:00",
+  "results": [
+    {
+      "test": "xss_reflection",
+      "vulnerable": false,
+      "evidence": "Payload not reflected or executed on tested surfaces"
+    },
+    {
+      "test": "rate_limit",
+      "vulnerable": true,
+      "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+    },
+    {
+      "test": "file_upload_validation",
+      "vulnerable": false,
+      "evidence": "No file input found at /upload"
+    },
+    {
+      "test": "debug_console_rce",
+      "vulnerable": false,
+      "evidence": "Debug console not accessible on any known path"
+    },
+    {
+      "test": "user_enumeration",
+      "vulnerable": false,
+      "evidence": "Same error message for both"
+    },
+    {
+      "test": "idor_item_edit",
+      "vulnerable": false,
+      "evidence": "Item creation form not found at /dashboard"
+    }
+  ],
+  "vulnerable_count": 1
+}

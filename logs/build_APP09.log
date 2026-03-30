@@ -1,0 +1,42 @@
+
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 197B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.11-slim
+#2 DONE 0.3s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/6] FROM docker.io/library/python:3.11-slim@sha256:9358444059ed78e2975ada2c189f1c1a3144a5dab6f35bff8c981afb38946634
+#4 resolve docker.io/library/python:3.11-slim@sha256:9358444059ed78e2975ada2c189f1c1a3144a5dab6f35bff8c981afb38946634 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 3.14kB 0.0s done
+#5 DONE 0.0s
+
+#6 [3/6] COPY requirements.txt .
+#6 CACHED
+
+#7 [5/6] COPY . .
+#7 CACHED
+
+#8 [4/6] RUN pip install -r requirements.txt
+#8 CACHED
+
+#9 [2/6] WORKDIR /app
+#9 CACHED
+
+#10 [6/6] RUN mkdir uploads
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 writing image sha256:3078a09b7860153e9ed0bff2e546afb275e8e320f0d5e19acd535876bc1c40e8 done
+#11 naming to docker.io/library/app09_image:latest done
+#11 DONE 0.0s

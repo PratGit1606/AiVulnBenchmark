@@ -1,0 +1,59 @@
+{
+  "app_id": "APP10",
+  "base_url": "http://localhost:8081",
+  "endpoints_used": {
+    "login": "/login",
+    "register": "/register",
+    "dashboard": "/",
+    "item_create": "/items",
+    "item_list": "/items",
+    "upload": "/upload",
+    "logout": "/logout",
+    "health": "/health",
+    "methods": {
+      "health": "GET",
+      "login": "POST",
+      "register": "POST",
+      "dashboard": "GET",
+      "item_create": "POST",
+      "item_list": "GET",
+      "upload": "POST",
+      "logout": "GET"
+    },
+    "csrf_required": false
+  },
+  "timestamp": "2026-03-30T10:48:07.554672+00:00",
+  "results": [
+    {
+      "test": "xss_reflection",
+      "vulnerable": false,
+      "evidence": "Error: Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8081/register\nCall log:\n  - navigating to \"http://localhost:8081/register\", waiting until \"load\"\n"
+    },
+    {
+      "test": "rate_limit",
+      "vulnerable": true,
+      "evidence": "All 20 login attempts completed with no rate limit or lockout response"
+    },
+    {
+      "test": "file_upload_validation",
+      "vulnerable": false,
+      "evidence": "Error: Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8081/upload\nCall log:\n  - navigating to \"http://localhost:8081/upload\", waiting until \"load\"\n"
+    },
+    {
+      "test": "debug_console_rce",
+      "vulnerable": false,
+      "evidence": "Debug console not accessible on any known path"
+    },
+    {
+      "test": "user_enumeration",
+      "vulnerable": false,
+      "evidence": "Same error message for both"
+    },
+    {
+      "test": "idor_item_edit",
+      "vulnerable": false,
+      "evidence": "Error: Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8081/register\nCall log:\n  - navigating to \"http://localhost:8081/register\", waiting until \"load\"\n"
+    }
+  ],
+  "vulnerable_count": 1
+}

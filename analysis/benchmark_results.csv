@@ -1,3 +1,2 @@
 app_id,prompt_type,stack,vulnerability_id,vulnerability_class,severity,tool_detected,exploit_single,exploit_concurrent,CAF,patch_type,patch_success,notes,timestamp
-APP07,fast,php,APP07-PW-RATE_LIM,rate_limit,high,,1.0,1.0,1.0,none,,All 20 login attempts completed with no rate limit or lockout response,2026-03-29T22:32:31.352378+00:00
-APP07,fast,php,APP07-ATK-MISSING_,missing_rate_limit,high,,1.0,1.0,1.0,none,,"100% login attempts succeed at c=1, 100% at c=50",2026-03-29T22:32:31.352424+00:00
+APP10,vague,express,APP10-PW-RATE_LIM,rate_limit,high,,1.0,1.0,1.0,none,,All 20 login attempts completed with no rate limit or lockout response,2026-03-30T10:48:07.579671+00:00

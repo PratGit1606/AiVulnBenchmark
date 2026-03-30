@@ -1,0 +1,2 @@
+vuln_id,vuln_class,severity,exploit_single,exploit_concurrent,poc_notes,confirmed_by,timestamp
+APP10-PW-RATE_LIM,rate_limit,high,1.0,1.0,All 20 login attempts completed with no rate limit or lockout response,playwright,2026-03-30T10:48:07.579671+00:00
