@@ -3,7 +3,8 @@
     "type": "implementation_defect",
     "endpoint": "item_create",
     "path": "/item/new",
+    "method": "GET",
     "status": 404,
-    "note": "item_create at /item/new returned HTTP 404"
+    "note": "item_create at /item/new (GET) returned HTTP 404"
   }
 ]

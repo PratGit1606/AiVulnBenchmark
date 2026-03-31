@@ -1,6 +1,6 @@
 {
   "app_id": "APP01",
-  "base_url": "http://localhost:8081",
+  "base_url": "http://localhost:8082",
   "endpoints_used": {
     "login": "/login",
     "register": "/register",
@@ -10,12 +10,12 @@
     "upload": "/dashboard",
     "logout": "/logout"
   },
-  "timestamp": "2026-03-29T00:38:13.691491+00:00",
+  "timestamp": "2026-03-31T04:45:54.372582+00:00",
   "results": [
     {
       "test": "xss_reflection",
       "vulnerable": false,
-      "evidence": "Payload not reflected at /dashboard"
+      "evidence": "Payload not reflected or executed on tested surfaces"
     },
     {
       "test": "rate_limit",
@@ -35,7 +35,7 @@
     {
       "test": "user_enumeration",
       "vulnerable": false,
-      "evidence": "Same error message for both \u2014 not enumerable"
+      "evidence": "Same error message for both"
     },
     {
       "test": "idor_item_edit",

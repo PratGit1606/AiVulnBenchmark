@@ -23,7 +23,7 @@
     "csrf_token_endpoint": "/csrf-token",
     "csrf_required": false
   },
-  "timestamp": "2026-03-29T21:37:29.502219+00:00",
+  "timestamp": "2026-03-31T04:45:23.006364+00:00",
   "results": [
     {
       "test": "xss_reflection",
@@ -53,7 +53,7 @@
     {
       "test": "idor_item_edit",
       "vulnerable": true,
-      "evidence": "User B accessed User A's item (id=17748202473318fef12c7fe456) at http://localhost:8081/items/17748202473318fef12c7fe456"
+      "evidence": "User B accessed User A's item (id=17749323209033d349563f67cb) at http://localhost:8081/items/17749323209033d349563f67cb"
     }
   ],
   "vulnerable_count": 2

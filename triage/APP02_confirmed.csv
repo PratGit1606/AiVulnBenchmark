@@ -1,6 +1,6 @@
 vuln_id,vuln_class,severity,exploit_single,exploit_concurrent,poc_notes,confirmed_by,timestamp
-APP02-PW-RATE_LIM,rate_limit,high,1.0,1.0,All 20 login attempts completed with no rate limit or lockout response,playwright,2026-03-29T01:18:23.480164+00:00
-APP02-PW-USER_ENU,user_enumeration,medium,1.0,1.0,"Different error messages for valid vs invalid email:
-  real:  {""errors"":[{""value"":""admin@admin.com"",""msg"":""invalid value"",""param"":""username"",""location"":""body""}]}
-  fake:  {""errors"":[{""value"":""zzznobod",playwright,2026-03-29T01:18:23.480222+00:00
-APP02-ATK-USER_ENU,user_enumeration,medium,1.0,1.0,Timing delta -40.16ms at c=50,attack_runner,2026-03-29T01:18:23.480227+00:00
+APP02-PW-RATE_LIM,rate_limit,high,1.0,1.0,All 20 login attempts completed with no rate limit or lockout response,playwright,2026-03-31T05:04:43.819649+00:00
+APP02-PW-USER_ENU,user_enumeration,medium,1.0,1.0,"Different error messages for valid vs invalid user:
+  real: {""errors"":[{""value"":""admin@admin.com"",""msg"":""invalid value"",""param"":""username"",""location"":""body""}]} welcome to the expre
+  fake: {""errors"":[",playwright,2026-03-31T05:04:43.819681+00:00
+APP02-ATK-USER_ENU,user_enumeration,medium,1.0,1.0,Timing delta -20.55ms at c=50,attack_runner,2026-03-31T05:04:43.819684+00:00

@@ -1,7 +1,7 @@
 {
   "snapshot_version": "1.0",
   "app_id": "APP04",
-  "timestamp": "2026-03-29T18:03:46.203936+00:00",
+  "timestamp": "2026-03-31T05:08:06.212660+00:00",
   "generation": {
     "prompt_type": "secure",
     "stack": "react",
@@ -12,7 +12,7 @@
   },
   "deployment": {
     "docker_image_name": "app04_image:latest",
-    "docker_image_id": "sha256:02db4c1fb9bcc37fcea3404d39f1261e1db29c18a62245d9cefc013c8ff063e2"
+    "docker_image_id": "sha256:b47a73dae1ed0cc89ef69775fa504b1ce45f45abb03eceab9a6ad058baa868a2"
   },
   "scans": {
     "files": [
@@ -51,21 +51,21 @@
       "file": "attacks/results/APP04_file_upload_race_c10_r1.json",
       "scenario": "file_upload_race",
       "concurrency": 10,
-      "requests_total": 5074,
+      "requests_total": 5771,
       "success_rate": 0.0
     },
     {
       "file": "attacks/results/APP04_file_upload_race_c1_r1.json",
       "scenario": "file_upload_race",
       "concurrency": 1,
-      "requests_total": 289,
+      "requests_total": 303,
       "success_rate": 0.0
     },
     {
       "file": "attacks/results/APP04_file_upload_race_c50_r1.json",
       "scenario": "file_upload_race",
       "concurrency": 50,
-      "requests_total": 15875,
+      "requests_total": 25434,
       "success_rate": 0.0
     },
     {
@@ -73,21 +73,21 @@
       "scenario": "fuzz_inputs",
       "concurrency": 10,
       "requests_total": 78,
-      "success_rate": 0.0
+      "success_rate": 0.7436
     },
     {
       "file": "attacks/results/APP04_fuzz_inputs_c1_r1.json",
       "scenario": "fuzz_inputs",
       "concurrency": 1,
       "requests_total": 2,
-      "success_rate": 0.0
+      "success_rate": 0.5
     },
     {
       "file": "attacks/results/APP04_fuzz_inputs_c50_r1.json",
       "scenario": "fuzz_inputs",
       "concurrency": 50,
       "requests_total": 398,
-      "success_rate": 0.0
+      "success_rate": 0.7487
     },
     {
       "file": "attacks/results/APP04_timing_probe_c10_r1.json",

@@ -78,17 +78,7 @@
       "snippet": ""
     },
     {
-      "req_idx": 12,
-      "status": 0,
-      "snippet": ""
-    },
-    {
-      "req_idx": 16,
-      "status": 0,
-      "snippet": ""
-    },
-    {
-      "req_idx": 14,
+      "req_idx": 15,
       "status": 0,
       "snippet": ""
     },
@@ -98,12 +88,12 @@
       "snippet": ""
     },
     {
-      "req_idx": 18,
+      "req_idx": 13,
       "status": 0,
       "snippet": ""
     },
     {
-      "req_idx": 15,
+      "req_idx": 18,
       "status": 0,
       "snippet": ""
     },
@@ -113,7 +103,12 @@
       "snippet": ""
     },
     {
-      "req_idx": 11,
+      "req_idx": 14,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 16,
       "status": 0,
       "snippet": ""
     },
@@ -123,23 +118,28 @@
       "snippet": ""
     },
     {
-      "req_idx": 13,
+      "req_idx": 11,
+      "status": 0,
+      "snippet": ""
+    },
+    {
+      "req_idx": 12,
       "status": 0,
       "snippet": ""
     }
   ],
   "timing_stats": {
-    "min_ms": 15671.79,
-    "max_ms": 16001.54,
-    "mean_ms": 15833.84,
-    "p50_ms": 15983.42,
-    "p95_ms": 16001.54,
-    "p99_ms": 16001.54
+    "min_ms": 15813.19,
+    "max_ms": 16001.56,
+    "mean_ms": 15907.35,
+    "p50_ms": 15998.44,
+    "p95_ms": 16001.56,
+    "p99_ms": 16001.56
   },
   "extra": {
-    "timing_delta_ms": -3.71,
+    "timing_delta_ms": 0.11,
     "enumeration_signal": "NO"
   },
-  "timestamp_start": "2026-03-29T18:01:19.878236+00:00",
-  "timestamp_end": "2026-03-29T18:01:51.573677+00:00"
+  "timestamp_start": "2026-03-31T05:05:44.268669+00:00",
+  "timestamp_end": "2026-03-31T05:06:16.095570+00:00"
 }

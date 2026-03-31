@@ -1,2 +1,2 @@
 app_id,prompt_type,stack,vulnerability_id,vulnerability_class,severity,tool_detected,exploit_single,exploit_concurrent,CAF,patch_type,patch_success,notes,timestamp
-APP10,vague,express,APP10-PW-RATE_LIM,rate_limit,high,,1.0,1.0,1.0,none,,All 20 login attempts completed with no rate limit or lockout response,2026-03-30T10:48:07.579671+00:00
+APP04,secure,react,APP04-ATK-USER_ENU,user_enumeration,medium,,1.0,1.0,1.0,none,,Timing delta -26.64ms at c=50,2026-03-31T05:08:06.130330+00:00

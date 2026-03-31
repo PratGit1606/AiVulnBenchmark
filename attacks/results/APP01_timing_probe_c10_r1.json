@@ -12,23 +12,23 @@
     "upload": "/dashboard",
     "logout": "/logout"
   },
-  "requests_total": 4107,
-  "successful_requests": 4107,
+  "requests_total": 6684,
+  "successful_requests": 6684,
   "failed_requests": 0,
   "success_rate": 1.0,
   "errors": [],
   "timing_stats": {
-    "min_ms": 23.74,
-    "max_ms": 171.9,
-    "mean_ms": 72.21,
-    "p50_ms": 67.29,
-    "p95_ms": 113.67,
-    "p99_ms": 136.4
+    "min_ms": 16.79,
+    "max_ms": 183.18,
+    "mean_ms": 44.53,
+    "p50_ms": 43.35,
+    "p95_ms": 57.38,
+    "p99_ms": 78.05
   },
   "extra": {
-    "timing_delta_ms": 0.24,
+    "timing_delta_ms": -0.19,
     "enumeration_signal": "NO"
   },
-  "timestamp_start": "2026-03-29T00:35:28.575145+00:00",
-  "timestamp_end": "2026-03-29T00:35:58.660695+00:00"
+  "timestamp_start": "2026-03-31T04:43:08.336513+00:00",
+  "timestamp_end": "2026-03-31T04:43:38.371974+00:00"
 }

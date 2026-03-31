@@ -25,22 +25,22 @@
     "csrf_token_endpoint": "/csrf-token",
     "csrf_required": false
   },
-  "requests_total": 3351,
-  "successful_requests": 3351,
+  "requests_total": 4282,
+  "successful_requests": 4282,
   "failed_requests": 0,
   "success_rate": 1.0,
   "errors": [],
   "timing_stats": {
-    "min_ms": 1.47,
-    "max_ms": 34.38,
-    "mean_ms": 3.87,
-    "p50_ms": 3.62,
-    "p95_ms": 6.2,
-    "p99_ms": 8.65
+    "min_ms": 1.52,
+    "max_ms": 18.99,
+    "mean_ms": 2.7,
+    "p50_ms": 2.61,
+    "p95_ms": 3.7,
+    "p99_ms": 4.85
   },
   "extra": {
-    "duplicate_count": 3351
+    "duplicate_count": 4282
   },
-  "timestamp_start": "2026-03-29T21:35:40.090588+00:00",
-  "timestamp_end": "2026-03-29T21:35:55.141378+00:00"
+  "timestamp_start": "2026-03-31T04:43:32.873873+00:00",
+  "timestamp_end": "2026-03-31T04:43:47.916079+00:00"
 }

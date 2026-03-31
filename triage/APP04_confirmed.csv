@@ -1,2 +1,2 @@
 vuln_id,vuln_class,severity,exploit_single,exploit_concurrent,poc_notes,confirmed_by,timestamp
-APP04-ATK-USER_ENU,user_enumeration,medium,1.0,1.0,Timing delta -42.68ms at c=50,attack_runner,2026-03-29T18:03:46.037952+00:00
+APP04-ATK-USER_ENU,user_enumeration,medium,1.0,1.0,Timing delta -26.64ms at c=50,attack_runner,2026-03-31T05:08:06.130330+00:00

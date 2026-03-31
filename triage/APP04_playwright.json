@@ -1,6 +1,6 @@
 {
   "app_id": "APP04",
-  "base_url": "http://localhost:8084",
+  "base_url": "http://localhost:8083",
   "endpoints_used": {
     "login": "/login",
     "register": "/register",
@@ -20,22 +20,22 @@
     "csrf_token_endpoint": "/csrf-token",
     "csrf_required": true
   },
-  "timestamp": "2026-03-29T18:03:45.959458+00:00",
+  "timestamp": "2026-03-31T05:08:06.102088+00:00",
   "results": [
     {
       "test": "xss_reflection",
       "vulnerable": false,
-      "evidence": "Payload not reflected at /"
+      "evidence": "Payload not reflected or executed on tested surfaces"
     },
     {
       "test": "rate_limit",
       "vulnerable": false,
-      "evidence": "Login form not found on UI root"
+      "evidence": "Login form not found"
     },
     {
       "test": "file_upload_validation",
       "vulnerable": false,
-      "evidence": "No file input found at /"
+      "evidence": "No file input found at /upload"
     },
     {
       "test": "debug_console_rce",
@@ -45,12 +45,12 @@
     {
       "test": "user_enumeration",
       "vulnerable": false,
-      "evidence": "Same error message for both \u2014 not enumerable"
+      "evidence": "Same error message for both"
     },
     {
       "test": "idor_item_edit",
       "vulnerable": false,
-      "evidence": "Error: Page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n  - navigating to \"http://localhost:8084None\", waiting until \"load\"\n"
+      "evidence": "Error: Page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL\nCall log:\n  - navigating to \"http://localhost:8083None\", waiting until \"load\"\n"
     }
   ],
   "vulnerable_count": 0

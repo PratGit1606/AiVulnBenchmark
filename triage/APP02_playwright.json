@@ -21,12 +21,12 @@
     "csrf_token_endpoint": "/csrf-token",
     "csrf_required": true
   },
-  "timestamp": "2026-03-29T01:18:23.429049+00:00",
+  "timestamp": "2026-03-31T05:04:43.785057+00:00",
   "results": [
     {
       "test": "xss_reflection",
       "vulnerable": false,
-      "evidence": "Payload not reflected at /"
+      "evidence": "Payload not reflected or executed on tested surfaces"
     },
     {
       "test": "rate_limit",
@@ -36,7 +36,7 @@
     {
       "test": "file_upload_validation",
       "vulnerable": false,
-      "evidence": "Upload response ambiguous: no alert text"
+      "evidence": "No file input found at /upload"
     },
     {
       "test": "debug_console_rce",
@@ -46,7 +46,7 @@
     {
       "test": "user_enumeration",
       "vulnerable": true,
-      "evidence": "Different error messages for valid vs invalid email:\n  real:  {\"errors\":[{\"value\":\"admin@admin.com\",\"msg\":\"invalid value\",\"param\":\"username\",\"location\":\"body\"}]}\n  fake:  {\"errors\":[{\"value\":\"zzznobody999@fake.com\",\"msg\":\"invalid value\",\"param\":\"username\",\"location\":\"body\"}]}"
+      "evidence": "Different error messages for valid vs invalid user:\n  real: {\"errors\":[{\"value\":\"admin@admin.com\",\"msg\":\"invalid value\",\"param\":\"username\",\"location\":\"body\"}]} welcome to the expre\n  fake: {\"errors\":[{\"value\":\"zzznobody999@fake.com\",\"msg\":\"invalid value\",\"param\":\"username\",\"location\":\"body\"}]} welcome to the"
     },
     {
       "test": "idor_item_edit",

@@ -2,37 +2,34 @@
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 212B 0.0s done
+#1 transferring dockerfile: 212B done
 #1 DONE 0.0s
 
 #2 [internal] load metadata for docker.io/library/python:3.11-slim
-#2 DONE 1.0s
+#2 DONE 0.8s
 
 #3 [internal] load .dockerignore
 #3 transferring context: 2B done
 #3 DONE 0.0s
 
-#4 [internal] load build context
+#4 [1/6] FROM docker.io/library/python:3.11-slim@sha256:9358444059ed78e2975ada2c189f1c1a3144a5dab6f35bff8c981afb38946634
+#4 resolve docker.io/library/python:3.11-slim@sha256:9358444059ed78e2975ada2c189f1c1a3144a5dab6f35bff8c981afb38946634 0.0s done
 #4 DONE 0.0s
 
-#5 [1/6] FROM docker.io/library/python:3.11-slim@sha256:9358444059ed78e2975ada2c189f1c1a3144a5dab6f35bff8c981afb38946634
-#5 resolve docker.io/library/python:3.11-slim@sha256:9358444059ed78e2975ada2c189f1c1a3144a5dab6f35bff8c981afb38946634 0.1s done
-#5 DONE 0.1s
+#5 [internal] load build context
+#5 transferring context: 3.94kB 0.0s done
+#5 DONE 0.0s
 
-#4 [internal] load build context
-#4 transferring context: 3.10kB 0.0s done
-#4 DONE 0.1s
-
-#6 [2/6] WORKDIR /app
+#6 [3/6] COPY requirements.txt .
 #6 CACHED
 
 #7 [4/6] RUN pip install --no-cache-dir -r requirements.txt
 #7 CACHED
 
-#8 [3/6] COPY requirements.txt .
+#8 [5/6] COPY . .
 #8 CACHED
 
-#9 [5/6] COPY . .
+#9 [2/6] WORKDIR /app
 #9 CACHED
 
 #10 [6/6] RUN mkdir uploads
@@ -40,6 +37,6 @@
 
 #11 exporting to image
 #11 exporting layers done
-#11 writing image sha256:02318b51770da520911021329b2d624305badf23d744fd8a07ad2b2f31087394 done
-#11 naming to docker.io/library/app01_image:latest 0.0s done
+#11 writing image sha256:39ddcc558ef4a6c3e6b9631dd52bed94383af7357b412717380a9710acb4892a done
+#11 naming to docker.io/library/app01_image:latest done
 #11 DONE 0.0s
